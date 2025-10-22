@@ -1,527 +1,168 @@
 ---
 title: Capturas de Pantalla y Guía Visual
-Description: Guía detallada de las capturas de pantalla necesarias para el manual de usuario, con instrucciones sobre qué mostrar en cada sección.
+description: Manual visual del usuario de Moodify con capturas de pantalla y explicaciones detalladas de cada funcionalidad.
 ---
 
-Guía detallada de las capturas de pantalla necesarias para el manual de usuario, con instrucciones sobre qué mostrar en cada sección.
+import { Callout } from '@/components/callout';
+import { Card, Cards } from '@/components/card';
+import { Tabs, Tab } from '@/components/tabs';
+import { Banner } from '@/components/banner';
+import { ImageZoom } from '@/components/image-zoom';
+import { Steps } from '@/components/steps';
 
-## Pantallas de Autenticación
+<Banner>
+  <p>¡Actualización importante! Moodify ahora incluye nuevas características de análisis emocional y recomendaciones musicales mejoradas.</p>
+</Banner>
 
-### 1. Pantalla de Inicio de Sesión
-**Ruta**: `/auth/login`
+# Manual de Usuario Visual de Moodify
 
-**Elementos a capturar**:
-- Logo de la aplicación en la parte superior
-- Formulario de inicio de sesión con campos:
-  - Campo de correo electrónico con placeholder
-  - Campo de contraseña con opción de mostrar/ocultar
-  - Checkbox "Recordarme"
-  - Botón primario "Iniciar Sesión"
-  - Enlaces secundarios "¿Olvidaste tu contraseña?" y "Registrarse"
-- Sección de inicio de sesión con redes sociales (Spotify, Google)
+<Callout type="info" title="Bienvenido a Moodify">
+Moodify te ayuda a descubrir música que se adapta a tu estado emocional actual, proporcionando una experiencia personalizada que puede mejorar tu bienestar y estado de ánimo.
+</Callout>
 
-**Instrucciones para la captura**:
-- Mostrar la pantalla completa
-- Asegurarse de que los campos estén visibles
-- No incluir datos reales en los campos
+## Autenticación
 
-### 2. Pantalla de Registro
-**Ruta**: `/auth/register`
+<Tabs items={["Inicio de Sesión", "Registro"]}>
 
-**Elementos a capturar**:
-- Logo de la aplicación
-- Formulario de registro con campos:
-  - Campo de nombre completo
-  - Campo de correo electrónico
-  - Campo de contraseña con validación en tiempo real
-  - Campo de confirmación de contraseña
-  - Botón primario "Registrarse"
-  - Enlace "¿Ya tienes cuenta? Inicia sesión"
-- Indicadores de fortaleza de contraseña
+<Tab value="Inicio de Sesión">
 
-**Instrucciones para la captura**:
-- Mostrar formulario completo
-- Incluir mensajes de validación si es posible
-- Asegurarse de que los botones estén claramente visibles
+### Inicio de Sesión
+<ImageZoom>
+  ![Pantalla de Login](/images/Login.png)
+</ImageZoom>
 
-### 3. Pantalla de Recuperación de Contraseña
-**Ruta**: `/auth/forgot-password`
+Esta es la pantalla de inicio de sesión donde puedes acceder a tu cuenta de Moodify. Incluye campos para email y contraseña, y opciones de registro o recuperación de contraseña. También puedes iniciar sesión utilizando tu cuenta de Spotify u otros proveedores OAuth.
 
-**Elementos a capturar**:
-- Logo de la aplicación
-- Formulario de recuperación con campo de correo
-- Botón "Enviar instrucciones"
-- Enlace "Volver al inicio de sesión"
+</Tab>
+<Tab value="Registro">
 
-**Instrucciones para la captura**:
-- Mostrar formulario limpio
-- Asegurar visibilidad del campo de correo
+### Registro
+<ImageZoom>
+  ![Pantalla de Registro](/images/register.png)
+</ImageZoom>
+
+La pantalla de registro te permite crear una nueva cuenta en Moodify. Debes proporcionar tu nombre, email y contraseña. La aplicación incluye validación en tiempo real para ayudarte a crear una contraseña segura.
+
+</Tab>
+</Tabs>
 
 ## Panel Principal
 
-### 4. Dashboard Principal
-**Ruta**: `/dashboard`
+### Dashboard Principal
+<ImageZoom>
+  ![Pantalla de Dashboard](/images/dashboard.png)
+</ImageZoom>
 
-**Elementos a capturar**:
-- Barra de navegación superior con:
-  - Logo y nombre de la aplicación
-  - Menú de usuario con avatar
-  - Notificaciones
-- Menú lateral con opciones de navegación:
-  - Inicio
-  - Detección de emociones
-  - Historial
-  - Recomendaciones
-  - Perfil
-  - Configuración
-- Sección de estadísticas rápidas:
-  - Total de análisis realizados
-  - Emoción más común
-  - Última actividad
-- Gráfico de tendencias emocionales
-- Lista de actividades recientes
-
-**Instrucciones para la captura**:
-- Mostrar pantalla completa en resolución de escritorio
-- Asegurar visibilidad de todos los elementos mencionados
-- Usar datos de ejemplo si es necesario
-
-### 5. Menú Desplegable de Usuario
-**Ruta**: Accesible desde cualquier página haciendo clic en el avatar
-
-**Elementos a capturar**:
-- Avatar del usuario
-- Nombre del usuario
-- Correo electrónico
-- Opciones del menú:
-  - Mi perfil
-  - Configuración
-  - Cerrar sesión
-- Sección de tema (claro/oscuro)
-
-**Instrucciones para la captura**:
-- Mostrar menú desplegado completamente
-- Asegurar que todas las opciones sean visibles
+El dashboard principal te proporciona una visión general de tu actividad en Moodify. Incluye estadísticas rápidas, un resumen de tus análisis emocionales recientes y acceso directo a las funcionalidades principales de la aplicación.
 
 ## Detección de Emociones
 
-### 6. Pantalla de Configuración de Cámara
-**Ruta**: `/detect`
+<Tabs items={["Captura de Análisis", "Resultados del Análisis"]}>
 
-**Elementos a capturar**:
-- Vista previa de la cámara en tiempo real
-- Indicador de permisos de cámara
-- Botones de control:
-  - Cambiar cámara (si hay múltiples)
-  - Flash (si está disponible)
-  - Tomar foto
-- Instrucciones para el usuario:
-  - "Mantén una expresión natural"
-  - "Asegúrate de buena iluminación"
-  - "Evita sombras en el rostro"
+<Tab value="Captura de Análisis">
 
-**Instrucciones para la captura**:
-- Mostrar vista previa de la cámara activa
-- Incluir elementos de interfaz de control
-- No mostrar rostro real en la captura
+### Captura de Análisis
+<ImageZoom>
+  ![Pantalla de Captura de Cámara](/images/capture_test_camara.png)
+</ImageZoom>
 
-### 7. Proceso de Detección
-**Ruta**: `/detect` durante el proceso de análisis
+En esta pantalla puedes permitir el acceso a la cámara para analizar tu expresión facial. La aplicación te guiará para obtener la mejor captura posible, asegurando buena iluminación y una posición adecuada.
 
-**Elementos a capturar**:
-- Imagen capturada con overlay de análisis
-- Indicador de progreso "Analizando emociones..."
-- Animación de carga o spinner
-- Área para mostrar resultados futuros
+</Tab>
+<Tab value="Resultados del Análisis">
 
-**Instrucciones para la captura**:
-- Mostrar estado de procesamiento
-- Asegurar visibilidad del indicador de progreso
+### Resultados del Análisis
+<ImageZoom>
+  ![Resultados de Análisis Emocional](/images/capture_result.png)
+</ImageZoom>
 
-### 8. Resultados de Detección
-**Ruta**: `/detect` con resultados
+Después de capturar tu imagen, Moodify muestra los resultados del análisis emocional. La emoción principal se destaca junto con un porcentaje de confianza, y se generan recomendaciones personalizadas de música basadas en tu estado emocional detectado.
 
-**Elementos a capturar**:
-- Imagen analizada con marcadores faciales
-- Emoción detectada principal con porcentaje de confianza
-- Gráfico circular con distribución de todas las emociones
-- Recomendaciones musicales generadas:
-  - Lista de canciones con portadas
-  - Botones de acción:
-    - Escuchar en Spotify
-    - Guardar en historial
-    - Compartir
-- Botones de acción adicionales:
-  - Nueva detección
-  - Ver historial
-  - Ir a recomendaciones
+</Tab>
+</Tabs>
 
-**Instrucciones para la captura**:
-- Mostrar resultados completos
-- Asegurar visibilidad de la emoción principal
-- Incluir al menos 3 canciones recomendadas
+## Cómo Utilizar Moodify
 
-## Historial de Análisis
+<Steps>
+  <ol>
+    <li>**Inicia sesión** o crea una cuenta nueva</li>
+    <li>**Accede a la cámara** para analizar tu expresión facial</li>
+    <li>**Mantén una expresión natural** con buena iluminación</li>
+    <li>**Revisa los resultados** del análisis emocional</li>
+    <li>**Explora las recomendaciones** musicales personalizadas</li>
+    <li>**Consulta tu historial** y estadísticas para entender tus patrones emocionales</li>
+    <li>**Comparte tu música favorita** con base en tu estado emocional</li>
+  </ol>
+</Steps>
 
-### 9. Lista de Historial
-**Ruta**: `/history`
-
-**Elementos a capturar**:
-- Filtros de historial:
-  - Selector de tipo (emociones/recomendaciones/todo)
-  - Selector de emoción
-  - Selector de rango de fechas
-  - Botón "Limpiar filtros"
-- Lista de entradas de historial:
-  - Tarjetas con fecha y hora
-  - Imagen miniatura del análisis
-  - Emoción detectada
-  - Número de canciones recomendadas
-  - Botones de acción:
-    - Ver detalles
-    - Eliminar
-- Paginación o scroll infinito
-- Botones de acción global:
-  - Exportar datos
-  - Limpiar historial
-
-**Instrucciones para la captura**:
-- Mostrar varias tarjetas de historial
-- Incluir filtros visibles
-- Asegurar visibilidad de botones de acción
-
-### 10. Detalles de Entrada de Historial
-**Ruta**: `/history/[id]`
-
-**Elementos a capturar**:
-- Imagen del análisis con marcadores faciales
-- Información detallada:
-  - Fecha y hora exacta
-  - Emoción principal con confianza
-  - Desglose de todas las emociones
-- Recomendaciones musicales asociadas:
-  - Lista completa de canciones
-  - Información detallada de cada canción
-- Botones de acción:
-  - Escuchar todo en Spotify
-  - Eliminar entrada
-  - Compartir
-
-**Instrucciones para la captura**:
-- Mostrar información completa de una entrada
-- Incluir al menos 5 canciones recomendadas
-- Asegurar visibilidad de todos los detalles
+<Cards>
+<Card title="Beneficios">
+- Experiencia personalizada basada en tu estado emocional
+- Descubrimiento de nueva música que resuona contigo
+- Análisis detallado de tus patrones emocionales
+- Integración con Spotify para escuchar fácilmente
+</Card>
+<Card title="Recomendaciones Pro">
+- Asegúrate de buena iluminación facial al usar la cámara
+- Mantén una expresión natural para mejores resultados
+- Consulta tu historial para identificar patrones emocionales
+</Card>
+</Cards>
 
 ## Recomendaciones Musicales
 
-### 11. Pantalla de Recomendaciones
-**Ruta**: `/recommendations`
+### Música Recomendada
+<ImageZoom>
+  ![Recomendaciones Musicales](/images/music_recommendations.png)
+</ImageZoom>
 
-**Elementos a capturar**:
-- Selector de emoción para recomendaciones
-- Filtros adicionales:
-  - Género musical
-  - Excluir contenido explícito
-  - Límite de canciones
-- Lista de recomendaciones:
-  - Tarjetas de canciones con:
-    - Portada del álbum
-    - Título de la canción
-    - Nombre del artista
-    - Popularidad
-    - Botones de acción:
-      - Escuchar en Spotify
-      - Guardar
-      - Compartir
-- Botones de acción:
-  - Generar nuevas recomendaciones
-  - Guardar playlist
+La pantalla de recomendaciones muestra las canciones sugeridas específicamente para tu estado emocional. Puedes escuchar las canciones directamente o guardarlas en tu historial.
 
-**Instrucciones para la captura**:
-- Mostrar selector de emoción
-- Incluir al menos 10 tarjetas de canciones
-- Asegurar visibilidad de filtros
+## Análisis Estadístico
 
-### 12. Playlist Generada
-**Ruta**: `/recommendations` con playlist creada
+<Cards>
+<Card title="Distribución de Emociones">
+<ImageZoom>
+  ![Gráfico de Distribución de Emociones](/images/chart_distribution.png)
+</ImageZoom>
+Este histograma circular muestra la distribución de tus emociones detectadas a lo largo del tiempo, ayudándote a entender tus patrones emocionales más comunes.
+</Card>
+<Card title="Línea de Tiempo Emocional">
+<ImageZoom>
+  ![Gráfico de Línea de Tiempo](/images/chart_timeline.png)
+</ImageZoom>
+La línea de tiempo emocional muestra cómo han evolucionado tus emociones detectadas a lo largo de los días, semanas o meses, permitiéndote identificar tendencias y patrones emocionales.
+</Card>
+<Card title="Análisis de Actividad">
+<ImageZoom>
+  ![Análisis de Actividad](/images/analytucs_activity.png)
+</ImageZoom>
+Este gráfico muestra tu actividad en la aplicación, indicando cuándo utilizas Moodify con mayor frecuencia y ayudándote a entender tus hábitos de uso.
+</Card>
+<Card title="Emociones por Día de la Semana">
+<ImageZoom>
+  ![Emociones por Día de la Semana](/images/analytics_weekly.png)
+</ImageZoom>
+Este gráfico muestra cómo varían tus emociones detectadas según el día de la semana, lo que puede ayudarte a identificar patrones relacionados con tu rutina.
+</Card>
+<Card title="Análisis General de Emociones">
+<ImageZoom>
+  ![Análisis General de Emociones](/images/analytics_emotions.png)
+</ImageZoom>
+Una vista general de todas las emociones detectadas durante un período específico, mostrando la frecuencia y distribución de cada tipo de emoción.
+</Card>
+<Card title="Historial de Análisis">
+<ImageZoom>
+  ![Historial de Análisis](/images/history.png)
+</ImageZoom>
+En esta pantalla puedes revisar todos los análisis emocionales que has realizado en Moodify. Puedes filtrar por fecha o tipo de emoción, y volver a ver los resultados y recomendaciones de cada análisis.
+</Card>
+</Cards>
 
-**Elementos a capturar**:
-- Nombre de la playlist generada
-- Descripción de la playlist
-- Imagen de portada de la playlist
-- Lista de canciones en la playlist
-- Botones de acción:
-  - Abrir en Spotify
-  - Guardar en Spotify
-  - Compartir playlist
-  - Generar nueva playlist
+## Consejos de Uso
 
-**Instrucciones para la captura**:
-- Mostrar playlist completa
-- Incluir información de portada
-- Asegurar visibilidad de botones de acción
+<Callout type="success" title="Consejos para una Mejor Experiencia">
+Para obtener los mejores resultados con Moodify, asegúrate de usar la aplicación con buena iluminación facial y manten una expresión natural. La precisión del análisis emocional mejora con condiciones de luz adecuadas.
+</Callout>
 
-## Perfil de Usuario
-
-### 13. Pantalla de Perfil
-**Ruta**: `/profile`
-
-**Elementos a capturar**:
-- Información del usuario:
-  - Avatar grande
-  - Nombre completo
-  - Correo electrónico
-  - Fecha de registro
-  - Biografía
-- Estadísticas del usuario:
-  - Total de análisis
-  - Total de recomendaciones
-  - Emoción más común
-- Preferencias musicales:
-  - Géneros favoritos
-  - Artistas favoritos
-- Botones de acción:
-  - Editar perfil
-  - Cambiar contraseña
-  - Eliminar cuenta
-
-**Instrucciones para la captura**:
-- Mostrar perfil completo
-- Incluir sección de estadísticas
-- Asegurar visibilidad de botones de acción
-
-### 14. Edición de Perfil
-**Ruta**: `/profile/edit`
-
-**Elementos a capturar**:
-- Formulario de edición con campos:
-  - Avatar (con opción de cambiar)
-  - Nombre completo
-  - Correo electrónico
-  - Biografía
-  - Géneros musicales favoritos (selector múltiple)
-- Botones de acción:
-  - Guardar cambios
-  - Cancelar
-  - Eliminar cuenta
-
-**Instrucciones para la captura**:
-- Mostrar formulario completo
-- Incluir selector de géneros
-- Asegurar visibilidad de botones
-
-### 15. Cambio de Contraseña
-**Ruta**: `/profile/change-password`
-
-**Elementos a capturar**:
-- Formulario de cambio de contraseña:
-  - Contraseña actual
-  - Nueva contraseña
-  - Confirmar nueva contraseña
-- Indicadores de fortaleza de contraseña
-- Botones de acción:
-  - Guardar nueva contraseña
-  - Cancelar
-
-**Instrucciones para la captura**:
-- Mostrar formulario con validación
-- Incluir indicadores de fortaleza
-- Asegurar visibilidad de botones
-
-### 16. Eliminación de Cuenta
-**Ruta**: `/profile/delete`
-
-**Elementos a capturar**:
-- Advertencia de eliminación permanente
-- Formulario de confirmación:
-  - Confirmar correo electrónico
-  - Confirmar contraseña
-- Lista de datos que se eliminarán:
-  - Historial de emociones
-  - Recomendaciones musicales
-  - Preferencias de usuario
-  - Estadísticas
-- Botones de acción:
-  - Eliminar cuenta permanentemente
-  - Cancelar
-
-**Instrucciones para la captura**:
-- Mostrar advertencia claramente
-- Incluir formulario de confirmación
-- Asegurar visibilidad de la lista de datos a eliminar
-
-## Analíticas y Estadísticas
-
-### 17. Dashboard de Analíticas
-**Ruta**: `/analytics`
-
-**Elementos a capturar**:
-- Resumen de estadísticas:
-  - Total de análisis realizados
-  - Total de recomendaciones
-  - Tiempo usando la aplicación
-- Gráficos de analíticas:
-  - Tendencias emocionales (línea)
-  - Distribución de emociones (pastel)
-  - Actividad por hora del día (barras)
-  - Actividad por día de la semana (barras)
-- Métricas destacadas:
-  - Emoción más común
-  - Hora pico de actividad
-  - Día más activo
-  - Género musical más recomendado
-
-**Instrucciones para la captura**:
-- Mostrar todos los gráficos
-- Incluir resumen de estadísticas
-- Asegurar visibilidad de métricas destacadas
-
-### 18. Filtros de Analíticas
-**Ruta**: `/analytics` con filtros activos
-
-**Elementos a capturar**:
-- Selector de rango de tiempo:
-  - Últimos 7 días
-  - Últimos 30 días
-  - Últimos 3 meses
-  - Último año
-- Selector de tipo de análisis:
-  - Emociones
-  - Recomendaciones
-  - Actividad
-- Botón "Aplicar filtros"
-- Gráficos actualizados según filtros
-
-**Instrucciones para la captura**:
-- Mostrar selectores de filtros
-- Incluir gráficos actualizados
-- Asegurar visibilidad de botón de aplicación
-
-## Configuración
-
-### 19. Pantalla de Configuración
-**Ruta**: `/settings`
-
-**Elementos a capturar**:
-- Secciones de configuración:
-  - Preferencias de interfaz:
-    - Tema (claro/oscuro/auto)
-    - Idioma
-    - Tamaño de fuente
-  - Notificaciones:
-    - Correo electrónico
-    - Push (si aplicable)
-    - Newsletter
-  - Privacidad:
-    - Visibilidad del perfil
-    - Compartir actividad
-    - Búsqueda en directorio
-  - Seguridad:
-    - Autenticación de dos factores (si disponible)
-    - Sesiones activas
-    - Historial de actividad
-
-**Instrucciones para la captura**:
-- Mostrar todas las secciones de configuración
-- Incluir elementos de interfaz (switches, selects)
-- Asegurar visibilidad de cada sección
-
-### 20. Gestión de Sesiones
-**Ruta**: `/settings/sessions`
-
-**Elementos a capturar**:
-- Lista de sesiones activas:
-  - Dispositivo
-  - Ubicación (aproximada)
-  - Fecha de inicio
-  - Última actividad
-  - Botones de acción:
-    - Cerrar sesión
-- Botones de acción globales:
-  - Cerrar todas las sesiones
-  - Cerrar sesiones en otros dispositivos
-
-**Instrucciones para la captura**:
-- Mostrar lista de sesiones
-- Incluir información de dispositivo
-- Asegurar visibilidad de botones de acción
-
-## Mensajes de Error y Estado
-
-### 21. Pantalla de Error 404
-**Ruta**: Cualquier ruta inválida
-
-**Elementos a capturar**:
-- Código de error (404)
-- Mensaje amigable
-- Ilustración o icono
-- Botones de acción:
-  - Volver a la página principal
-  - Ir al dashboard
-
-**Instrucciones para la captura**:
-- Mostrar mensaje de error completo
-- Incluir ilustración
-- Asegurar visibilidad de botones
-
-### 22. Pantalla de Error de Conexión
-**Ruta**: Cuando hay problemas de red
-
-**Elementos a capturar**:
-- Icono de error de conexión
-- Mensaje descriptivo
-- Botones de acción:
-  - Reintentar
-  - Recargar página
-  - Verificar conexión
-
-**Instrucciones para la captura**:
-- Mostrar mensaje de error de red
-- Incluir icono apropiado
-- Asegurar visibilidad de botones
-
-### 23. Pantalla de Carga
-**Ruta**: Durante operaciones largas
-
-**Elementos a capturar**:
-- Spinner o animación de carga
-- Mensaje de estado (opcional)
-- Barra de progreso (si aplica)
-
-**Instrucciones para la captura**:
-- Mostrar estado de carga
-- Incluir elemento visual de progreso
-- Asegurar buen contraste
-
-## Dispositivos Móviles
-
-### 24. Diseño Responsivo en Móvil
-**Ruta**: Todas las pantallas principales en vista móvil
-
-**Elementos a capturar**:
-- Menú hamburguesa colapsado
-- Barra de navegación inferior (si aplica)
-- Diseño de una columna para contenido
-- Botones táctiles adecuadamente dimensionados
-- Formularios optimizados para móvil
-
-**Instrucciones para la captura**:
-- Usar modo responsive de navegador o dispositivo real
-- Mostrar vista móvil de al menos 3 pantallas principales
-- Asegurar visibilidad de elementos táctiles
-
-### 25. Menú Móvil
-**Ruta**: Menú lateral en vista móvil
-
-**Elementos a capturar**:
-- Menú hamburguesa abierto
-- Opciones de navegación en lista vertical
-- Información del usuario en el encabezado del menú
-- Botón de cierre del menú
-
-**Instrucciones para la captura**:
-- Mostrar menú completamente expandido
-- Incluir opciones de navegación
-- Asegurar visibilidad del encabezado de usuario
-
-Esta guía detallada de capturas de pantalla proporcionará al equipo de documentación toda la información necesaria para crear un manual de usuario completo y visualmente atractivo que ayude a los usuarios a entender y utilizar todas las funcionalidades de Moodify.
+Moodify te ayuda a descubrir música que se adapta a tu estado emocional actual, proporcionando una experiencia personalizada que puede mejorar tu bienestar y estado de ánimo. Utiliza las herramientas de análisis y estadísticas para conocer mejor tus emociones y descubrir nuevas canciones que resonarán contigo en cada momento.

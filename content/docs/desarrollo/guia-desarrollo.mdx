@@ -3,6 +3,9 @@ title: Guía de Desarrollo
 Description: Guía completa para desarrolladores que desean contribuir al proyecto Moodify.
 ---
 
+import { Tabs, Tab } from '@/components/tabs';
+import { Files, Folder, File } from '@/components/files';
+
 # Guía de Desarrollo
 
 Guía completa para desarrolladores que desean contribuir al proyecto Moodify.
@@ -41,25 +44,63 @@ pnpm install
 
 ## Estructura del Proyecto
 
-```
-moodify-frontend/
-├── app/                    # Aplicación Next.js con App Router
-├── components/             # Componentes reutilizables de UI
-├── content/                # Contenido de documentación en MDX
-├── lib/                    # Lógica compartida y utilidades
-├── public/                 # Archivos estáticos públicos
-├── scripts/                # Scripts de automatización
-├── styles/                 # Estilos globales y configuración
-├── types/                  # Definiciones de tipos TypeScript
-├── .env.local             # Variables de entorno (no versionado)
-├── next.config.mjs        # Configuración de Next.js
-├── package.json           # Dependencias y scripts del proyecto
-├── pnpm-lock.yaml         # Bloqueo de versiones de dependencias
-├── postcss.config.mjs     # Configuración de PostCSS
-├── README.md              # Documentación principal del proyecto
-├── source.config.ts       # Configuración de Fumadocs
-└── tsconfig.json          # Configuración de TypeScript
-```
+<Files >
+  <Folder name="moodify/" defaultOpen>
+    <Folder name="app/">
+      <Folder name="api/">
+      </Folder>
+      <Folder name="auth/">
+        <File name="login/page.tsx" />
+        <File name="register/page.tsx" />
+      </Folder>
+      <Folder name="dashboard/">
+        <File name="page.tsx" />
+      </Folder>
+      <Folder name="detect/">
+        <File name="page.tsx" />
+      </Folder>
+      <Folder name="history/">
+        <File name="page.tsx" />
+      </Folder>
+      <Folder name="recommendations/">
+        <File name="page.tsx" />
+      </Folder>
+      <File name="layout.tsx" />
+      <File name="page.tsx" />
+    </Folder>
+    <Folder name="components/">
+      <Folder name="ui/">
+        <File name="button.tsx" />
+        <File name="card.tsx" />
+        <File name="input.tsx" />
+      </Folder>
+      <Folder name="camera/">
+        <File name="camera.tsx" />
+        <File name="capture.tsx" />
+      </Folder>
+      <Folder name="emotion/">
+        <File name="detector.tsx" />
+        <File name="results.tsx" />
+      </Folder>
+      <File name="navbar.tsx" />
+      <File name="sidebar.tsx" />
+    </Folder>
+    <Folder name="lib/">
+      <File name="auth.ts" />
+      <File name="database.ts" />
+      <File name="spotify.ts" />
+      <File name="face-api.ts" />
+    </Folder>
+    <Folder name="public/">
+      <Folder name="images/" />
+      <Folder name="icons/" />
+    </Folder>
+    <File name="package.json" />
+    <File name="next.config.js" />
+    <File name="tsconfig.json" />
+    <File name="README.md" />
+  </Folder>
+</Files>
 
 ## Scripts Disponibles
 
@@ -149,16 +190,25 @@ Los componentes siguen el patrón de Atomic Design:
 ### Patrón de API
 
 Las rutas de API siguen esta estructura:
-```
-/api/
-├── auth/          # Autenticación y autorización
-├── user/          # Gestión de usuarios
-├── history/       # Historial de análisis
-├── recommendations/ # Recomendaciones musicales
-├── emotion/       # Detección de emociones
-├── music/         # Integración con música
-└── health/        # Verificación de salud del sistema
-```
+
+<Files>
+  <Folder name="api/" defaultOpen>
+    <Folder name="auth/">
+    </Folder>
+    <Folder name="user/">
+    </Folder>
+    <Folder name="history/">
+    </Folder>
+    <Folder name="recommendations/">
+    </Folder>
+    <Folder name="emotion/">
+    </Folder>
+    <Folder name="music/">
+    </Folder>
+    <Folder name="health/">
+    </Folder>
+  </Folder>
+</Files>
 
 ## Contribución al Proyecto
 
@@ -184,25 +234,19 @@ Seguimos el estándar de Conventional Commits:
 [pie opcional]
 ```
 
-**Tipos válidos**:
-- `feat`: Nueva funcionalidad
-- `fix`: Corrección de errores
-- `docs`: Cambios en documentación
-- `style`: Cambios de estilo (espacios, formato, etc.)
-- `refactor`: Refactorización de código
-- `test`: Adición o modificación de pruebas
-- `chore`: Cambios de mantenimiento
-
 **Ejemplos**:
-```
-feat(auth): añadir login con Spotify
-fix(api): corregir error en endpoint de recomendaciones
-docs(readme): actualizar guía de instalación
-style(button): mejorar espaciado en botones
-refactor(components): mover lógica de estado a hooks personalizados
-test(api): añadir pruebas para endpoints de autenticación
-chore(deps): actualizar dependencias
-```
+
+Tipo de commits:
+
+<Tabs items={["feat", "fix", "docs", "style", "refactor", "test", "chore"]} defaultIndex={0}>
+    <Tab value="feat">Nueva funcionalidad</Tab>
+    <Tab value="fix">Corrección de errores</Tab>
+    <Tab value="docs">Cambios en documentación</Tab>
+    <Tab value="style">Cambios de estilo (espacios, formato, etc.)</Tab>
+    <Tab value="refactor">Refactorización de código</Tab>
+    <Tab value="test">Adición o modificación de pruebas</Tab>
+    <Tab value="chore">Cambios de mantenimiento</Tab>
+</Tabs>
 
 ## Pruebas
 

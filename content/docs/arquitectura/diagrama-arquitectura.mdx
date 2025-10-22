@@ -3,235 +3,210 @@ title: "Diagrama y Explicación de la Arquitectura"
 description: "Presentación del diagrama arquitectónico completo de Moodify y explicación detallada de cada componente y sus interacciones."
 ---
 
+import { Callout } from '@/components/callout';
+import { Card, Cards } from '@/components/card';
+import { Tabs, Tab } from '@/components/tabs';
+import { Banner } from '@/components/banner';
+import { ImageZoom } from '@/components/image-zoom';
+import { Steps } from '@/components/steps';
+import { Files, File, Folder } from '@/components/files';
+
+<Banner type="info">
+  <p>Arquitectura actualizada: La versión 2.0 de Moodify incluye mejoras en la seguridad y escalabilidad.</p>
+</Banner>
+
 # Diagrama y Explicación de la Arquitectura
 
-Esta sección presenta el diagrama arquitectónico completo de Moodify junto con explicaciones detalladas de cada componente y sus interacciones.
+Esta sección presenta la arquitectura de Moodify a través de múltiples diagramas que ilustran diferentes aspectos del sistema, junto con explicaciones detalladas de cada componente y sus interacciones.
 
-## Diagrama Arquitectónico
+## Estructura del Proyecto
 
-```
-┌─────────────────────────────────────────────────────────────────────────────┐
-│                              CLIENTE WEB                                 │
-│  ┌─────────────────────────────────────────────────────────────────────┐   │
-│  │                    NAVEGADOR MODERNO                                │   │
-│  │  ┌─────────────┐  ┌─────────────┐  ┌────────────────────────────┐ │   │
-│  │  │  Next.js 15 │  │   React 19  │  │  Fumadocs Documentation    │ │   │
-│  │  │  App Router │  │  Server C.  │  │  (MDX + OpenAPI)           │ │   │
-│  │  │             │  │             │  │                            │ │   │
-│  │  │  ┌────────┐ │  │  ┌────────┐ │  │  ┌─────────────────────┐   │ │   │
-│  │  │  │Server  │ │  │  │Client  │ │  │  │Documentation        │   │ │   │
-│  │  │  │Comp.  │ │  │  │Comp.   │ │  │  │Components           │   │ │   │
-│  │  │  └────────┘ │  │  └────────┘ │  │  └─────────────────────┘   │ │   │
-│  │  │             │  │             │  │                            │ │   │
-│  │  │  ┌────────┐ │  │  ┌────────┐ │  │  ┌─────────────────────┐   │ │   │
-│  │  │  │API     │ │  │  │UI      │ │  │  │Search & Navigation │   │ │   │
-│  │  │  │Routes  │ │  │  │Library │ │  │  └─────────────────────┘   │ │   │
-│  │  │  └────────┘ │  │  └────────┘ │  │                            │ │   │
-│  │  │             │  │             │  │  ┌─────────────────────┐   │ │   │
-│  │  │  ┌────────┐ │  │  ┌────────┐ │  │  │Static Generation    │   │ │   │
-│  │  │  │SSR/SSG │ │  │  │Hooks   │ │  │  │(Build Time)         │   │ │   │
-│  │  │  └────────┘ │  │  └────────┘ │  │  └─────────────────────┘   │ │   │
-│  │  └─────────────┘  └─────────────┘  └────────────────────────────┘ │   │
-│  └─────────────────────────────────────────────────────────────────────┘   │
-└─────────────────────────────┬─────────────────────────────────────────────┘
-                              │
-                    HTTPS/REST API
-                              │
-┌─────────────────────────────▼─────────────────────────────────────────────┐
-│                         API GATEWAY                                       │
-│  ┌─────────────────────────────────────────────────────────────────────┐ │
-│  │                        NGINX/VERCEL                                 │ │
-│  │  ┌─────────────────────────────────────────────────────────────────┐ │ │
-│  │  │            Autenticación & Autorización                       │ │ │
-│  │  │  ┌─────────────────────────────────────────────────────────┐ │ │ │
-│  │  │  │              NextAuth.js                               │ │ │ │
-│  │  │  │  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐     │ │ │ │
-│  │  │  │  │   OAuth     │  │Credentials  │  │Magic Links  │     │ │ │ │
-│  │  │  │  │  Providers  │  │Provider     │  │Provider     │     │ │ │ │
-│  │  │  │  │             │  │             │  │             │     │ │ │ │
-│  │  │  │  │ Spotify     │  │Email/Pass   │  │Email Only   │     │ │ │ │
-│  │  │  │  └─────────────┘  └─────────────┘  └─────────────┘     │ │ │ │
-│  │  │  └─────────────────────────────────────────────────────────┘ │ │ │
-│  │  │                                                             │ │ │
-│  │  │            Rate Limiting & Security                         │ │ │
-│  │  │  ┌─────────────────────────────────────────────────────────┐ │ │ │
-│  │  │  │                  Helmet.js                             │ │ │ │
-│  │  │  │  Security Headers, CSP, CORS Configuration              │ │ │ │
-│  │  │  └─────────────────────────────────────────────────────────┘ │ │ │
-│  │  └─────────────────────────────────────────────────────────────────┘ │ │
-│  └─────────────────────────────────────────────────────────────────────┘ │
-└─────────────────────────────┬─────────────────────────────────────────────┘
-                              │
-                    HTTPS/REST API
-                              │
-┌─────────────────────────────▼─────────────────────────────────────────────┐
-│                         SERVIDOR DE APLICACIÓN                            │
-│  ┌─────────────────────────────────────────────────────────────────────┐ │
-│  │                    Next.js Serverless Functions                     │ │
-│  │  ┌─────────────────────────────────────────────────────────────────┐ │ │
-│  │  │                   API Endpoints                                │ │ │
-│  │  │  ┌─────────────┐  ┌─────────────┐  ┌─────────────────────────┐ │ │ │
-│  │  │  │   Auth      │  │   User      │  │       History           │ │ │ │
-│  │  │  │  /api/auth  │  │  /api/user  │  │      /api/history       │ │ │ │
-│  │  │  │             │  │             │  │                         │ │ │ │
-│  │  │  │  Login      │  │  Profile    │  │  Emotion Analysis       │ │ │ │
-│  │  │  │  Logout     │  │  Settings   │  │  Music Recommendations  │ │ │ │
-│  │  │  │  Register   │  │  Privacy    │  │  Analytics              │ │ │ │
-│  │  │  │  Session    │  │  Delete     │  │                         │ │ │ │
-│  │  │  └─────────────┘  └─────────────┘  └─────────────────────────┘ │ │ │
-│  │  │  ┌─────────────────────────────────────────────────────────┐ │ │ │
-│  │  │  │                    Recommendations                    │ │ │ │
-│  │  │  │                   /api/recommendations                 │ │ │ │
-│  │  │  │                                                         │ │ │ │
-│  │  │  │  Music Search    │  Emotion-Based Rec  │  Playlist Gen │ │ │ │
-│  │  │  └─────────────────────────────────────────────────────────┘ │ │ │
-│  │  │  ┌─────────────────────────────────────────────────────────┐ │ │ │
-│  │  │  │                    Music Integration                   │ │ │ │
-│  │  │  │                      /api/music                        │ │ │ │
-│  │  │  │                                                         │ │ │ │
-│  │  │  │  Track Info      │  Search         │  Recommendations │ │ │ │
-│  │  │  └─────────────────────────────────────────────────────────┘ │ │ │
-│  │  │  ┌─────────────────────────────────────────────────────────┐ │ │ │
-│  │  │  │                      Health Check                      │ │ │ │
-│  │  │  │                       /api/health                       │ │ │ │
-│  │  │  │                                                         │ │ │ │
-│  │  │  │  System Status   │  Dependency Check │  Performance  │ │ │ │
-│  │  │  └─────────────────────────────────────────────────────────┘ │ │ │
-│  │  └─────────────────────────────────────────────────────────────────┘ │ │
-│  │  ┌─────────────────────────────────────────────────────────────────┐ │ │
-│  │  │                    Business Logic Services                     │ │ │
-│  │  │  ┌─────────────┐  ┌─────────────┐  ┌─────────────────────────┐ │ │ │
-│  │  │  │  Emotion    │  │  Music      │  │      Analytics          │ │ │ │
-│  │  │  │ Detection   │  │ Services    │  │    Services             │ │ │ │
-│  │  │  │ Service     │  │             │  │                         │ │ │ │
-│  │  │  │             │  │  Spotify     │  │  Trend Analysis         │ │ │ │
-│  │  │  │  Face-API   │  │  Wrapper     │  │  Pattern Recognition    │ │ │ │
-│  │  │  │  Integration│  │  Utilities   │  │  Statistical Processing │ │ │ │
-│  │  │  └─────────────┘  └─────────────┘  └─────────────────────────┘ │ │ │
-│  │  └─────────────────────────────────────────────────────────────────┘ │ │
-│  └─────────────────────────────────────────────────────────────────────┘ │
-└─────────────────────────────┬─────────────────────────────────────────────┘
-                              │
-                    Database Connection Pool
-                              │
-┌─────────────────────────────▼─────────────────────────────────────────────┐
-│                         BASE DE DATOS                                     │
-│  ┌─────────────────────────────────────────────────────────────────────┐ │
-│  │                        PostgreSQL 15+                               │ │
-│  │  ┌─────────────────────────────────────────────────────────────────┐ │ │
-│  │  │                    Tablas Principales                           │ │ │
-│  │  │  ┌─────────────┐  ┌─────────────┐  ┌─────────────────────────┐ │ │ │
-│  │  │  │   Users     │  │   Sessions  │  │    Emotion Analyses     │ │ │ │
-│  │  │  │             │  │             │  │                         │ │ │ │
-│  │  │  │  id         │  │  id         │  │  id                     │ │ │ │
-│  │  │  │  email      │  │  user_id    │  │  user_id                │ │ │ │
-│  │  │  │  name       │  │  token      │  │  emotion                │ │ │ │
-│  │  │  │  password   │  │  expires    │  │  confidence             │ │ │ │
-│  │  │  │  image       │  │  created_at │  │  image_url              │ │ │ │
-│  │  │  │  created_at │  │             │  │  metadata               │ │ │ │
-│  │  │  │  updated_at │  │  device_info │  │  created_at             │ │ │ │
-│  │  │  └─────────────┘  └─────────────┘  └─────────────────────────┘ │ │ │
-│  │  │  ┌─────────────────────────────────────────────────────────┐ │ │ │
-│  │  │  │              Music Recommendations                  │ │ │ │
-│  │  │  │              music_recommendations                 │ │ │ │
-│  │  │  │                                                     │ │ │ │
-│  │  │  │  id         │  track_id      │  user_id               │ │ │ │
-│  │  │  │  emotion    │  track_name    │  artist_name           │ │ │ │
-│  │  │  │  confidence │  album_name    │  track_url             │ │ │ │
-│  │  │  │  user_id    │  image_url     │  duration_ms           │ │ │ │
-│  │  │  │  audio_feat │  popularity    │  created_at            │ │ │ │
-│  │  │  └─────────────────────────────────────────────────────────┘ │ │ │
-│  │  │  ┌─────────────────────────────────────────────────────────┐ │ │ │
-│  │  │  │                   User Preferences                     │ │ │ │
-│  │  │  │                   user_preferences                     │ │ │ │
-│  │  │  │                                                         │ │ │ │
-│  │  │  │  id         │  user_id       │  favorite_genres        │ │ │ │
-│  │  │  │  theme      │  notifications │  exclude_explicit      │ │ │ │
-│  │  │  │  privacy    │  created_at    │  updated_at             │ │ │ │
-│  │  │  └─────────────────────────────────────────────────────────┘ │ │ │
-│  │  └─────────────────────────────────────────────────────────────────┘ │ │
-│  │  ┌─────────────────────────────────────────────────────────────────┐ │ │
-│  │  │                   Database Operations                         │ │ │
-│  │  │  ┌─────────────┐  ┌─────────────┐  ┌─────────────────────────┐ │ │ │
-│  │  │  │   Prisma    │  │  Migrations │  │      Query Builder      │ │ │ │
-│  │  │  │   ORM       │  │  System     │  │      (Prisma Query)     │ │ │ │
-│  │  │  │             │  │             │  │                         │ │ │ │
-│  │  │  │  Type Safe  │  │  Version    │  │  Fluent API             │ │ │ │
-│  │  │  │  Queries    │  │  Control     │  │  Auto-Completion        │ │ │ │
-│  │  │  │  Relations  │  │  Rollbacks   │  │  Error Handling         │ │ │ │
-│  │  │  └─────────────┘  └─────────────┘  └─────────────────────────┘ │ │ │
-│  │  └─────────────────────────────────────────────────────────────────┘ │ │
-│  └─────────────────────────────────────────────────────────────────────┘ │
-└─────────────────────────────┬─────────────────────────────────────────────┘
-                              │
-                    API Calls (HTTPS)
-                              │
-┌─────────────────────────────▼─────────────────────────────────────────────┐
-│                         SERVICIOS EXTERNOS                               │
-│  ┌─────────────────────────────────────────────────────────────────────┐ │
-│  │                        Spotify Web API                              │ │
-│  │  ┌─────────────────────────────────────────────────────────────────┐ │ │
-│  │  │                   Music Intelligence                           │ │ │
-│  │  │  ┌─────────────┐  ┌─────────────┐  ┌─────────────────────────┐ │ │ │
-│  │  │  │  Tracks     │  │  Search     │  │  Recommendations         │ │ │ │
-│  │  │  │  Metadata   │  │  Endpoint   │  │  Engine                 │ │ │ │
-│  │  │  │             │  │             │  │                         │ │ │ │
-│  │  │  │  Audio      │  │  Filters    │  │  Personalization        │ │ │ │
-│  │  │  │  Features   │  │  Sorting    │  │  Algorithms             │ │ │ │
-│  │  │  │  Analysis   │  │  Pagination │  │  Collaborative Filtering│ │ │ │
-│  │  │  └─────────────┘  └─────────────┘  └─────────────────────────┘ │ │ │
-│  │  │  ┌─────────────────────────────────────────────────────────┐ │ │ │
-│  │  │  │                 User Integration                        │ │ │ │
-│  │  │  │  ┌─────────────┐  ┌─────────────┐  ┌─────────────────┐   │ │ │ │
-│  │  │  │  │  Playlists  │  │   Library   │  │   Listening     │   │ │ │ │
-│  │  │  │  │  Creation   │  │   Sync      │  │   History       │   │ │ │ │
-│  │  │  │  │  Curation   │  │   Import    │  │   Analysis      │   │ │ │ │
-│  │  │  │  └─────────────┘  └─────────────┘  └─────────────────┘   │ │ │ │
-│  │  │  └─────────────────────────────────────────────────────────┘ │ │ │
-│  │  └─────────────────────────────────────────────────────────────────┘ │ │
-│  └─────────────────────────────────────────────────────────────────────┘ │
-│  ┌─────────────────────────────────────────────────────────────────────┐ │
-│  │                      Face-API.js (Node.js)                         │ │
-│  │  ┌─────────────────────────────────────────────────────────────────┐ │ │
-│  │  │                    Facial Recognition                        │ │ │
-│  │  │  ┌─────────────┐  ┌─────────────┐  ┌─────────────────────────┐ │ │ │
-│  │  │  │  Detection  │  │Expression   │  │      Models             │ │ │ │
-│  │  │  │  Models     │  │  Analysis    │  │      Loading            │ │ │ │
-│  │  │  │             │  │             │  │                         │ │ │ │
-│  │  │  │  Face       │  │  Happy      │  │  TinyFaceDetector       │ │ │ │
-│  │  │  │  Landmark    │  │  Sad        │  │  FaceLandmark68Net      │ │ │ │
-│  │  │  │  Recognition │  │  Angry      │  │  FaceRecognitionNet      │ │ │ │
-│  │  │  │  Models      │  │  Surprise   │  │  FaceExpressionNet      │ │ │ │
-│  │  │  └─────────────┘  └─────────────┘  └─────────────────────────┘ │ │ │
-│  │  └─────────────────────────────────────────────────────────────────┘ │ │
-│  └─────────────────────────────────────────────────────────────────────┘ │
-└─────────────────────────────────────────────────────────────────────────┘
+<Files >
+  <Folder name="moodify/" defaultOpen>
+    <Folder name="app/">
+      <Folder name="api/">
+      </Folder>
+      <Folder name="auth/">
+        <File name="login/page.tsx" />
+        <File name="register/page.tsx" />
+      </Folder>
+      <Folder name="dashboard/">
+        <File name="page.tsx" />
+      </Folder>
+      <Folder name="detect/">
+        <File name="page.tsx" />
+      </Folder>
+      <Folder name="history/">
+        <File name="page.tsx" />
+      </Folder>
+      <Folder name="recommendations/">
+        <File name="page.tsx" />
+      </Folder>
+      <File name="layout.tsx" />
+      <File name="page.tsx" />
+    </Folder>
+    <Folder name="components/">
+      <Folder name="ui/">
+        <File name="button.tsx" />
+        <File name="card.tsx" />
+        <File name="input.tsx" />
+      </Folder>
+      <Folder name="camera/">
+        <File name="camera.tsx" />
+        <File name="capture.tsx" />
+      </Folder>
+      <Folder name="emotion/">
+        <File name="detector.tsx" />
+        <File name="results.tsx" />
+      </Folder>
+      <File name="navbar.tsx" />
+      <File name="sidebar.tsx" />
+    </Folder>
+    <Folder name="lib/">
+      <File name="auth.ts" />
+      <File name="database.ts" />
+      <File name="spotify.ts" />
+      <File name="face-api.ts" />
+    </Folder>
+    <Folder name="public/">
+      <Folder name="images/" />
+      <Folder name="icons/" />
+    </Folder>
+    <File name="package.json" />
+    <File name="next.config.js" />
+    <File name="tsconfig.json" />
+    <File name="README.md" />
+  </Folder>
+</Files>
+
+## Arquitectura General
+
+El siguiente diagrama muestra la estructura general de la aplicación Moodify, desde el cliente web hasta los servicios externos:
+
+```mermaid
+graph TB
+    subgraph "Cliente Web"
+        A["Next.js 15 App Router"]
+        B["React 19 Server Components"]
+        C["Tailwind CSS v4"]
+    end
+
+    subgraph "API Gateway"
+        D["NGINX/Vercel"]
+        E["NextAuth.js"]
+        F["Helmet.js Security"]
+    end
+
+    subgraph "Servidor de Aplicación"
+        G["Next.js Serverless Functions"]
+        H["API Endpoints"]
+        I["Servicios de Lógica de Negocio"]
+    end
+
+    subgraph "Base de Datos"
+        J["PostgreSQL 15+"]
+        K["Prisma ORM"]
+    end
+
+    subgraph "Servicios Externos"
+        L["Spotify Web API"]
+        M["face-api.js"]
+    end
+
+    A --> D
+    B --> D
+    C --> D
+    D --> G
+    G --> J
+    G --> L
+    G --> M
+    H --> I
+    I --> J
+    I --> L
+    I --> M
 ```
 
-## Explicación Detallada de Componentes
+<Callout type="info" title="Arquitectura Modular">
+Esta arquitectura modular y bien definida permite a Moodify crecer y evolucionar manteniendo altos estándares de calidad, seguridad y experiencia de usuario.
+</Callout>
+
+## Capas de la Arquitectura
+
+<Tabs items={["Cliente Web", "API Gateway", "Servidor de Aplicación", "Base de Datos", "Servicios Externos"]}>
+<Tab value="Cliente Web">
 
 ### Capa de Cliente Web
 
-#### Next.js 15 con App Router
-- **Server Components**: Renderizado en servidor para mejor performance
-- **Client Components**: Interactividad en el cliente cuando es necesario
-- **Partial Prerendering**: Combinación de SSG y SSR para carga instantánea
-- **Turbopack**: Bundler de próxima generación para desarrollo rápido
+#### Arquitectura del Frontend
 
-#### Fumadocs Documentation
-- **MDX Support**: Documentación rica con componentes React
-- **OpenAPI Integration**: Generación automática de referencias de API
-- **Search Engine**: Búsqueda semántica con indexación avanzada
-- **Responsive Design**: Documentación óptima en todos los dispositivos
+```mermaid
+graph TD
+    A["Cliente Web"] --> B["Next.js 15 App Router"]
+    B --> C["Server Components"]
+    B --> D["Client Components"]
+    B --> E["Tailwind CSS v4"]
+    
+    C --> F["Renderizado en Servidor"]
+    D --> G["Interactividad en Cliente"]
+    E --> H["CSS Utility-First"]
+    E --> I["@headlessui/react"]
+    E --> J["@heroicons/react"]
+    E --> K["lucide-react"]
+    E --> L["react-hook-form"]
+```
+
+#### Next.js 15 con App Router
+- **Server Components**: Renderizado parcial en servidor para mejor performance
+- **Client Components**: Interactividad en el cliente cuando es necesario
+- **Turbopack**: Bundler de próxima generación para compilación ultra rápida
+- **React 19**: Última versión de React con mejoras de rendimiento y nuevas APIs
+
+#### Tailwind CSS v4
+- **Utility-First CSS**: Clases utilitarias descriptivas y auto-documentadas
+- **CSS Nativo**: Sin PostCSS para compilación más rápida
+- **Anidamiento CSS**: Soporte nativo para anidamiento de estilos
+- **Purging Automático**: Eliminación automática de estilos no utilizados
+
+#### Componentes de Interfaz
+- **@headlessui/react**: Componentes accesibles sin estilos predeterminados
+- **@heroicons/react**: Íconos optimizados en SVG
+- **lucide-react**: Colección completa de íconos consistentes
+- **react-hook-form**: Gestión eficiente de formularios con validación Zod
+
+</Tab>
+<Tab value="API Gateway">
 
 ### Capa de API Gateway
 
-#### Autenticación & Autorización
-El sistema de autenticación está basado en **NextAuth.js** y soporta múltiples proveedores:
+#### Autenticación y Seguridad
 
-1. **OAuth Providers**: Spotify, Google, GitHub
-2. **Credentials Provider**: Autenticación tradicional email/contraseña
-3. **Magic Links**: Inicio de sesión sin contraseña mediante enlaces mágicos
+```mermaid
+graph TD
+    A["API Gateway"] --> B["NGINX/Vercel"]
+    B --> C["Autenticación"]
+    B --> D["Seguridad"]
+    
+    C --> E["NextAuth.js"]
+    E --> F["OAuth Providers"]
+    E --> G["Credentials Provider"]
+    E --> H["Magic Links Provider"]
+    
+    F --> I["Spotify OAuth"]
+    F --> J["Google OAuth"]
+    F --> K["GitHub OAuth"]
+    
+    D --> L["Helmet.js"]
+    D --> M["Rate Limiting"]
+    L --> N["Security Headers"]
+    L --> O["CSP & CORS"]
+    M --> P["Token Bucket Algorithm"]
+```
+
+#### Autenticación con NextAuth.js
+- **OAuth Providers**: Integración con Spotify para autenticación social
+- **Credentials Provider**: Autenticación tradicional email/contraseña
+- **Magic Links**: Inicio de sesión sin contraseña mediante enlaces
+- **JWT**: Tokens firmados y encriptados para sesiones seguras
 
 #### Seguridad y Rate Limiting
 - **Helmet.js**: Headers de seguridad HTTP para protección contra ataques comunes
@@ -239,9 +214,42 @@ El sistema de autenticación está basado en **NextAuth.js** y soporta múltiple
 - **CORS Configuration**: Configuración flexible de Cross-Origin Resource Sharing
 - **CSRF Protection**: Protección automática contra falsificación de solicitudes
 
+</Tab>
+<Tab value="Servidor de Aplicación">
+
 ### Capa de Servidor de Aplicación
 
 #### Estructura de Endpoints API
+
+```mermaid
+graph TD
+    A["Servidor de Aplicación"] --> B["Next.js Serverless Functions"]
+    B --> C["API Endpoints"]
+    B --> D["Servicios de Lógica de Negocio"]
+    
+    C --> E["/api/auth"]
+    C --> F["/api/user"]
+    C --> G["/api/history"]
+    C --> H["/api/recommendations"]
+    C --> I["/api/music"]
+    C --> J["/api/health"]
+    
+    D --> K["Emotion Detection Service"]
+    D --> L["Music Services"]
+    D --> M["Analytics Services"]
+    
+    E --> N["Login/Logout/Register/Session"]
+    F --> O["Profile/Settings/Privacy/Delete"]
+    G --> P["Emotion Analysis/Music Recommendations/Analytics"]
+    H --> Q["Music Search/Emotion-Based Rec/Playlist Gen"]
+    I --> R["Track Info/Search/Recommendations"]
+    J --> S["System Status/Dependency Check/Performance"]
+    
+    K --> T["face-api.js Integration"]
+    L --> U["Spotify Wrapper"]
+    M --> V["Trend Analysis/Pattern Recognition"]
+```
+
 La API sigue una estructura RESTful organizada por dominios funcionales:
 
 1. **Authentication** (`/api/auth`): Manejo de inicio de sesión, registro y sesiones
@@ -258,7 +266,43 @@ Los servicios de negocio encapsulan la lógica específica de dominio:
 2. **Music Services**: Wrappers tipados para la API de Spotify
 3. **Analytics Services**: Generación de estadísticas y tendencias
 
+</Tab>
+<Tab value="Base de Datos">
+
 ### Capa de Base de Datos
+
+#### Modelo Relacional
+
+```mermaid
+graph TD
+    A["Base de Datos"] --> B["PostgreSQL 15+"]
+    B --> C["Prisma ORM"]
+    B --> D["Tablas Principales"]
+    
+    D --> E["Users"]
+    D --> F["Sessions"]
+    D --> G["Emotion Analyses"]
+    D --> H["Music Recommendations"]
+    D --> I["User Preferences"]
+    
+    E --> J["id, email, name, password, image, created_at, updated_at"]
+    F --> K["id, user_id, token, expires, created_at, device_info"]
+    G --> L["id, user_id, emotion, confidence, image_url, metadata, created_at"]
+    H --> M["id, emotion, confidence, user_id, track_id, track_name, album_name, artist_name, track_url, image_url, duration_ms, popularity, created_at"]
+    I --> N["id, user_id, theme, privacy, notifications, favorite_genres, exclude_explicit, created_at, updated_at"]
+    
+    C --> O["Type Safety"]
+    C --> P["Query Builder"]
+    C --> Q["Migrations"]
+    C --> R["Data Browser"]
+```
+
+#### Prisma ORM
+Prisma proporciona:
+- **Type Safety**: Generación automática de tipos TypeScript
+- **Query Builder**: API intuitiva para consultas complejas
+- **Migrations**: Sistema de migraciones declarativo y versionado
+- **Data Browser**: GUI para exploración de datos en desarrollo
 
 #### Modelo Relacional
 La base de datos PostgreSQL almacena información estructurada en tablas relacionadas:
@@ -269,14 +313,56 @@ La base de datos PostgreSQL almacena información estructurada en tablas relacio
 4. **Music Recommendations**: Recomendaciones musicales generadas
 5. **User Preferences**: Preferencias personalizadas del usuario
 
-#### Prisma ORM
-Prisma proporciona:
-- **Type Safety**: Generación automática de tipos TypeScript
-- **Query Builder**: API intuitiva para consultas complejas
-- **Migrations**: Sistema de migraciones declarativo y versionado
-- **Data Browser**: GUI para exploración de datos en desarrollo
+</Tab>
+<Tab value="Servicios Externos">
 
-### Capa de Servicios Externos
+### Servicios Externos
+
+#### Integraciones Externas
+
+```mermaid
+graph TD
+    A["Servicios Externos"] --> B["Spotify Web API"]
+    A --> C["face-api.js"]
+    
+    B --> D["Metadata Access"]
+    B --> E["Search Capabilities"]
+    B --> F["Recommendation Engine"]
+    B --> G["User Integration"]
+    
+    D --> H["Track Information"]
+    D --> I["Album Information"]
+    D --> J["Artist Information"]
+    
+    E --> K["Filters"]
+    E --> L["Sorting"]
+    E --> M["Pagination"]
+    
+    F --> N["Personalization"]
+    F --> O["Algorithms"]
+    F --> P["Collaborative Filtering"]
+    
+    G --> Q["Playlists"]
+    G --> R["Library"]
+    G --> S["Listening History"]
+    
+    C --> T["Face Detection"]
+    C --> U["Expression Analysis"]
+    C --> V["Model Loading"]
+    
+    T --> W["Recognition Models"]
+    T --> X["Landmark Detection"]
+    
+    U --> Y["Happy"]
+    U --> Z["Sad"]
+    U --> AA["Angry"]
+    U --> AB["Surprise"]
+    
+    V --> AC["TinyFaceDetector"]
+    V --> AD["FaceLandmark68Net"]
+    V --> AE["FaceRecognitionNet"]
+    V --> AF["FaceExpressionNet"]
+```
 
 #### Spotify Web API
 Integración completa con la plataforma musical líder:
@@ -286,7 +372,7 @@ Integración completa con la plataforma musical líder:
 3. **Recommendation Engine**: Algoritmos de recomendación basados en audio features
 4. **User Integration**: Acceso a playlists, bibliotecas y historial de escucha
 
-#### Face-API.js
+#### face-api.js
 Sistema avanzado de reconocimiento facial:
 
 1. **Model Loading**: Carga eficiente de modelos de machine learning
@@ -294,39 +380,107 @@ Sistema avanzado de reconocimiento facial:
 3. **Face Recognition**: Identificación y verificación de rostros
 4. **Landmark Detection**: Puntos de referencia faciales para análisis detallado
 
+</Tab>
+</Tabs>
+
 ## Flujos de Datos Principales
 
+<Steps>
+  <ol>
+    <li>El usuario interactúa con la aplicación web</li>
+    <li>La solicitud pasa por el gateway de API</li>
+    <li>Se realizan validaciones de seguridad y autenticación</li>
+    <li>La lógica de negocio procesa la solicitud</li>
+    <li>La base de datos es consultada o actualizada según sea necesario</li>
+    <li>Los servicios externos son invocados cuando es necesario</li>
+    <li>La respuesta se devuelve al cliente</li>
+  </ol>
+</Steps>
+
+<Tabs items={["Autenticación", "Detección Emocional", "Recomendaciones Musicales"]}>
+
+<Tab value="Autenticación">
+
 ### Flujo de Autenticación
+
+```mermaid
+sequenceDiagram
+    participant U as Usuario
+    participant A as NextAuth.js
+    participant DB as Base de Datos
+    participant OA as Servicio OAuth
+    
+    U->>A: Inicia sesión
+    A->>OA: Verifica credenciales
+    A->>DB: Crea/actualiza sesión
+    DB-->>A: Confirma sesión
+    A-->>U: Sesión establecida
 ```
-[Usuario] → [NextAuth.js] → [Base de Datos/Servicio OAuth] → [Sesión Establecida]
-```
+
+</Tab>
+<Tab value="Detección Emocional">
 
 ### Flujo de Detección Emocional
+
+```mermaid
+sequenceDiagram
+    participant U as Usuario
+    participant C as Cámara
+    participant F as face-api.js
+    participant S as Servicio Detección Emocional
+    participant DB as Base de Datos
+    
+    U->>C: Accede a cámara
+    C->>F: Captura imagen facial
+    F->>S: Analiza expresión facial
+    S->>DB: Registra análisis emocional
+    DB-->>S: Confirma registro
+    S-->>U: Recomendaciones musicales
 ```
-[Usuario] → [Cámara] → [Face-API.js] → [Emotion Analysis] → [Base de Datos] → [Respuesta]
-```
+
+</Tab>
+<Tab value="Recomendaciones Musicales">
 
 ### Flujo de Recomendaciones Musicales
+
+```mermaid
+sequenceDiagram
+    participant DE as Datos Emocionales
+    participant S as API Spotify
+    participant RE as Motor de Recomendación
+    participant U as Usuario
+    
+    DE->>RE: Provee datos emocionales
+    RE->>S: Solicita recomendaciones musicales
+    S-->>RE: Proporciona tracks recomendados
+    RE-->>U: Presenta playlist personalizada
 ```
-[Emotion Data] → [Spotify API] → [Recommendation Engine] → [Playlist Generation] → [Usuario]
-```
 
-## Consideraciones de Escalabilidad
+</Tab>
+</Tabs>
 
-### Horizontal Scaling
-- **Serverless Functions**: Escalamiento automático basado en demanda
-- **Database Connection Pooling**: Gestión eficiente de conexiones concurrentes
-- **Load Balancing**: Distribución automática de cargas mediante Vercel
+## Consideraciones de Seguridad
 
-### Vertical Scaling
-- **Database Optimization**: Indices, particionamiento y query optimization
-- **Caching Strategy**: Redis para datos frecuentes y resultados computacionalmente costosos
-- **CDN Distribution**: Distribución de contenido estático globalmente
+<Callout type="warning" title="Importante">
+Implementar medidas de seguridad es fundamental para proteger los datos de los usuarios y mantener la integridad del sistema.
+</Callout>
 
-### Monitoreo y Observabilidad
-- **Logging**: Sistema de logs estructurados para debugging
-- **Metrics Collection**: Métricas de performance y uso del sistema
-- **Error Tracking**: Sistema de reporte y análisis de errores en producción
-- **Performance Monitoring**: Métricas de tiempo de respuesta y disponibilidad
+<Cards>
+<Card title="Protección contra Fuerza Bruta">
+- Bloqueo temporal después de 5 intentos fallidos consecutivos
+- Incremento exponencial del tiempo de bloqueo
+- Notificación automática de actividad sospechosa
+</Card>
+<Card title="Prevención de Enumeración de Usuarios">
+- Mensajes de error genéricos para evitar revelación de cuentas
+- Tiempos de respuesta consistentes independientemente del resultado
+- Rate limiting basado en IP y combinaciones email/IP
+</Card>
+<Card title="Seguridad de Transporte">
+- Requisito de HTTPS para todos los endpoints
+- Headers de seguridad HTTP Strict Transport Security (HSTS)
+- Política de seguridad de contenido (CSP) para prevenir XSS
+</Card>
+</Cards>
 
-Esta arquitectura modular y bien definida permite a Moodify crecer y evolucionar manteniendo altos estándares de calidad, seguridad y experiencia de usuario.
+Esta arquitectura modular y bien definida permite a Moodify crecer y evolucionar manteniendo altos estándares de calidad, seguridad y experiencia de usuario, basándose en las tecnologías reales especificadas en el package.json del proyecto.

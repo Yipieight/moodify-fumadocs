@@ -3,59 +3,102 @@ title: "Estructura del Proyecto y Organización del Código Fuente"
 description: "Conozca la estructura organizativa del proyecto Moodify y cómo está estructurado el código fuente para facilitar el mantenimiento y la escalabilidad."
 ---
 
+import { Files, File, Folder } from '@/components/files';
+
 # Estructura del Proyecto y Organización del Código Fuente
 
 Conozca la estructura organizativa del proyecto Moodify y cómo está estructurado el código fuente para facilitar el mantenimiento y la escalabilidad.
 
 ## Estructura General del Directorio
 
-```
-moodify-frontend/
-├── app/                    # Aplicación Next.js con App Router
-├── components/             # Componentes reutilizables de UI
-├── content/                # Contenido de documentación
-│   └── docs/              # Documentación en formato MDX
-├── lib/                    # Lógica compartida y utilidades
-├── public/                 # Archivos estáticos públicos
-├── scripts/                # Scripts de automatización
-├── styles/                 # Estilos globales y configuración
-├── types/                  # Definiciones de tipos TypeScript
-├── .env.local             # Variables de entorno (no versionado)
-├── next.config.mjs        # Configuración de Next.js
-├── package.json           # Dependencias y scripts del proyecto
-├── pnpm-lock.yaml         # Bloqueo de versiones de dependencias
-├── postcss.config.mjs     # Configuración de PostCSS
-├── README.md              # Documentación principal del proyecto
-├── source.config.ts       # Configuración de Fumadocs
-└── tsconfig.json          # Configuración de TypeScript
-```
+<Files >
+  <Folder name="moodify/" defaultOpen>
+    <Folder name="app/">
+      <Folder name="api/">
+      </Folder>
+      <Folder name="auth/">
+        <File name="login/page.tsx" />
+        <File name="register/page.tsx" />
+      </Folder>
+      <Folder name="dashboard/">
+        <File name="page.tsx" />
+      </Folder>
+      <Folder name="detect/">
+        <File name="page.tsx" />
+      </Folder>
+      <Folder name="history/">
+        <File name="page.tsx" />
+      </Folder>
+      <Folder name="recommendations/">
+        <File name="page.tsx" />
+      </Folder>
+      <File name="layout.tsx" />
+      <File name="page.tsx" />
+    </Folder>
+    <Folder name="components/">
+      <Folder name="ui/">
+        <File name="button.tsx" />
+        <File name="card.tsx" />
+        <File name="input.tsx" />
+      </Folder>
+      <Folder name="camera/">
+        <File name="camera.tsx" />
+        <File name="capture.tsx" />
+      </Folder>
+      <Folder name="emotion/">
+        <File name="detector.tsx" />
+        <File name="results.tsx" />
+      </Folder>
+      <File name="navbar.tsx" />
+      <File name="sidebar.tsx" />
+    </Folder>
+    <Folder name="lib/">
+      <File name="auth.ts" />
+      <File name="database.ts" />
+      <File name="spotify.ts" />
+      <File name="face-api.ts" />
+    </Folder>
+    <Folder name="public/">
+      <Folder name="images/" />
+      <Folder name="icons/" />
+    </Folder>
+    <File name="package.json" />
+    <File name="next.config.js" />
+    <File name="tsconfig.json" />
+    <File name="README.md" />
+  </Folder>
+</Files>
 
 ## Directorio `/app` - Aplicación Principal
 
 El corazón de la aplicación Next.js 15 con App Router:
 
-```
-app/
-├── (auth)/                # Rutas de autenticación
-│   ├── login/
-│   │   └── page.tsx      # Página de inicio de sesión
-│   └── register/
-│       └── page.tsx       # Página de registro
-├── api/                   # Endpoints de API REST
-│   ├── auth/              # Autenticación y autorización
-│   ├── history/           # Historial de análisis
-│   ├── music/             # Integración con música
-│   ├── recommendations/    # Recomendaciones personalizadas
-│   └── user/              # Gestión de perfil de usuario
-├── dashboard/             # Panel principal del usuario
-│   ├── page.tsx           # Página principal del dashboard
-│   └── components/        # Componentes específicos del dashboard
-├── detect/                # Detección de emociones
-│   └── page.tsx           # Página de captura y análisis emocional
-├── layout.tsx             # Layout raíz de la aplicación
-├── page.tsx               # Página de inicio pública
-└── providers.tsx          # Proveedores de contexto global
-```
+<Files >
+  <Folder name="moodify/" defaultOpen>
+    <Folder name="app/" defaultOpen>
+      <Folder name="api/">
+      </Folder>
+      <Folder name="auth/">
+        <File name="login/page.tsx" />
+        <File name="register/page.tsx" />
+      </Folder>
+      <Folder name="dashboard/">
+        <File name="page.tsx" />
+      </Folder>
+      <Folder name="detect/">
+        <File name="page.tsx" />
+      </Folder>
+      <Folder name="history/">
+        <File name="page.tsx" />
+      </Folder>
+      <Folder name="recommendations/">
+        <File name="page.tsx" />
+      </Folder>
+      <File name="layout.tsx" />
+      <File name="page.tsx" />
+    </Folder>
+  </Folder>
+</Files>
 
 ### Patrones de Rutas Especiales
 
@@ -70,51 +113,61 @@ app/
 
 Componentes reutilizables organizados por categorías:
 
-```
-components/
-├── analytics/             # Componentes de visualización de datos
-│   ├── EmotionTrendsChart.tsx
-│   ├── WeeklyAnalyticsChart.tsx
-│   └── ActivityPatternsChart.tsx
-├── auth/                  # Componentes de autenticación
-│   ├── LoginForm.tsx
-│   ├── RegisterForm.tsx
-│   └── AuthCard.tsx
-├── camera/                # Componentes de captura de imagen
-│   ├── CameraCapture.tsx
-│   ├── ImageUpload.tsx
-│   └── FaceDetectionPreview.tsx
-├── dashboard/             # Componentes del panel principal
-│   ├── DashboardHeader.tsx
-│   ├── QuickStats.tsx
-│   └── RecentActivityFeed.tsx
-├── emotion/               # Componentes relacionados con emociones
-│   ├── EmotionDisplay.tsx
-│   ├── EmotionSelector.tsx
-│   └── EmotionHistoryList.tsx
-├── history/                # Componentes de historial
-│   ├── HistoryList.tsx
-│   ├── HistoryFilters.tsx
-│   └── HistoryItemCard.tsx
-├── layout/                # Componentes de estructura
-│   ├── Header.tsx
-│   ├── Sidebar.tsx
-│   ├── Footer.tsx
-│   └── NavigationMenu.tsx
-├── music/                 # Componentes de música
-│   ├── MusicPlayer.tsx
-│   ├── TrackList.tsx
-│   ├── RecommendationCard.tsx
-│   └── PlaylistView.tsx
-├── ui/                    # Componentes de interfaz base
-│   ├── Button.tsx
-│   ├── Card.tsx
-│   ├── Dialog.tsx
-│   ├── Input.tsx
-│   ├── Loading.tsx
-│   └── Toast.tsx
-└── index.ts               # Exportaciones centralizadas
-```
+<Files>
+  <Folder name="components/" defaultOpen>
+    <Folder name="analytics/">
+      <File name="EmotionTrendsChart.tsx" />
+      <File name="WeeklyAnalyticsChart.tsx" />
+      <File name="ActivityPatternsChart.tsx" />
+    </Folder>
+    <Folder name="auth/">
+      <File name="LoginForm.tsx" />
+      <File name="RegisterForm.tsx" />
+      <File name="AuthCard.tsx" />
+    </Folder>
+    <Folder name="camera/">
+      <File name="CameraCapture.tsx" />
+      <File name="ImageUpload.tsx" />
+      <File name="FaceDetectionPreview.tsx" />
+    </Folder>
+    <Folder name="dashboard/">
+      <File name="DashboardHeader.tsx" />
+      <File name="QuickStats.tsx" />
+      <File name="RecentActivityFeed.tsx" />
+    </Folder>
+    <Folder name="emotion/">
+      <File name="EmotionDisplay.tsx" />
+      <File name="EmotionSelector.tsx" />
+      <File name="EmotionHistoryList.tsx" />
+    </Folder>
+    <Folder name="history/">
+      <File name="HistoryList.tsx" />
+      <File name="HistoryFilters.tsx" />
+      <File name="HistoryItemCard.tsx" />
+    </Folder>
+    <Folder name="layout/">
+      <File name="Header.tsx" />
+      <File name="Sidebar.tsx" />
+      <File name="Footer.tsx" />
+      <File name="NavigationMenu.tsx" />
+    </Folder>
+    <Folder name="music/">
+      <File name="MusicPlayer.tsx" />
+      <File name="TrackList.tsx" />
+      <File name="RecommendationCard.tsx" />
+      <File name="PlaylistView.tsx" />
+    </Folder>
+    <Folder name="ui/">
+      <File name="Button.tsx" />
+      <File name="Card.tsx" />
+      <File name="Dialog.tsx" />
+      <File name="Input.tsx" />
+      <File name="Loading.tsx" />
+      <File name="Toast.tsx" />
+    </Folder>
+    <File name="index.ts" />
+  </Folder>
+</Files>
 
 ### Principios de Diseño de Componentes
 
@@ -128,65 +181,73 @@ components/
 
 Documentación técnica y de usuario en formato MDX:
 
-```
-content/docs/
-├── introduccion/          # Introducción al proyecto
-│   ├── index.mdx
-│   ├── que-es.mdx
-│   ├── caracteristicas.mdx
-│   └── casos-uso.mdx
-├── guia-inicio/           # Guía de instalación y configuración
-│   ├── instalacion.mdx
-│   ├── configuracion.mdx
-│   ├── primeros-pasos.mdx
-│   └── variables-entorno.mdx
-├── arquitectura/          # Documentación técnica de arquitectura
-│   ├── estructura-proyecto.mdx
-│   ├── patrones-diseño.mdx
-│   ├── diagrama-arquitectura.mdx
-│   └── tecnologias.mdx
-├── api-reference/        # Referencia completa de la API
-│   ├── introduccion.mdx
-│   ├── autenticacion.mdx
-│   ├── usuarios.mdx
-│   ├── recomendaciones.mdx
-│   ├── historial.mdx
-│   ├── analiticas.mdx
-│   ├── busqueda.mdx
-│   └── otros.mdx
-├── manual-usuario/        # Manual para usuarios finales
-│   ├── inicio-sesion.mdx
-│   ├── deteccion-emociones.mdx
-│   ├── recomendaciones.mdx
-│   ├── historial.mdx
-│   ├── perfil.mdx
-│   ├── analiticas.mdx
-│   └── solucion-problemas.mdx
-└── desarrollo/            # Guía para desarrolladores
-    ├── guia-desarrollo.mdx
-    ├── convenciones.mdx
-    ├── pruebas.mdx
-    ├── contribucion.mdx
-    └── despliegue.mdx
-```
+<Files>
+  <Folder name="content/docs/" defaultOpen>
+    <Folder name="introduccion/">
+      <File name="index.mdx" />
+      <File name="que-es.mdx" />
+      <File name="caracteristicas.mdx" />
+      <File name="casos-uso.mdx" />
+    </Folder>
+    <Folder name="guia-inicio/">
+      <File name="instalacion.mdx" />
+      <File name="configuracion.mdx" />
+      <File name="primeros-pasos.mdx" />
+      <File name="variables-entorno.mdx" />
+    </Folder>
+    <Folder name="arquitectura/">
+      <File name="estructura-proyecto.mdx" />
+      <File name="patrones-diseño.mdx" />
+      <File name="diagrama-arquitectura.mdx" />
+      <File name="tecnologias.mdx" />
+    </Folder>
+    <Folder name="api-reference/">
+      <File name="introduccion.mdx" />
+      <File name="autenticacion.mdx" />
+      <File name="usuarios.mdx" />
+      <File name="recomendaciones.mdx" />
+      <File name="historial.mdx" />
+      <File name="analiticas.mdx" />
+      <File name="busqueda.mdx" />
+      <File name="otros.mdx" />
+    </Folder>
+    <Folder name="manual-usuario/">
+      <File name="inicio-sesion.mdx" />
+      <File name="deteccion-emociones.mdx" />
+      <File name="recomendaciones.mdx" />
+      <File name="historial.mdx" />
+      <File name="perfil.mdx" />
+      <File name="analiticas.mdx" />
+      <File name="solucion-problemas.mdx" />
+    </Folder>
+    <Folder name="desarrollo/">
+      <File name="guia-desarrollo.mdx" />
+      <File name="convenciones.mdx" />
+      <File name="pruebas.mdx" />
+      <File name="contribucion.mdx" />
+      <File name="despliegue.mdx" />
+    </Folder>
+  </Folder>
+</Files>
 
 ## Directorio `/lib` - Lógica Compartida
 
 Utilidades y servicios compartidos entre toda la aplicación:
 
-```
-lib/
-├── auth.ts                # Configuración de autenticación NextAuth
-├── chartConfig.ts         # Configuración y temas para gráficos
-├── emotionDetection.ts    # Lógica de detección de emociones
-├── errorHandler.ts         # Manejo centralizado de errores
-├── historyService.ts       # Servicios para gestión de historial
-├── prisma.ts              # Cliente de Prisma ORM
-├── rateLimit.ts           # Limitación de tasa de solicitudes
-├── spotify.ts             # Integración con API de Spotify
-├── validation.ts          # Esquemas de validación Zod
-└── utils.ts               # Funciones de utilidad generales
-```
+<Files>
+  <Folder name="lib/" defaultOpen>
+    <File name="auth.ts" />
+    <File name="chartConfig.ts" />
+    <File name="emotionDetection.ts" />
+    <File name="errorHandler.ts" />
+    <File name="historyService.ts" />
+    <File name="prisma.ts" />
+    <File name="rateLimit.ts" />
+    <File name="spotify.ts" />
+    <File name="validation.ts" />
+    <File name="utils.ts" />
+  </Folder>
+</Files>
 
 ### Servicios Clave
 
@@ -200,66 +261,74 @@ lib/
 
 Archivos accesibles públicamente sin procesamiento:
 
-```
-public/
-├── favicon.ico            # Icono de la aplicación
-├── icons/                 # Iconos adicionales
-│   ├── android-chrome-192x192.png
-│   ├── android-chrome-512x512.png
-│   ├── apple-touch-icon.png
-│   └── favicon-32x32.png
-├── images/                # Imágenes estáticas
-│   ├── logos/
-│   ├── illustrations/
-│   └── screenshots/
-├── manifest.json          # Web App Manifest
-└── robots.txt            # Directrices para motores de búsqueda
-```
+<Files>
+  <Folder name="public/" defaultOpen>
+    <File name="favicon.ico" />
+    <Folder name="icons/">
+      <File name="android-chrome-192x192.png" />
+      <File name="android-chrome-512x512.png" />
+      <File name="apple-touch-icon.png" />
+      <File name="favicon-32x32.png" />
+    </Folder>
+    <Folder name="images/">
+      <Folder name="logos/" />
+      <Folder name="illustrations/" />
+      <Folder name="screenshots/" />
+    </Folder>
+    <File name="manifest.json" />
+    <File name="robots.txt" />
+  </Folder>
+</Files>
 
 ## Directorio `/scripts` - Automatización
 
 Scripts para tareas repetitivas y mantenimiento:
 
-```
-scripts/
-├── seed.ts                # Datos iniciales para desarrollo
-├── migrate.ts             # Migraciones de base de datos
-├── backup.ts              # Copias de seguridad automatizadas
-├── cleanup.ts             # Limpieza de datos obsoletos
-├── deploy.ts              # Script de despliegue automatizado
-└── test-setup.ts          # Configuración del entorno de pruebas
-```
+<Files>
+  <Folder name="scripts/" defaultOpen>
+    <File name="seed.ts" />
+    <File name="migrate.ts" />
+    <File name="backup.ts" />
+    <File name="cleanup.ts" />
+    <File name="deploy.ts" />
+    <File name="test-setup.ts" />
+  </Folder>
+</Files>
 
 ## Directorio `/styles` - Estilos Globales
 
 Configuración visual y temas de la aplicación:
 
-```
-styles/
-├── globals.css            # Estilos globales y resets
-├── tailwind.config.ts     # Configuración de Tailwind CSS
-├── themes/                # Temas personalizados
-│   ├── light.ts
-│   └── dark.ts
-└── animations/           # Animaciones CSS personalizadas
-    ├── fade-in.ts
-    └── slide-up.ts
-```
+<Files>
+  <Folder name="styles/" defaultOpen>
+    <File name="globals.css" />
+    <File name="tailwind.config.ts" />
+    <Folder name="themes/">
+      <File name="light.ts" />
+      <File name="dark.ts" />
+    </Folder>
+    <Folder name="animations/">
+      <File name="fade-in.ts" />
+      <File name="slide-up.ts" />
+    </Folder>
+  </Folder>
+</Files>
 
 ## Directorio `/types` - Tipos TypeScript
 
 Definiciones de tipos compartidos en toda la aplicación:
 
-```
-types/
-├── index.ts               # Exportaciones centrales
-├── emotion.ts             # Tipos relacionados con emociones
-├── user.ts                # Tipos de datos de usuario
-├── music.ts               # Tipos relacionados con música
-├── history.ts             # Tipos para historial de análisis
-├── api.ts                 # Tipos para respuestas de API
-└── components.ts          # Tipos específicos de componentes
-```
+<Files>
+  <Folder name="types/" defaultOpen>
+    <File name="index.ts" />
+    <File name="emotion.ts" />
+    <File name="user.ts" />
+    <File name="music.ts" />
+    <File name="history.ts" />
+    <File name="api.ts" />
+    <File name="components.ts" />
+  </Folder>
+</Files>
 
 ## Convenciones de Nomenclatura
 

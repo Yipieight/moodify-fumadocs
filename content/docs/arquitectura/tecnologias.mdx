@@ -4,167 +4,133 @@ description: "Documentación de las tecnologías y frameworks utilizados en Mood
 ---
 # Tecnologías y Frameworks Utilizados
 
-Moodify emplea una pila tecnológica moderna y robusta que combina las mejores herramientas del ecosistema JavaScript/TypeScript para ofrecer una experiencia de usuario excepcional.
+Moodify emplea una pila tecnológica moderna y robusta basada en las dependencias reales del proyecto tal como se definen en el archivo `package.json`.
 
 ## Framework Principal - Next.js 15
 
-### Características Clave
-- **App Router**: Nueva arquitectura de enrutamiento basada en carpetas
-- **Server Components**: Renderizado parcial en servidor para mejor rendimiento
-- **Turbopack**: Nuevo bundler escrito en Rust para compilación ultra rápida
-- **React 19**: Última versión de React con mejoras de rendimiento y nuevas APIs
-- **Partial Prerendering**: Combinación de SSG y SSR para carga instantánea
+### Versiones y Características
+- **Next.js**: v15.5.0 con Turbopack
+- **React**: v19.1.0 (última versión estable)
+- **App Router**: Arquitectura moderna de enrutamiento basada en carpetas
 
 ### Ventajas para Moodify
-- **SEO Optimizado**: Indexación perfecta para contenido público
-- **Performance Excellence**: Tiempos de carga mínimos gracias a Server Components
-- **Streaming SSR**: Renderizado progresivo para experiencias de usuario fluidas
-- **Built-in Optimizations**: Compresión automática de imágenes, división de código
-
-## Framework de Documentación - Fumadocs
-
-### Componentes Principales
-- **fumadocs-core**: Motor principal de documentación
-- **fumadocs-mdx**: Soporte para contenido MDX avanzado
-- **fumadocs-openapi**: Integración automática con especificaciones OpenAPI
-- **fumadocs-ui**: Componentes de interfaz optimizados para documentación
-
-### Características Destacadas
-- **Navegación Inteligente**: Búsqueda semántica y navegación contextual
-- **Modo Oscuro/Natural**: Soporte automático para preferencias del sistema
-- **Responsive Design**: Documentación óptima en todos los dispositivos
-- **Code Highlighting**: Soporte para más de 100 lenguajes con Shiki
-
-## Estilado - Tailwind CSS v4
-
-### Innovaciones en v4
-- **CSS Native**: Eliminación de PostCSS para compilación más rápida
-- **Arbitrary Values**: Valores personalizados directamente en clases
-- **Native Nesting**: Soporte para anidamiento CSS nativo
-- **Improved DX**: Mejor experiencia de desarrollo con autocompletado mejorado
-
-### Beneficios para Moodify
-- **Consistencia Visual**: Sistema de diseño unificado en toda la aplicación
-- **Mantenibilidad**: Clases utilitarias descriptivas y auto-documentadas
-- **Performance**: Purging automático de estilos no utilizados
-- **Personalización**: Temas fácilmente configurables y extensibles
-
-## Tipado Estático - TypeScript 5.9
-
-### Nuevas Características
-- **Improved Decorators**: Soporte mejorado para decoradores
-- **Organic Intersections**: Mejor manejo de tipos intersección
-- **Enhanced JSX**: Soporte para nuevas características JSX
-- **Better Inference**: Inferencia de tipos más precisa
-
-### Ventajas para el Proyecto
-- **Prevención de Errores**: Detección temprana de errores de tipo
-- **Autocompletado Inteligente**: IDEs con sugerencias precisas basadas en tipos
-- **Refactorización Segura**: Cambios con confianza en tipos mantenidos
-- **Documentación Integrada**: Tipos como documentación ejecutable
+- **Rendimiento**: Compilación rápida con Turbopack
+- **Server Components**: Renderizado parcial en servidor para mejor performance
+- **API Routes**: Endpoints API integrados sin servidores separados
+- **Optimizaciones Automáticas**: Compresión de imágenes, división de código, etc.
 
 ## Autenticación - NextAuth.js
 
-### Protocolos Soportados
-- **OAuth**: Integración con más de 30 proveedores (Spotify, Google, GitHub)
-- **Credenciales**: Autenticación basada en email/contraseña
-- **Email Magic Links**: Inicio de sesión sin contraseña
-- **Enterprise SSO**: Soporte para SAML, LDAP, Azure AD
+### Dependencias Reales
+- **next-auth**: v4.24.11
+- **@auth/prisma-adapter**: v2.10.0
 
-### Seguridad Implementada
-- **JSON Web Tokens**: Tokens firmados y encriptados
-- **Session Management**: Gestión automática de sesiones con renovación
-- **Rate Limiting**: Protección contra ataques de fuerza bruta
-- **CSRF Protection**: Protección automática contra falsificación de solicitudes
+### Características Implementadas
+- **Multiple Providers**: Soporte para autenticación con credenciales y OAuth
+- **JWT**: Tokens de autenticación basados en JSON Web Tokens
+- **Prisma Adapter**: Integración directa con base de datos a través de Prisma
+- **Session Management**: Gestión automática de sesiones de usuario
 
 ## Base de Datos - Prisma ORM
 
-### Características Principales
+### Dependencias Reales
+- **@prisma/client**: v6.14.0
+- **prisma**: v6.14.0 (devDependency)
+
+### Funcionalidades Clave
 - **Type Safety**: Generación automática de tipos TypeScript
 - **Query Builder**: Consultas intuitivas con autocompletado
 - **Migrations**: Sistema de migraciones declarativo
-- **Data Browser**: GUI para exploración de datos en desarrollo
+- **Database Adapters**: Soporte para PostgreSQL, MySQL, SQLite, MongoDB
 
-### Ventajas para Moodify
-- **Productividad**: Desarrollo rápido con APIs intuitivas
-- **Seguridad**: Prevención automática de inyecciones SQL
-- **Performance**: Optimización automática de consultas
-- **Multi-Database**: Soporte para PostgreSQL, MySQL, SQLite, MongoDB
+## Componentes de Interfaz
 
-## Componentes de Interfaz - Shadcn/UI + Lucide React
+### Bibliotecas de UI
+- **@headlessui/react**: v2.2.7 - Componentes accesibles sin estilos
+- **@heroicons/react**: v2.2.0 - Conjunto de íconos SVG optimizados
+- **lucide-react**: v0.541.0 - Íconos minimalistas y consistentes
 
-### Shadcn/UI
-- **Headless Components**: Componentes sin estilos predeterminados
-- **Accessibility First**: Cumplimiento completo de estándares WCAG
-- **Customizable**: Fácil personalización con clases Tailwind
-- **Copy-Paste**: Componentes individuales copiables
+### Formularios y Validación
+- **react-hook-form**: v7.62.0 - Gestión eficiente de formularios
+- **@hookform/resolvers**: v5.2.1 - Integración con Zod para validación
+- **zod**: v4.0.17 - Validación de esquemas y tipos en tiempo de ejecución
 
-### Lucide React
-- **400+ Icons**: Colección completa de íconos consistentes
-- **Tree-Shaking**: Solo incluye íconos utilizados
-- **Customizable Sizes**: Tamaños ajustables por props
-- **Theming Support**: Hereda colores del contexto actual
+## Seguridad
 
-## Análisis Musical - Spotify Web API
+### Encriptación y Hashing
+- **bcryptjs**: v3.0.2 - Hashing seguro de contraseñas
+- **jsonwebtoken**: v9.0.2 - Generación y verificación de JWT tokens
+- **@types/bcryptjs**: v3.0.0 - Tipos TypeScript para bcryptjs
+- **@types/jsonwebtoken**: v9.0.10 - Tipos TypeScript para jsonwebtoken
 
-### Integraciones Clave
-- **Audio Features**: Análisis detallado de características musicales
-- **Recommendations**: Motores de recomendación basados en atributos
-- **Playlists**: Gestión completa de playlists personalizadas
-- **User Library**: Acceso a bibliotecas musicales de usuarios
+## Funcionalidades Especializadas
 
-### Beneficios para Usuarios
-- **Millones de Canciones**: Acceso a catálogo extenso de Spotify
-- **Personalization**: Recomendaciones basadas en historial y preferencias
-- **Real-time Sync**: Sincronización instantánea con estado de Spotify
-- **Cross-Platform**: Funcionamiento consistente en todas las plataformas
+### Detección Facial
+- **face-api.js**: v0.22.2 - Librería de reconocimiento facial en navegador
 
-## Herramientas de Desarrollo
+### Correo Electrónico
+- **nodemailer**: v6.10.1 - Envío de correos electrónicos
+- **@types/nodemailer**: v7.0.1 - Tipos TypeScript para nodemailer
 
-### Gestor de Paquetes - pnpm
-- **Espacio Eficiente**: Almacenamiento enlazado para dependencias comunes
+### Visualización de Datos
+- **chart.js**: v4.5.0 - Biblioteca de gráficos versátil
+- **react-chartjs-2**: v5.3.0 - Componentes React para Chart.js
+
+### Captura de Webcam
+- **react-webcam**: v7.2.0 - Componente React para acceso a webcam
+
+## Utilidades y Helpers
+
+### Manejo de Clases CSS
+- **clsx**: v2.1.1 - Utilidad para construir clases CSS condicionales
+
+### Cliente HTTP
+- **axios**: v1.11.0 - Cliente HTTP basado en promesas
+
+## Desarrollo y Testing
+
+### Linters y Formateadores
+- **eslint**: v9 - Linter de JavaScript/TypeScript
+- **@eslint/eslintrc**: v3 - Configuración de ESLint
+- **eslint-config-next**: v15.5.0 - Configuración específica de Next.js
+
+### Testing
+- **jest**: v29.7.0 - Framework de testing
+- **@testing-library/react**: v16.3.0 - Testing de componentes React
+- **@testing-library/jest-dom**: v6.8.0 - Matchers adicionales para Jest
+- **@testing-library/user-event**: v14.6.1 - Simulación de eventos de usuario
+- **jest-environment-jsdom**: v29.7.0 - Entorno DOM para Jest
+- **supertest**: v7.1.4 - Testing de endpoints HTTP
+- **node-mocks-http**: v1.17.2 - Mocks para objetos HTTP
+
+### Utilidades de Desarrollo
+- **@types/node**: v20 - Tipos TypeScript para Node.js
+- **@types/react**: v19 - Tipos TypeScript para React
+- **@types/react-dom**: v19 - Tipos TypeScript para ReactDOM
+- **ts-node**: v10.9.2 - Ejecución directa de TypeScript
+- **tsx**: v4.19.2 - Ejecución de archivos TypeScript
+- **typescript**: v5 - Compilador y tipado estático
+
+## Estilos - Tailwind CSS
+
+### Dependencias Reales
+- **tailwindcss**: v4 - Framework CSS utility-first
+- **@tailwindcss/postcss**: v4 - Plugin de PostCSS para Tailwind
+
+### Características
+- **Utility-First**: Estilos mediante clases utilitarias
+- **Responsive Design**: Puntos de quiebre integrados
+- **Dark Mode**: Soporte nativo para temas oscuros
+- **Personalización**: Configuración extensible mediante `tailwind.config.js`
+
+## Gestión de Dependencias - pnpm
+
+Aunque no se lista explícitamente en package.json, el proyecto utiliza pnpm como gestor de paquetes por las siguientes ventajas:
+
+### Beneficios
+- **Eficiencia de Espacio**: Almacenamiento enlazado para dependencias comunes
 - **Velocidad**: Instalación más rápida que npm/yarn
 - **Seguridad**: Verificación de integridad con checksums
-- **Workspace Support**: Gestión de monorepositorios
+- **Workspace Support**: Gestión eficiente de monorepositorios
 
-### Linter - ESLint
-- **Quality Assurance**: Reglas automáticas para código limpio
-- **Framework Integration**: Configuración específica para Next.js/React
-- **Auto-Fix**: Corrección automática de muchos problemas comunes
-- **Custom Rules**: Reglas específicas para el proyecto
-
-### Formatter - Prettier
-- **Opinionated Formatting**: Formato consistente sin debates
-- **Editor Integration**: Formato automático al guardar
-- **Configuration Minimal**: Configuración simple con defaults sensatos
-- **Language Support**: Soporte para JavaScript, TypeScript, JSON, CSS, MDX
-
-## Testing - Jest + React Testing Library
-
-### Jest
-- **Zero-Config Setup**: Configuración mínima para empezar rápido
-- **Snapshot Testing**: Verificación automática de cambios inesperados
-- **Mocking System**: Sistema de mocks potente y flexible
-- **Coverage Reports**: Reportes detallados de cobertura de código
-
-### React Testing Library
-- **User-Centric Testing**: Pruebas que reflejan cómo usan los usuarios reales
-- **Accessibility Built-In**: APIs que promueven código accesible
-- **Framework Agnostic**: Funciona con cualquier framework React
-- **Query-Based Selection**: Selección de elementos como lo harían usuarios reales
-
-## Deployment - Vercel
-
-### Características Destacadas
-- **Git Integration**: Deploy automático en push a repositorios
-- **Global CDN**: Distribución mundial para baja latencia
-- **Serverless Functions**: Ejecución automática de funciones API
-- **Automatic HTTPS**: Certificados SSL gratuitos y renovación automática
-
-### Optimizaciones Incluidas
-- **Smart Caching**: Estrategias de cache inteligentes por tipo de contenido
-- **Edge Network**: Ejecución cerca de usuarios con Edge Functions
-- **Image Optimization**: Compresión y formato automático de imágenes
-- **Instant Rollbacks**: Reversión instantánea a versiones anteriores
-
-Esta combinación de tecnologías modernas proporciona a Moodify una base sólida, escalable y mantenible que puede crecer con las necesidades futuras del proyecto mientras mantiene altos estándares de calidad, seguridad y experiencia de usuario.
+Esta combinación de tecnologías proporciona a Moodify una base sólida y mantenible que aprovecha las mejores herramientas del ecosistema JavaScript/TypeScript moderno.
