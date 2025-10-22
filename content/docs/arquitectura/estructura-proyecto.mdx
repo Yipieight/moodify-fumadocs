@@ -1,0 +1,282 @@
+---
+title: "Estructura del Proyecto y Organización del Código Fuente"
+description: "Conozca la estructura organizativa del proyecto Moodify y cómo está estructurado el código fuente para facilitar el mantenimiento y la escalabilidad."
+---
+
+# Estructura del Proyecto y Organización del Código Fuente
+
+Conozca la estructura organizativa del proyecto Moodify y cómo está estructurado el código fuente para facilitar el mantenimiento y la escalabilidad.
+
+## Estructura General del Directorio
+
+```
+moodify-frontend/
+├── app/                    # Aplicación Next.js con App Router
+├── components/             # Componentes reutilizables de UI
+├── content/                # Contenido de documentación
+│   └── docs/              # Documentación en formato MDX
+├── lib/                    # Lógica compartida y utilidades
+├── public/                 # Archivos estáticos públicos
+├── scripts/                # Scripts de automatización
+├── styles/                 # Estilos globales y configuración
+├── types/                  # Definiciones de tipos TypeScript
+├── .env.local             # Variables de entorno (no versionado)
+├── next.config.mjs        # Configuración de Next.js
+├── package.json           # Dependencias y scripts del proyecto
+├── pnpm-lock.yaml         # Bloqueo de versiones de dependencias
+├── postcss.config.mjs     # Configuración de PostCSS
+├── README.md              # Documentación principal del proyecto
+├── source.config.ts       # Configuración de Fumadocs
+└── tsconfig.json          # Configuración de TypeScript
+```
+
+## Directorio `/app` - Aplicación Principal
+
+El corazón de la aplicación Next.js 15 con App Router:
+
+```
+app/
+├── (auth)/                # Rutas de autenticación
+│   ├── login/
+│   │   └── page.tsx      # Página de inicio de sesión
+│   └── register/
+│       └── page.tsx       # Página de registro
+├── api/                   # Endpoints de API REST
+│   ├── auth/              # Autenticación y autorización
+│   ├── history/           # Historial de análisis
+│   ├── music/             # Integración con música
+│   ├── recommendations/    # Recomendaciones personalizadas
+│   └── user/              # Gestión de perfil de usuario
+├── dashboard/             # Panel principal del usuario
+│   ├── page.tsx           # Página principal del dashboard
+│   └── components/        # Componentes específicos del dashboard
+├── detect/                # Detección de emociones
+│   └── page.tsx           # Página de captura y análisis emocional
+├── layout.tsx             # Layout raíz de la aplicación
+├── page.tsx               # Página de inicio pública
+└── providers.tsx          # Proveedores de contexto global
+```
+
+### Patrones de Rutas Especiales
+
+- **`(auth)`**: Grupo de rutas para autenticación sin afectar la URL
+- **`[id]`**: Parámetros dinámicos en rutas
+- **`[[...slug]]`**: Parámetros catch-all para rutas anidadas
+- **`not-found.tsx`**: Páginas 404 personalizadas
+- **`error.tsx`**: Manejo de errores por segmento
+- **`loading.tsx`**: Estados de carga optimistas
+
+## Directorio `/components` - Componentes UI
+
+Componentes reutilizables organizados por categorías:
+
+```
+components/
+├── analytics/             # Componentes de visualización de datos
+│   ├── EmotionTrendsChart.tsx
+│   ├── WeeklyAnalyticsChart.tsx
+│   └── ActivityPatternsChart.tsx
+├── auth/                  # Componentes de autenticación
+│   ├── LoginForm.tsx
+│   ├── RegisterForm.tsx
+│   └── AuthCard.tsx
+├── camera/                # Componentes de captura de imagen
+│   ├── CameraCapture.tsx
+│   ├── ImageUpload.tsx
+│   └── FaceDetectionPreview.tsx
+├── dashboard/             # Componentes del panel principal
+│   ├── DashboardHeader.tsx
+│   ├── QuickStats.tsx
+│   └── RecentActivityFeed.tsx
+├── emotion/               # Componentes relacionados con emociones
+│   ├── EmotionDisplay.tsx
+│   ├── EmotionSelector.tsx
+│   └── EmotionHistoryList.tsx
+├── history/                # Componentes de historial
+│   ├── HistoryList.tsx
+│   ├── HistoryFilters.tsx
+│   └── HistoryItemCard.tsx
+├── layout/                # Componentes de estructura
+│   ├── Header.tsx
+│   ├── Sidebar.tsx
+│   ├── Footer.tsx
+│   └── NavigationMenu.tsx
+├── music/                 # Componentes de música
+│   ├── MusicPlayer.tsx
+│   ├── TrackList.tsx
+│   ├── RecommendationCard.tsx
+│   └── PlaylistView.tsx
+├── ui/                    # Componentes de interfaz base
+│   ├── Button.tsx
+│   ├── Card.tsx
+│   ├── Dialog.tsx
+│   ├── Input.tsx
+│   ├── Loading.tsx
+│   └── Toast.tsx
+└── index.ts               # Exportaciones centralizadas
+```
+
+### Principios de Diseño de Componentes
+
+1. **Atomic Design**: Componentes construidos desde átomos hasta organismos
+2. **Reutilización Máxima**: Cada componente debe ser usable en múltiples contextos
+3. **Tipado Estricto**: Todos los componentes deben tener interfaces TypeScript definidas
+4. **Accesibilidad**: Cumplimiento de WCAG 2.1 AA
+5. **Responsive Design**: Funcionamiento en todos los tamaños de pantalla
+
+## Directorio `/content/docs` - Documentación
+
+Documentación técnica y de usuario en formato MDX:
+
+```
+content/docs/
+├── introduccion/          # Introducción al proyecto
+│   ├── index.mdx
+│   ├── que-es.mdx
+│   ├── caracteristicas.mdx
+│   └── casos-uso.mdx
+├── guia-inicio/           # Guía de instalación y configuración
+│   ├── instalacion.mdx
+│   ├── configuracion.mdx
+│   ├── primeros-pasos.mdx
+│   └── variables-entorno.mdx
+├── arquitectura/          # Documentación técnica de arquitectura
+│   ├── estructura-proyecto.mdx
+│   ├── patrones-diseño.mdx
+│   ├── diagrama-arquitectura.mdx
+│   └── tecnologias.mdx
+├── api-reference/        # Referencia completa de la API
+│   ├── introduccion.mdx
+│   ├── autenticacion.mdx
+│   ├── usuarios.mdx
+│   ├── recomendaciones.mdx
+│   ├── historial.mdx
+│   ├── analiticas.mdx
+│   ├── busqueda.mdx
+│   └── otros.mdx
+├── manual-usuario/        # Manual para usuarios finales
+│   ├── inicio-sesion.mdx
+│   ├── deteccion-emociones.mdx
+│   ├── recomendaciones.mdx
+│   ├── historial.mdx
+│   ├── perfil.mdx
+│   ├── analiticas.mdx
+│   └── solucion-problemas.mdx
+└── desarrollo/            # Guía para desarrolladores
+    ├── guia-desarrollo.mdx
+    ├── convenciones.mdx
+    ├── pruebas.mdx
+    ├── contribucion.mdx
+    └── despliegue.mdx
+```
+
+## Directorio `/lib` - Lógica Compartida
+
+Utilidades y servicios compartidos entre toda la aplicación:
+
+```
+lib/
+├── auth.ts                # Configuración de autenticación NextAuth
+├── chartConfig.ts         # Configuración y temas para gráficos
+├── emotionDetection.ts    # Lógica de detección de emociones
+├── errorHandler.ts         # Manejo centralizado de errores
+├── historyService.ts       # Servicios para gestión de historial
+├── prisma.ts              # Cliente de Prisma ORM
+├── rateLimit.ts           # Limitación de tasa de solicitudes
+├── spotify.ts             # Integración con API de Spotify
+├── validation.ts          # Esquemas de validación Zod
+└── utils.ts               # Funciones de utilidad generales
+```
+
+### Servicios Clave
+
+1. **`auth.ts`**: Configuración de proveedores de autenticación y callbacks
+2. **`prisma.ts`**: Cliente tipado de Prisma con configuración de conexión
+3. **`spotify.ts`**: Wrapper tipado para la API de Spotify con manejo de tokens
+4. **`validation.ts`**: Esquemas Zod para validación de datos en toda la aplicación
+5. **`chartConfig.ts`**: Configuración común para Chart.js con temas consistentes
+
+## Directorio `/public` - Archivos Estáticos
+
+Archivos accesibles públicamente sin procesamiento:
+
+```
+public/
+├── favicon.ico            # Icono de la aplicación
+├── icons/                 # Iconos adicionales
+│   ├── android-chrome-192x192.png
+│   ├── android-chrome-512x512.png
+│   ├── apple-touch-icon.png
+│   └── favicon-32x32.png
+├── images/                # Imágenes estáticas
+│   ├── logos/
+│   ├── illustrations/
+│   └── screenshots/
+├── manifest.json          # Web App Manifest
+└── robots.txt            # Directrices para motores de búsqueda
+```
+
+## Directorio `/scripts` - Automatización
+
+Scripts para tareas repetitivas y mantenimiento:
+
+```
+scripts/
+├── seed.ts                # Datos iniciales para desarrollo
+├── migrate.ts             # Migraciones de base de datos
+├── backup.ts              # Copias de seguridad automatizadas
+├── cleanup.ts             # Limpieza de datos obsoletos
+├── deploy.ts              # Script de despliegue automatizado
+└── test-setup.ts          # Configuración del entorno de pruebas
+```
+
+## Directorio `/styles` - Estilos Globales
+
+Configuración visual y temas de la aplicación:
+
+```
+styles/
+├── globals.css            # Estilos globales y resets
+├── tailwind.config.ts     # Configuración de Tailwind CSS
+├── themes/                # Temas personalizados
+│   ├── light.ts
+│   └── dark.ts
+└── animations/           # Animaciones CSS personalizadas
+    ├── fade-in.ts
+    └── slide-up.ts
+```
+
+## Directorio `/types` - Tipos TypeScript
+
+Definiciones de tipos compartidos en toda la aplicación:
+
+```
+types/
+├── index.ts               # Exportaciones centrales
+├── emotion.ts             # Tipos relacionados con emociones
+├── user.ts                # Tipos de datos de usuario
+├── music.ts               # Tipos relacionados con música
+├── history.ts             # Tipos para historial de análisis
+├── api.ts                 # Tipos para respuestas de API
+└── components.ts          # Tipos específicos de componentes
+```
+
+## Convenciones de Nomenclatura
+
+### Archivos y Componentes
+- **Componentes React**: PascalCase (`UserProfile.tsx`)
+- **Hooks personalizados**: `use` + PascalCase (`useAuth.ts`)
+- **Utilidades**: camelCase (`formatDate.ts`)
+- **Constantes**: UPPER_SNAKE_CASE (`API_ENDPOINTS.ts`)
+
+### Estilos y Clases CSS
+- **Clases Tailwind**: Utilizar utilidades de Tailwind CSS
+- **Clases personalizadas**: Prefijo con `moodify-` (`moodify-gradient-primary`)
+- **Variants**: Utilizar sistema de variants de Tailwind
+
+### Importaciones
+- **Alias de ruta**: `@/components/Button` en lugar de `../../components/Button`
+- **Importaciones nombradas**: Preferir importaciones específicas
+- **Orden de importaciones**: Librerías externas, luego internas, luego locales
+
+Esta estructura organizativa permite un desarrollo escalable, mantenible y colaborativo, siguiendo las mejores prácticas de la industria para aplicaciones modernas de React/Next.js.

@@ -1,0 +1,323 @@
+---
+title: "Variables de Entorno Requeridas"
+description: "Configure correctamente todas las variables de entorno necesarias para el funcionamiento de Moodify."
+---
+
+# Variables de Entorno Requeridas
+
+Configure correctamente todas las variables de entorno necesarias para el funcionamiento de Moodify.
+
+## Variables Obligatorias
+
+### Autenticación y Seguridad
+
+```bash
+# Secreto maestro para encriptación de sesiones
+NEXTAUTH_SECRET=su_secreto_seguro_aqui_minimo_32_caracteres
+
+# URL base de la aplicación (debe coincidir con su dominio)
+NEXTAUTH_URL=http://localhost:3000
+
+# Secreto adicional para tokens JWT
+JWT_SECRET=su_jwt_secreto_para_pruebas
+```
+
+### Integración con Spotify API
+
+```bash
+# Credenciales de cliente de Spotify
+SPOTIFY_CLIENT_ID=su_client_id_obtenido_en_spotify_dashboard
+SPOTIFY_CLIENT_SECRET=su_client_secret_obtenido_en_spotify_dashboard
+
+# URIs de redirección autorizados (separados por comas)
+SPOTIFY_REDIRECT_URIS=http://localhost:3000/api/auth/callback/spotify,http://localhost:3000/auth/login
+```
+
+### Configuración de Base de Datos
+
+```bash
+# Cadena de conexión completa a PostgreSQL
+DATABASE_URL=postgresql://usuario:contraseña@host:puerto/nombre_base_datos
+
+# Ejemplo para desarrollo local:
+# DATABASE_URL=postgresql://moodify_user:moodify_password@localhost:5432/moodify_db
+
+# Ejemplo para producción en la nube:
+# DATABASE_URL=postgresql://user:pass@aws-region.compute.amazonaws.com:5432/dbname
+```
+
+## Variables Opcionales
+
+### Configuración de Entorno
+
+```bash
+# Entorno de ejecución (development|production|test)
+NODE_ENV=development
+
+# Puerto personalizado (por defecto 3000)
+PORT=3000
+
+# Nivel de logging (debug|info|warn|error)
+LOG_LEVEL=info
+```
+
+### Optimización de Rendimiento
+
+```bash
+# Habilitar/deshabilitar compresión de assets
+NEXT_COMPRESS=true
+
+# Tamaño máximo para carga de archivos (bytes)
+NEXT_MAX_FILE_SIZE=10485760
+
+# Tiempo de espera para operaciones largas (milisegundos)
+NEXT_API_TIMEOUT=30000
+```
+
+### Configuración de Cache
+
+```bash
+# Tiempo de vida del cache para datos de usuario (segundos)
+USER_CACHE_TTL=3600
+
+# Tiempo de vida del cache para recomendaciones (segundos)
+RECOMMENDATIONS_CACHE_TTL=1800
+
+# Tamaño máximo del cache (MB)
+CACHE_MAX_SIZE=100
+```
+
+### Configuración de Seguridad Adicional
+
+```bash
+# Cabeceras de seguridad HTTP
+SECURITY_HEADERS=true
+
+# Política de mismo origen (same-site policy)
+SAME_SITE_POLICY=lax
+
+# Tiempo de expiración de cookies (segundos)
+COOKIE_MAX_AGE=2592000
+
+# Dominio para cookies compartidas
+COOKIE_DOMAIN=localhost
+```
+
+## Configuración por Entorno
+
+### Desarrollo Local (.env.local)
+
+```bash
+# Configuración básica
+NEXTAUTH_SECRET=desarrollo_secreto_super_seguro_12345
+NEXTAUTH_URL=http://localhost:3000
+JWT_SECRET=desarrollo_jwt_secreto_67890
+
+# Spotify API (obtener desde https://developer.spotify.com/dashboard)
+SPOTIFY_CLIENT_ID=tu_client_id_de_desarrollo
+SPOTIFY_CLIENT_SECRET=tu_client_secret_de_desarrollo
+
+# Base de datos local
+DATABASE_URL=postgresql://moodify_dev:moodify_pass@localhost:5432/moodify_dev
+
+# Configuración de desarrollo
+NODE_ENV=development
+LOG_LEVEL=debug
+```
+
+### Pruebas (.env.test)
+
+```bash
+# Configuración para pruebas
+NEXTAUTH_SECRET=test_secreto_ultra_seguro_abc123
+NEXTAUTH_URL=http://localhost:3000
+JWT_SECRET=test_jwt_secreto_xyz789
+
+# Credenciales de prueba (no usar credenciales reales)
+SPOTIFY_CLIENT_ID=test_client_id
+SPOTIFY_CLIENT_SECRET=test_client_secret
+
+# Base de datos de pruebas
+DATABASE_URL=postgresql://moodify_test:moodify_test_pass@localhost:5432/moodify_test
+
+# Configuración de pruebas
+NODE_ENV=test
+LOG_LEVEL=warn
+```
+
+### Producción (.env.production)
+
+```bash
+# Configuración de producción (mantener segura)
+NEXTAUTH_SECRET=produccion_secreto_extremadamente_seguro_y_largo
+NEXTAUTH_URL=https://su-dominio.com
+JWT_SECRET=produccion_jwt_secreto_seguro
+
+# Credenciales de producción
+SPOTIFY_CLIENT_ID=produccion_client_id
+SPOTIFY_CLIENT_SECRET=produccion_client_secret
+
+# Base de datos en producción
+DATABASE_URL=postgresql://prod_user:prod_password@prod_host:5432/prod_database
+
+# Configuración de producción
+NODE_ENV=production
+LOG_LEVEL=error
+
+# Configuración de seguridad adicional
+SECURITY_HEADERS=true
+SAME_SITE_POLICY=strict
+COOKIE_MAX_AGE=2592000
+```
+
+## Obtención de Credenciales
+
+### Spotify API
+
+1. **Visite el Dashboard de Desarrolladores de Spotify**:
+   - URL: https://developer.spotify.com/dashboard
+   - Inicie sesión con su cuenta de Spotify
+
+2. **Cree una nueva aplicación**:
+   - Nombre: Moodify (o nombre descriptivo)
+   - Descripción: Sistema de recomendación musical basado en emociones
+   - Tipo de aplicación: Web API
+
+3. **Configure las URIs de redirección**:
+   - Para desarrollo: `http://localhost:3000/api/auth/callback/spotify`
+   - Para producción: `https://su-dominio.com/api/auth/callback/spotify`
+
+4. **Copie las credenciales**:
+   - **Client ID**: Visible inmediatamente
+   - **Client Secret**: Haga clic en "Show Client Secret" para revelar
+
+### Base de Datos
+
+#### PostgreSQL Local
+
+1. **Instalación**:
+   ```bash
+   # macOS
+   brew install postgresql
+   
+   # Ubuntu/Debian
+   sudo apt update
+   sudo apt install postgresql postgresql-contrib
+   ```
+
+2. **Creación de usuario y base de datos**:
+   ```sql
+   CREATE USER moodify_user WITH PASSWORD 'moodify_password';
+   CREATE DATABASE moodify_db OWNER moodify_user;
+   GRANT ALL PRIVILEGES ON DATABASE moodify_db TO moodify_user;
+   ```
+
+#### Proveedores en la Nube
+
+##### Supabase (Recomendado para desarrollo)
+1. Cree cuenta gratuita en https://supabase.io
+2. Cree nuevo proyecto
+3. Obtenga cadena de conexión desde "Settings" > "Database"
+
+##### AWS RDS
+1. Cree instancia de PostgreSQL en RDS
+2. Configure reglas de seguridad
+3. Obtenga endpoint y credenciales
+
+##### Google Cloud SQL
+1. Cree instancia de PostgreSQL
+2. Configure conexiones autorizadas
+3. Obtenga cadena de conexión
+
+## Generación de Secretos Seguros
+
+### Método 1: OpenSSL (Recomendado)
+
+```bash
+# Generar secreto de 32 bytes codificado en base64
+openssl rand -base64 32
+
+# Generar secreto hexadecimal de 64 caracteres
+openssl rand -hex 32
+```
+
+### Método 2: Node.js
+
+```bash
+# Usando crypto module de Node.js
+node -e "console.log(require('crypto').randomBytes(32).toString('base64'))"
+
+# Generar secreto hexadecimal
+node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"
+```
+
+### Método 3: Python
+
+```bash
+# Generar secreto base64
+python3 -c "import secrets; print(secrets.token_urlsafe(32))"
+
+# Generar secreto hexadecimal
+python3 -c "import secrets; print(secrets.token_hex(32))"
+```
+
+## Validación de Configuración
+
+### Script de Verificación
+
+Cree un script `scripts/check-env.js` para validar su configuración:
+
+```javascript
+const fs = require('fs');
+const path = require('path');
+
+// Variables obligatorias
+const requiredVars = [
+  'NEXTAUTH_SECRET',
+  'NEXTAUTH_URL',
+  'SPOTIFY_CLIENT_ID',
+  'SPOTIFY_CLIENT_SECRET',
+  'DATABASE_URL'
+];
+
+// Verificar existencia de archivo .env.local
+const envPath = path.join(__dirname, '..', '.env.local');
+if (!fs.existsSync(envPath)) {
+  console.error('❌ Archivo .env.local no encontrado');
+  process.exit(1);
+}
+
+// Cargar variables de entorno
+require('dotenv').config({ path: envPath });
+
+// Verificar variables obligatorias
+let missing = [];
+requiredVars.forEach(varName => {
+  if (!process.env[varName]) {
+    missing.push(varName);
+  }
+});
+
+if (missing.length > 0) {
+  console.error('❌ Variables de entorno faltantes:', missing.join(', '));
+  process.exit(1);
+}
+
+console.log('✅ Todas las variables de entorno requeridas están presentes');
+```
+
+### Ejecutar verificación:
+
+```bash
+node scripts/check-env.js
+```
+
+## Mejores Prácticas de Seguridad
+
+1. **Nunca commitee secretos reales** al repositorio
+2. **Use diferentes secretos** para cada entorno
+3. **Rote secretos periódicamente** (cada 6 meses)
+4. **Limite permisos** de credenciales a lo mínimo necesario
+5. **Audite acceso** a variables de entorno
+
+Con esta configuración completa, su aplicación Moodify estará lista para funcionar en cualquier entorno con las máximas garantías de seguridad y funcionalidad.

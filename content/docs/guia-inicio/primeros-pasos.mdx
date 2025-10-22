@@ -1,0 +1,200 @@
+---
+title: "Primeros Pasos"
+description: "Comience a utilizar Moodify con esta guía paso a paso para usuarios nuevos."
+---
+
+# Primeros Pasos
+
+Comience a utilizar Moodify con esta guía paso a paso para usuarios nuevos.
+
+## Inicio de la Aplicación
+
+Después de completar la instalación y configuración, inicie la aplicación:
+
+```bash
+# Navegue al directorio del proyecto
+cd moodify-fumadocs
+
+# Inicie el servidor de desarrollo
+pnpm dev
+```
+
+La aplicación se iniciará normalmente en `http://localhost:3000`. Si configuró un puerto personalizado, utilice ese puerto en su lugar.
+
+## Registro e Inicio de Sesión
+
+### Creación de Cuenta
+
+1. **Acceda a la página de registro**:
+   - Abra su navegador y visite `http://localhost:3000/auth/register`
+   - Alternativamente, haga clic en "Registrarse" en la página de inicio de sesión
+
+2. **Complete el formulario de registro**:
+   - **Nombre completo**: Ingrese su nombre real o nombre de usuario preferido
+   - **Correo electrónico**: Proporcione una dirección de correo válida
+   - **Contraseña**: Cree una contraseña segura (mínimo 8 caracteres)
+   - **Confirmación de contraseña**: Repita la misma contraseña
+
+3. **Verificación de correo**:
+   - Revise su bandeja de entrada por un correo de verificación
+   - Haga clic en el enlace de verificación para activar su cuenta
+   - Si no recibe el correo, revise la carpeta de spam
+
+### Inicio de Sesión
+
+1. **Acceda a la página de inicio de sesión**:
+   - Visite `http://localhost:3000/auth/login`
+   - O haga clic en "Iniciar Sesión" desde la página principal
+
+2. **Ingrese sus credenciales**:
+   - **Correo electrónico**: Su dirección registrada
+   - **Contraseña**: Su contraseña segura
+   - **Recordarme**: (Opcional) Mantenga la sesión activa
+
+3. **Autenticación con Spotify** (Recomendado):
+   - Haga clic en "Conectar con Spotify"
+   - Autorice la aplicación en la ventana emergente de Spotify
+   - Esto habilitará recomendaciones musicales personalizadas
+
+## Configuración Inicial del Perfil
+
+### Configuración Básica
+
+1. **Complete su perfil**:
+   - Vaya a "Perfil" en el menú de navegación
+   - Agregue una foto de perfil (opcional)
+   - Actualice su biografía personal (opcional)
+   - Seleccione sus géneros musicales favoritos
+
+2. **Preferencias de música**:
+   - **Géneros favoritos**: Seleccione hasta 10 géneros musicales
+   - **Contenido explícito**: Habilite o deshabilite según preferencia
+   - **Horarios de escucha**: Establezca sus horarios preferidos
+
+### Configuración de Notificaciones
+
+1. **Notificaciones por correo**:
+   - Recomendaciones semanales
+   - Resúmenes mensuales
+   - Alertas de mantenimiento
+
+2. **Notificaciones push** (si aplica):
+   - Recordatorios diarios
+   - Nuevas funciones
+   - Eventos especiales
+
+## Primera Sesión de Detección Emocional
+
+### Preparación
+
+1. **Configuración del entorno**:
+   - Asegúrese de tener buena iluminación
+   - Elimine obstáculos faciales (gafas de sol, mascarillas)
+   - Encuentre un fondo neutro
+
+2. **Acceso a la cámara**:
+   - Permita acceso a la cámara cuando el navegador lo solicite
+   - Asegúrese de que su cámara funcione correctamente
+
+### Captura de Emoción
+
+1. **Navegue a la sección de detección**:
+   - Haga clic en "Detectar Emoción" en el menú principal
+   - O visite `http://localhost:3000/detect`
+
+2. **Posiciónate frente a la cámara**:
+   - Mantén una expresión natural
+   - Asegúrate de que tu rostro esté completamente visible
+   - Mantén una distancia adecuada de la cámara (aproximadamente brazo extendido)
+
+3. **Captura automática**:
+   - El sistema detectará automáticamente cuando estés listo
+   - Se tomará una foto y se analizará tu expresión facial
+   - Recibirás retroalimentación visual inmediata
+
+### Interpretación de Resultados
+
+1. **Emoción detectada**:
+   - Verás la emoción principal identificada
+   - Una puntuación de confianza (0-100%)
+   - Desglose de todas las emociones detectadas
+
+2. **Recomendaciones musicales**:
+   - Playlist personalizada basada en tu emoción
+   - Canciones sugeridas que complementan tu estado de ánimo
+   - Opción para guardar la recomendación en tu historial
+
+## Exploración de Funciones Principales
+
+### Historial de Análisis
+
+1. **Acceso al historial**:
+   - Navega a "Historial" en el menú
+   - Visualiza todas tus sesiones anteriores
+
+2. **Detalles de análisis**:
+   - Fecha y hora de cada análisis
+   - Emoción detectada con puntuaciones
+   - Recomendaciones musicales asociadas
+
+### Panel de Analíticas
+
+1. **Tendencias emocionales**:
+   - Vista gráfica de tus patrones emocionales
+   - Comparación semanal, mensual y anual
+   - Insights sobre tus ciclos emocionales
+
+2. **Descubrimiento musical**:
+   - Estadísticas de canciones descubiertas
+   - Géneros musicales más explorados
+   - Artistas nuevos encontrados
+
+### Configuración Avanzada
+
+1. **Privacidad y seguridad**:
+   - Gestiona qué datos se almacenan
+   - Elimina tu historial si lo deseas
+   - Configura la expiración automática de datos
+
+2. **Personalización**:
+   - Tema oscuro/claro
+   - Idioma preferido
+   - Notificaciones y alertas
+
+## Consejos para una Experiencia Óptima
+
+### Mejores Prácticas
+
+1. **Consistencia en la captura**:
+   - Realiza análisis en condiciones similares
+   - Mantén la misma distancia de la cámara
+   - Asegúrate de buena iluminación
+
+2. **Variedad emocional**:
+   - No te limites a estados de ánimo positivos
+   - Explora cómo la música puede ayudar en momentos difíciles
+   - Usa Moodify como herramienta de autoexploración
+
+3. **Integración en la rutina**:
+   - Establece momentos regulares para análisis emocionales
+   - Combina con tu rutina musical diaria
+   - Comparte descubrimientos con amigos
+
+### Solución de Problemas Comunes
+
+1. **Cámara no detectada**:
+   - Verifica permisos del navegador
+   - Asegúrate de que ninguna otra aplicación use la cámara
+   - Reinicia el navegador si es necesario
+
+2. **Resultados inconsistentes**:
+   - Mejora las condiciones de iluminación
+   - Mantén una expresión facial natural sin forzar
+   - Intenta en diferentes momentos del día
+
+3. **Recomendaciones no relevantes**:
+   - Actualiza tus preferencias musicales
+   - Proporciona feedback sobre las recomendaciones
+   - Asegúrate de tener conexión a internet estable
+
+Con estos primeros pasos completados, estarás listo para aprovechar al máximo todas las capacidades de Moodify y comenzar tu viaje emocional musical.

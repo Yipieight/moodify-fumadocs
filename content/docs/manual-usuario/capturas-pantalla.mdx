@@ -1,0 +1,527 @@
+---
+title: Capturas de Pantalla y Guía Visual
+Description: Guía detallada de las capturas de pantalla necesarias para el manual de usuario, con instrucciones sobre qué mostrar en cada sección.
+---
+
+Guía detallada de las capturas de pantalla necesarias para el manual de usuario, con instrucciones sobre qué mostrar en cada sección.
+
+## Pantallas de Autenticación
+
+### 1. Pantalla de Inicio de Sesión
+**Ruta**: `/auth/login`
+
+**Elementos a capturar**:
+- Logo de la aplicación en la parte superior
+- Formulario de inicio de sesión con campos:
+  - Campo de correo electrónico con placeholder
+  - Campo de contraseña con opción de mostrar/ocultar
+  - Checkbox "Recordarme"
+  - Botón primario "Iniciar Sesión"
+  - Enlaces secundarios "¿Olvidaste tu contraseña?" y "Registrarse"
+- Sección de inicio de sesión con redes sociales (Spotify, Google)
+
+**Instrucciones para la captura**:
+- Mostrar la pantalla completa
+- Asegurarse de que los campos estén visibles
+- No incluir datos reales en los campos
+
+### 2. Pantalla de Registro
+**Ruta**: `/auth/register`
+
+**Elementos a capturar**:
+- Logo de la aplicación
+- Formulario de registro con campos:
+  - Campo de nombre completo
+  - Campo de correo electrónico
+  - Campo de contraseña con validación en tiempo real
+  - Campo de confirmación de contraseña
+  - Botón primario "Registrarse"
+  - Enlace "¿Ya tienes cuenta? Inicia sesión"
+- Indicadores de fortaleza de contraseña
+
+**Instrucciones para la captura**:
+- Mostrar formulario completo
+- Incluir mensajes de validación si es posible
+- Asegurarse de que los botones estén claramente visibles
+
+### 3. Pantalla de Recuperación de Contraseña
+**Ruta**: `/auth/forgot-password`
+
+**Elementos a capturar**:
+- Logo de la aplicación
+- Formulario de recuperación con campo de correo
+- Botón "Enviar instrucciones"
+- Enlace "Volver al inicio de sesión"
+
+**Instrucciones para la captura**:
+- Mostrar formulario limpio
+- Asegurar visibilidad del campo de correo
+
+## Panel Principal
+
+### 4. Dashboard Principal
+**Ruta**: `/dashboard`
+
+**Elementos a capturar**:
+- Barra de navegación superior con:
+  - Logo y nombre de la aplicación
+  - Menú de usuario con avatar
+  - Notificaciones
+- Menú lateral con opciones de navegación:
+  - Inicio
+  - Detección de emociones
+  - Historial
+  - Recomendaciones
+  - Perfil
+  - Configuración
+- Sección de estadísticas rápidas:
+  - Total de análisis realizados
+  - Emoción más común
+  - Última actividad
+- Gráfico de tendencias emocionales
+- Lista de actividades recientes
+
+**Instrucciones para la captura**:
+- Mostrar pantalla completa en resolución de escritorio
+- Asegurar visibilidad de todos los elementos mencionados
+- Usar datos de ejemplo si es necesario
+
+### 5. Menú Desplegable de Usuario
+**Ruta**: Accesible desde cualquier página haciendo clic en el avatar
+
+**Elementos a capturar**:
+- Avatar del usuario
+- Nombre del usuario
+- Correo electrónico
+- Opciones del menú:
+  - Mi perfil
+  - Configuración
+  - Cerrar sesión
+- Sección de tema (claro/oscuro)
+
+**Instrucciones para la captura**:
+- Mostrar menú desplegado completamente
+- Asegurar que todas las opciones sean visibles
+
+## Detección de Emociones
+
+### 6. Pantalla de Configuración de Cámara
+**Ruta**: `/detect`
+
+**Elementos a capturar**:
+- Vista previa de la cámara en tiempo real
+- Indicador de permisos de cámara
+- Botones de control:
+  - Cambiar cámara (si hay múltiples)
+  - Flash (si está disponible)
+  - Tomar foto
+- Instrucciones para el usuario:
+  - "Mantén una expresión natural"
+  - "Asegúrate de buena iluminación"
+  - "Evita sombras en el rostro"
+
+**Instrucciones para la captura**:
+- Mostrar vista previa de la cámara activa
+- Incluir elementos de interfaz de control
+- No mostrar rostro real en la captura
+
+### 7. Proceso de Detección
+**Ruta**: `/detect` durante el proceso de análisis
+
+**Elementos a capturar**:
+- Imagen capturada con overlay de análisis
+- Indicador de progreso "Analizando emociones..."
+- Animación de carga o spinner
+- Área para mostrar resultados futuros
+
+**Instrucciones para la captura**:
+- Mostrar estado de procesamiento
+- Asegurar visibilidad del indicador de progreso
+
+### 8. Resultados de Detección
+**Ruta**: `/detect` con resultados
+
+**Elementos a capturar**:
+- Imagen analizada con marcadores faciales
+- Emoción detectada principal con porcentaje de confianza
+- Gráfico circular con distribución de todas las emociones
+- Recomendaciones musicales generadas:
+  - Lista de canciones con portadas
+  - Botones de acción:
+    - Escuchar en Spotify
+    - Guardar en historial
+    - Compartir
+- Botones de acción adicionales:
+  - Nueva detección
+  - Ver historial
+  - Ir a recomendaciones
+
+**Instrucciones para la captura**:
+- Mostrar resultados completos
+- Asegurar visibilidad de la emoción principal
+- Incluir al menos 3 canciones recomendadas
+
+## Historial de Análisis
+
+### 9. Lista de Historial
+**Ruta**: `/history`
+
+**Elementos a capturar**:
+- Filtros de historial:
+  - Selector de tipo (emociones/recomendaciones/todo)
+  - Selector de emoción
+  - Selector de rango de fechas
+  - Botón "Limpiar filtros"
+- Lista de entradas de historial:
+  - Tarjetas con fecha y hora
+  - Imagen miniatura del análisis
+  - Emoción detectada
+  - Número de canciones recomendadas
+  - Botones de acción:
+    - Ver detalles
+    - Eliminar
+- Paginación o scroll infinito
+- Botones de acción global:
+  - Exportar datos
+  - Limpiar historial
+
+**Instrucciones para la captura**:
+- Mostrar varias tarjetas de historial
+- Incluir filtros visibles
+- Asegurar visibilidad de botones de acción
+
+### 10. Detalles de Entrada de Historial
+**Ruta**: `/history/[id]`
+
+**Elementos a capturar**:
+- Imagen del análisis con marcadores faciales
+- Información detallada:
+  - Fecha y hora exacta
+  - Emoción principal con confianza
+  - Desglose de todas las emociones
+- Recomendaciones musicales asociadas:
+  - Lista completa de canciones
+  - Información detallada de cada canción
+- Botones de acción:
+  - Escuchar todo en Spotify
+  - Eliminar entrada
+  - Compartir
+
+**Instrucciones para la captura**:
+- Mostrar información completa de una entrada
+- Incluir al menos 5 canciones recomendadas
+- Asegurar visibilidad de todos los detalles
+
+## Recomendaciones Musicales
+
+### 11. Pantalla de Recomendaciones
+**Ruta**: `/recommendations`
+
+**Elementos a capturar**:
+- Selector de emoción para recomendaciones
+- Filtros adicionales:
+  - Género musical
+  - Excluir contenido explícito
+  - Límite de canciones
+- Lista de recomendaciones:
+  - Tarjetas de canciones con:
+    - Portada del álbum
+    - Título de la canción
+    - Nombre del artista
+    - Popularidad
+    - Botones de acción:
+      - Escuchar en Spotify
+      - Guardar
+      - Compartir
+- Botones de acción:
+  - Generar nuevas recomendaciones
+  - Guardar playlist
+
+**Instrucciones para la captura**:
+- Mostrar selector de emoción
+- Incluir al menos 10 tarjetas de canciones
+- Asegurar visibilidad de filtros
+
+### 12. Playlist Generada
+**Ruta**: `/recommendations` con playlist creada
+
+**Elementos a capturar**:
+- Nombre de la playlist generada
+- Descripción de la playlist
+- Imagen de portada de la playlist
+- Lista de canciones en la playlist
+- Botones de acción:
+  - Abrir en Spotify
+  - Guardar en Spotify
+  - Compartir playlist
+  - Generar nueva playlist
+
+**Instrucciones para la captura**:
+- Mostrar playlist completa
+- Incluir información de portada
+- Asegurar visibilidad de botones de acción
+
+## Perfil de Usuario
+
+### 13. Pantalla de Perfil
+**Ruta**: `/profile`
+
+**Elementos a capturar**:
+- Información del usuario:
+  - Avatar grande
+  - Nombre completo
+  - Correo electrónico
+  - Fecha de registro
+  - Biografía
+- Estadísticas del usuario:
+  - Total de análisis
+  - Total de recomendaciones
+  - Emoción más común
+- Preferencias musicales:
+  - Géneros favoritos
+  - Artistas favoritos
+- Botones de acción:
+  - Editar perfil
+  - Cambiar contraseña
+  - Eliminar cuenta
+
+**Instrucciones para la captura**:
+- Mostrar perfil completo
+- Incluir sección de estadísticas
+- Asegurar visibilidad de botones de acción
+
+### 14. Edición de Perfil
+**Ruta**: `/profile/edit`
+
+**Elementos a capturar**:
+- Formulario de edición con campos:
+  - Avatar (con opción de cambiar)
+  - Nombre completo
+  - Correo electrónico
+  - Biografía
+  - Géneros musicales favoritos (selector múltiple)
+- Botones de acción:
+  - Guardar cambios
+  - Cancelar
+  - Eliminar cuenta
+
+**Instrucciones para la captura**:
+- Mostrar formulario completo
+- Incluir selector de géneros
+- Asegurar visibilidad de botones
+
+### 15. Cambio de Contraseña
+**Ruta**: `/profile/change-password`
+
+**Elementos a capturar**:
+- Formulario de cambio de contraseña:
+  - Contraseña actual
+  - Nueva contraseña
+  - Confirmar nueva contraseña
+- Indicadores de fortaleza de contraseña
+- Botones de acción:
+  - Guardar nueva contraseña
+  - Cancelar
+
+**Instrucciones para la captura**:
+- Mostrar formulario con validación
+- Incluir indicadores de fortaleza
+- Asegurar visibilidad de botones
+
+### 16. Eliminación de Cuenta
+**Ruta**: `/profile/delete`
+
+**Elementos a capturar**:
+- Advertencia de eliminación permanente
+- Formulario de confirmación:
+  - Confirmar correo electrónico
+  - Confirmar contraseña
+- Lista de datos que se eliminarán:
+  - Historial de emociones
+  - Recomendaciones musicales
+  - Preferencias de usuario
+  - Estadísticas
+- Botones de acción:
+  - Eliminar cuenta permanentemente
+  - Cancelar
+
+**Instrucciones para la captura**:
+- Mostrar advertencia claramente
+- Incluir formulario de confirmación
+- Asegurar visibilidad de la lista de datos a eliminar
+
+## Analíticas y Estadísticas
+
+### 17. Dashboard de Analíticas
+**Ruta**: `/analytics`
+
+**Elementos a capturar**:
+- Resumen de estadísticas:
+  - Total de análisis realizados
+  - Total de recomendaciones
+  - Tiempo usando la aplicación
+- Gráficos de analíticas:
+  - Tendencias emocionales (línea)
+  - Distribución de emociones (pastel)
+  - Actividad por hora del día (barras)
+  - Actividad por día de la semana (barras)
+- Métricas destacadas:
+  - Emoción más común
+  - Hora pico de actividad
+  - Día más activo
+  - Género musical más recomendado
+
+**Instrucciones para la captura**:
+- Mostrar todos los gráficos
+- Incluir resumen de estadísticas
+- Asegurar visibilidad de métricas destacadas
+
+### 18. Filtros de Analíticas
+**Ruta**: `/analytics` con filtros activos
+
+**Elementos a capturar**:
+- Selector de rango de tiempo:
+  - Últimos 7 días
+  - Últimos 30 días
+  - Últimos 3 meses
+  - Último año
+- Selector de tipo de análisis:
+  - Emociones
+  - Recomendaciones
+  - Actividad
+- Botón "Aplicar filtros"
+- Gráficos actualizados según filtros
+
+**Instrucciones para la captura**:
+- Mostrar selectores de filtros
+- Incluir gráficos actualizados
+- Asegurar visibilidad de botón de aplicación
+
+## Configuración
+
+### 19. Pantalla de Configuración
+**Ruta**: `/settings`
+
+**Elementos a capturar**:
+- Secciones de configuración:
+  - Preferencias de interfaz:
+    - Tema (claro/oscuro/auto)
+    - Idioma
+    - Tamaño de fuente
+  - Notificaciones:
+    - Correo electrónico
+    - Push (si aplicable)
+    - Newsletter
+  - Privacidad:
+    - Visibilidad del perfil
+    - Compartir actividad
+    - Búsqueda en directorio
+  - Seguridad:
+    - Autenticación de dos factores (si disponible)
+    - Sesiones activas
+    - Historial de actividad
+
+**Instrucciones para la captura**:
+- Mostrar todas las secciones de configuración
+- Incluir elementos de interfaz (switches, selects)
+- Asegurar visibilidad de cada sección
+
+### 20. Gestión de Sesiones
+**Ruta**: `/settings/sessions`
+
+**Elementos a capturar**:
+- Lista de sesiones activas:
+  - Dispositivo
+  - Ubicación (aproximada)
+  - Fecha de inicio
+  - Última actividad
+  - Botones de acción:
+    - Cerrar sesión
+- Botones de acción globales:
+  - Cerrar todas las sesiones
+  - Cerrar sesiones en otros dispositivos
+
+**Instrucciones para la captura**:
+- Mostrar lista de sesiones
+- Incluir información de dispositivo
+- Asegurar visibilidad de botones de acción
+
+## Mensajes de Error y Estado
+
+### 21. Pantalla de Error 404
+**Ruta**: Cualquier ruta inválida
+
+**Elementos a capturar**:
+- Código de error (404)
+- Mensaje amigable
+- Ilustración o icono
+- Botones de acción:
+  - Volver a la página principal
+  - Ir al dashboard
+
+**Instrucciones para la captura**:
+- Mostrar mensaje de error completo
+- Incluir ilustración
+- Asegurar visibilidad de botones
+
+### 22. Pantalla de Error de Conexión
+**Ruta**: Cuando hay problemas de red
+
+**Elementos a capturar**:
+- Icono de error de conexión
+- Mensaje descriptivo
+- Botones de acción:
+  - Reintentar
+  - Recargar página
+  - Verificar conexión
+
+**Instrucciones para la captura**:
+- Mostrar mensaje de error de red
+- Incluir icono apropiado
+- Asegurar visibilidad de botones
+
+### 23. Pantalla de Carga
+**Ruta**: Durante operaciones largas
+
+**Elementos a capturar**:
+- Spinner o animación de carga
+- Mensaje de estado (opcional)
+- Barra de progreso (si aplica)
+
+**Instrucciones para la captura**:
+- Mostrar estado de carga
+- Incluir elemento visual de progreso
+- Asegurar buen contraste
+
+## Dispositivos Móviles
+
+### 24. Diseño Responsivo en Móvil
+**Ruta**: Todas las pantallas principales en vista móvil
+
+**Elementos a capturar**:
+- Menú hamburguesa colapsado
+- Barra de navegación inferior (si aplica)
+- Diseño de una columna para contenido
+- Botones táctiles adecuadamente dimensionados
+- Formularios optimizados para móvil
+
+**Instrucciones para la captura**:
+- Usar modo responsive de navegador o dispositivo real
+- Mostrar vista móvil de al menos 3 pantallas principales
+- Asegurar visibilidad de elementos táctiles
+
+### 25. Menú Móvil
+**Ruta**: Menú lateral en vista móvil
+
+**Elementos a capturar**:
+- Menú hamburguesa abierto
+- Opciones de navegación en lista vertical
+- Información del usuario en el encabezado del menú
+- Botón de cierre del menú
+
+**Instrucciones para la captura**:
+- Mostrar menú completamente expandido
+- Incluir opciones de navegación
+- Asegurar visibilidad del encabezado de usuario
+
+Esta guía detallada de capturas de pantalla proporcionará al equipo de documentación toda la información necesaria para crear un manual de usuario completo y visualmente atractivo que ayude a los usuarios a entender y utilizar todas las funcionalidades de Moodify.

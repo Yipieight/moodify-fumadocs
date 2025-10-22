@@ -1,0 +1,332 @@
+---
+title: "Diagrama y Explicación de la Arquitectura"
+description: "Presentación del diagrama arquitectónico completo de Moodify y explicación detallada de cada componente y sus interacciones."
+---
+
+# Diagrama y Explicación de la Arquitectura
+
+Esta sección presenta el diagrama arquitectónico completo de Moodify junto con explicaciones detalladas de cada componente y sus interacciones.
+
+## Diagrama Arquitectónico
+
+```
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                              CLIENTE WEB                                 │
+│  ┌─────────────────────────────────────────────────────────────────────┐   │
+│  │                    NAVEGADOR MODERNO                                │   │
+│  │  ┌─────────────┐  ┌─────────────┐  ┌────────────────────────────┐ │   │
+│  │  │  Next.js 15 │  │   React 19  │  │  Fumadocs Documentation    │ │   │
+│  │  │  App Router │  │  Server C.  │  │  (MDX + OpenAPI)           │ │   │
+│  │  │             │  │             │  │                            │ │   │
+│  │  │  ┌────────┐ │  │  ┌────────┐ │  │  ┌─────────────────────┐   │ │   │
+│  │  │  │Server  │ │  │  │Client  │ │  │  │Documentation        │   │ │   │
+│  │  │  │Comp.  │ │  │  │Comp.   │ │  │  │Components           │   │ │   │
+│  │  │  └────────┘ │  │  └────────┘ │  │  └─────────────────────┘   │ │   │
+│  │  │             │  │             │  │                            │ │   │
+│  │  │  ┌────────┐ │  │  ┌────────┐ │  │  ┌─────────────────────┐   │ │   │
+│  │  │  │API     │ │  │  │UI      │ │  │  │Search & Navigation │   │ │   │
+│  │  │  │Routes  │ │  │  │Library │ │  │  └─────────────────────┘   │ │   │
+│  │  │  └────────┘ │  │  └────────┘ │  │                            │ │   │
+│  │  │             │  │             │  │  ┌─────────────────────┐   │ │   │
+│  │  │  ┌────────┐ │  │  ┌────────┐ │  │  │Static Generation    │   │ │   │
+│  │  │  │SSR/SSG │ │  │  │Hooks   │ │  │  │(Build Time)         │   │ │   │
+│  │  │  └────────┘ │  │  └────────┘ │  │  └─────────────────────┘   │ │   │
+│  │  └─────────────┘  └─────────────┘  └────────────────────────────┘ │   │
+│  └─────────────────────────────────────────────────────────────────────┘   │
+└─────────────────────────────┬─────────────────────────────────────────────┘
+                              │
+                    HTTPS/REST API
+                              │
+┌─────────────────────────────▼─────────────────────────────────────────────┐
+│                         API GATEWAY                                       │
+│  ┌─────────────────────────────────────────────────────────────────────┐ │
+│  │                        NGINX/VERCEL                                 │ │
+│  │  ┌─────────────────────────────────────────────────────────────────┐ │ │
+│  │  │            Autenticación & Autorización                       │ │ │
+│  │  │  ┌─────────────────────────────────────────────────────────┐ │ │ │
+│  │  │  │              NextAuth.js                               │ │ │ │
+│  │  │  │  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐     │ │ │ │
+│  │  │  │  │   OAuth     │  │Credentials  │  │Magic Links  │     │ │ │ │
+│  │  │  │  │  Providers  │  │Provider     │  │Provider     │     │ │ │ │
+│  │  │  │  │             │  │             │  │             │     │ │ │ │
+│  │  │  │  │ Spotify     │  │Email/Pass   │  │Email Only   │     │ │ │ │
+│  │  │  │  └─────────────┘  └─────────────┘  └─────────────┘     │ │ │ │
+│  │  │  └─────────────────────────────────────────────────────────┘ │ │ │
+│  │  │                                                             │ │ │
+│  │  │            Rate Limiting & Security                         │ │ │
+│  │  │  ┌─────────────────────────────────────────────────────────┐ │ │ │
+│  │  │  │                  Helmet.js                             │ │ │ │
+│  │  │  │  Security Headers, CSP, CORS Configuration              │ │ │ │
+│  │  │  └─────────────────────────────────────────────────────────┘ │ │ │
+│  │  └─────────────────────────────────────────────────────────────────┘ │ │
+│  └─────────────────────────────────────────────────────────────────────┘ │
+└─────────────────────────────┬─────────────────────────────────────────────┘
+                              │
+                    HTTPS/REST API
+                              │
+┌─────────────────────────────▼─────────────────────────────────────────────┐
+│                         SERVIDOR DE APLICACIÓN                            │
+│  ┌─────────────────────────────────────────────────────────────────────┐ │
+│  │                    Next.js Serverless Functions                     │ │
+│  │  ┌─────────────────────────────────────────────────────────────────┐ │ │
+│  │  │                   API Endpoints                                │ │ │
+│  │  │  ┌─────────────┐  ┌─────────────┐  ┌─────────────────────────┐ │ │ │
+│  │  │  │   Auth      │  │   User      │  │       History           │ │ │ │
+│  │  │  │  /api/auth  │  │  /api/user  │  │      /api/history       │ │ │ │
+│  │  │  │             │  │             │  │                         │ │ │ │
+│  │  │  │  Login      │  │  Profile    │  │  Emotion Analysis       │ │ │ │
+│  │  │  │  Logout     │  │  Settings   │  │  Music Recommendations  │ │ │ │
+│  │  │  │  Register   │  │  Privacy    │  │  Analytics              │ │ │ │
+│  │  │  │  Session    │  │  Delete     │  │                         │ │ │ │
+│  │  │  └─────────────┘  └─────────────┘  └─────────────────────────┘ │ │ │
+│  │  │  ┌─────────────────────────────────────────────────────────┐ │ │ │
+│  │  │  │                    Recommendations                    │ │ │ │
+│  │  │  │                   /api/recommendations                 │ │ │ │
+│  │  │  │                                                         │ │ │ │
+│  │  │  │  Music Search    │  Emotion-Based Rec  │  Playlist Gen │ │ │ │
+│  │  │  └─────────────────────────────────────────────────────────┘ │ │ │
+│  │  │  ┌─────────────────────────────────────────────────────────┐ │ │ │
+│  │  │  │                    Music Integration                   │ │ │ │
+│  │  │  │                      /api/music                        │ │ │ │
+│  │  │  │                                                         │ │ │ │
+│  │  │  │  Track Info      │  Search         │  Recommendations │ │ │ │
+│  │  │  └─────────────────────────────────────────────────────────┘ │ │ │
+│  │  │  ┌─────────────────────────────────────────────────────────┐ │ │ │
+│  │  │  │                      Health Check                      │ │ │ │
+│  │  │  │                       /api/health                       │ │ │ │
+│  │  │  │                                                         │ │ │ │
+│  │  │  │  System Status   │  Dependency Check │  Performance  │ │ │ │
+│  │  │  └─────────────────────────────────────────────────────────┘ │ │ │
+│  │  └─────────────────────────────────────────────────────────────────┘ │ │
+│  │  ┌─────────────────────────────────────────────────────────────────┐ │ │
+│  │  │                    Business Logic Services                     │ │ │
+│  │  │  ┌─────────────┐  ┌─────────────┐  ┌─────────────────────────┐ │ │ │
+│  │  │  │  Emotion    │  │  Music      │  │      Analytics          │ │ │ │
+│  │  │  │ Detection   │  │ Services    │  │    Services             │ │ │ │
+│  │  │  │ Service     │  │             │  │                         │ │ │ │
+│  │  │  │             │  │  Spotify     │  │  Trend Analysis         │ │ │ │
+│  │  │  │  Face-API   │  │  Wrapper     │  │  Pattern Recognition    │ │ │ │
+│  │  │  │  Integration│  │  Utilities   │  │  Statistical Processing │ │ │ │
+│  │  │  └─────────────┘  └─────────────┘  └─────────────────────────┘ │ │ │
+│  │  └─────────────────────────────────────────────────────────────────┘ │ │
+│  └─────────────────────────────────────────────────────────────────────┘ │
+└─────────────────────────────┬─────────────────────────────────────────────┘
+                              │
+                    Database Connection Pool
+                              │
+┌─────────────────────────────▼─────────────────────────────────────────────┐
+│                         BASE DE DATOS                                     │
+│  ┌─────────────────────────────────────────────────────────────────────┐ │
+│  │                        PostgreSQL 15+                               │ │
+│  │  ┌─────────────────────────────────────────────────────────────────┐ │ │
+│  │  │                    Tablas Principales                           │ │ │
+│  │  │  ┌─────────────┐  ┌─────────────┐  ┌─────────────────────────┐ │ │ │
+│  │  │  │   Users     │  │   Sessions  │  │    Emotion Analyses     │ │ │ │
+│  │  │  │             │  │             │  │                         │ │ │ │
+│  │  │  │  id         │  │  id         │  │  id                     │ │ │ │
+│  │  │  │  email      │  │  user_id    │  │  user_id                │ │ │ │
+│  │  │  │  name       │  │  token      │  │  emotion                │ │ │ │
+│  │  │  │  password   │  │  expires    │  │  confidence             │ │ │ │
+│  │  │  │  image       │  │  created_at │  │  image_url              │ │ │ │
+│  │  │  │  created_at │  │             │  │  metadata               │ │ │ │
+│  │  │  │  updated_at │  │  device_info │  │  created_at             │ │ │ │
+│  │  │  └─────────────┘  └─────────────┘  └─────────────────────────┘ │ │ │
+│  │  │  ┌─────────────────────────────────────────────────────────┐ │ │ │
+│  │  │  │              Music Recommendations                  │ │ │ │
+│  │  │  │              music_recommendations                 │ │ │ │
+│  │  │  │                                                     │ │ │ │
+│  │  │  │  id         │  track_id      │  user_id               │ │ │ │
+│  │  │  │  emotion    │  track_name    │  artist_name           │ │ │ │
+│  │  │  │  confidence │  album_name    │  track_url             │ │ │ │
+│  │  │  │  user_id    │  image_url     │  duration_ms           │ │ │ │
+│  │  │  │  audio_feat │  popularity    │  created_at            │ │ │ │
+│  │  │  └─────────────────────────────────────────────────────────┘ │ │ │
+│  │  │  ┌─────────────────────────────────────────────────────────┐ │ │ │
+│  │  │  │                   User Preferences                     │ │ │ │
+│  │  │  │                   user_preferences                     │ │ │ │
+│  │  │  │                                                         │ │ │ │
+│  │  │  │  id         │  user_id       │  favorite_genres        │ │ │ │
+│  │  │  │  theme      │  notifications │  exclude_explicit      │ │ │ │
+│  │  │  │  privacy    │  created_at    │  updated_at             │ │ │ │
+│  │  │  └─────────────────────────────────────────────────────────┘ │ │ │
+│  │  └─────────────────────────────────────────────────────────────────┘ │ │
+│  │  ┌─────────────────────────────────────────────────────────────────┐ │ │
+│  │  │                   Database Operations                         │ │ │
+│  │  │  ┌─────────────┐  ┌─────────────┐  ┌─────────────────────────┐ │ │ │
+│  │  │  │   Prisma    │  │  Migrations │  │      Query Builder      │ │ │ │
+│  │  │  │   ORM       │  │  System     │  │      (Prisma Query)     │ │ │ │
+│  │  │  │             │  │             │  │                         │ │ │ │
+│  │  │  │  Type Safe  │  │  Version    │  │  Fluent API             │ │ │ │
+│  │  │  │  Queries    │  │  Control     │  │  Auto-Completion        │ │ │ │
+│  │  │  │  Relations  │  │  Rollbacks   │  │  Error Handling         │ │ │ │
+│  │  │  └─────────────┘  └─────────────┘  └─────────────────────────┘ │ │ │
+│  │  └─────────────────────────────────────────────────────────────────┘ │ │
+│  └─────────────────────────────────────────────────────────────────────┘ │
+└─────────────────────────────┬─────────────────────────────────────────────┘
+                              │
+                    API Calls (HTTPS)
+                              │
+┌─────────────────────────────▼─────────────────────────────────────────────┐
+│                         SERVICIOS EXTERNOS                               │
+│  ┌─────────────────────────────────────────────────────────────────────┐ │
+│  │                        Spotify Web API                              │ │
+│  │  ┌─────────────────────────────────────────────────────────────────┐ │ │
+│  │  │                   Music Intelligence                           │ │ │
+│  │  │  ┌─────────────┐  ┌─────────────┐  ┌─────────────────────────┐ │ │ │
+│  │  │  │  Tracks     │  │  Search     │  │  Recommendations         │ │ │ │
+│  │  │  │  Metadata   │  │  Endpoint   │  │  Engine                 │ │ │ │
+│  │  │  │             │  │             │  │                         │ │ │ │
+│  │  │  │  Audio      │  │  Filters    │  │  Personalization        │ │ │ │
+│  │  │  │  Features   │  │  Sorting    │  │  Algorithms             │ │ │ │
+│  │  │  │  Analysis   │  │  Pagination │  │  Collaborative Filtering│ │ │ │
+│  │  │  └─────────────┘  └─────────────┘  └─────────────────────────┘ │ │ │
+│  │  │  ┌─────────────────────────────────────────────────────────┐ │ │ │
+│  │  │  │                 User Integration                        │ │ │ │
+│  │  │  │  ┌─────────────┐  ┌─────────────┐  ┌─────────────────┐   │ │ │ │
+│  │  │  │  │  Playlists  │  │   Library   │  │   Listening     │   │ │ │ │
+│  │  │  │  │  Creation   │  │   Sync      │  │   History       │   │ │ │ │
+│  │  │  │  │  Curation   │  │   Import    │  │   Analysis      │   │ │ │ │
+│  │  │  │  └─────────────┘  └─────────────┘  └─────────────────┘   │ │ │ │
+│  │  │  └─────────────────────────────────────────────────────────┘ │ │ │
+│  │  └─────────────────────────────────────────────────────────────────┘ │ │
+│  └─────────────────────────────────────────────────────────────────────┘ │
+│  ┌─────────────────────────────────────────────────────────────────────┐ │
+│  │                      Face-API.js (Node.js)                         │ │
+│  │  ┌─────────────────────────────────────────────────────────────────┐ │ │
+│  │  │                    Facial Recognition                        │ │ │
+│  │  │  ┌─────────────┐  ┌─────────────┐  ┌─────────────────────────┐ │ │ │
+│  │  │  │  Detection  │  │Expression   │  │      Models             │ │ │ │
+│  │  │  │  Models     │  │  Analysis    │  │      Loading            │ │ │ │
+│  │  │  │             │  │             │  │                         │ │ │ │
+│  │  │  │  Face       │  │  Happy      │  │  TinyFaceDetector       │ │ │ │
+│  │  │  │  Landmark    │  │  Sad        │  │  FaceLandmark68Net      │ │ │ │
+│  │  │  │  Recognition │  │  Angry      │  │  FaceRecognitionNet      │ │ │ │
+│  │  │  │  Models      │  │  Surprise   │  │  FaceExpressionNet      │ │ │ │
+│  │  │  └─────────────┘  └─────────────┘  └─────────────────────────┘ │ │ │
+│  │  └─────────────────────────────────────────────────────────────────┘ │ │
+│  └─────────────────────────────────────────────────────────────────────┘ │
+└─────────────────────────────────────────────────────────────────────────┘
+```
+
+## Explicación Detallada de Componentes
+
+### Capa de Cliente Web
+
+#### Next.js 15 con App Router
+- **Server Components**: Renderizado en servidor para mejor performance
+- **Client Components**: Interactividad en el cliente cuando es necesario
+- **Partial Prerendering**: Combinación de SSG y SSR para carga instantánea
+- **Turbopack**: Bundler de próxima generación para desarrollo rápido
+
+#### Fumadocs Documentation
+- **MDX Support**: Documentación rica con componentes React
+- **OpenAPI Integration**: Generación automática de referencias de API
+- **Search Engine**: Búsqueda semántica con indexación avanzada
+- **Responsive Design**: Documentación óptima en todos los dispositivos
+
+### Capa de API Gateway
+
+#### Autenticación & Autorización
+El sistema de autenticación está basado en **NextAuth.js** y soporta múltiples proveedores:
+
+1. **OAuth Providers**: Spotify, Google, GitHub
+2. **Credentials Provider**: Autenticación tradicional email/contraseña
+3. **Magic Links**: Inicio de sesión sin contraseña mediante enlaces mágicos
+
+#### Seguridad y Rate Limiting
+- **Helmet.js**: Headers de seguridad HTTP para protección contra ataques comunes
+- **Rate Limiting**: Token bucket algorithm para prevenir abusos
+- **CORS Configuration**: Configuración flexible de Cross-Origin Resource Sharing
+- **CSRF Protection**: Protección automática contra falsificación de solicitudes
+
+### Capa de Servidor de Aplicación
+
+#### Estructura de Endpoints API
+La API sigue una estructura RESTful organizada por dominios funcionales:
+
+1. **Authentication** (`/api/auth`): Manejo de inicio de sesión, registro y sesiones
+2. **User Management** (`/api/user`): Perfil de usuario y preferencias
+3. **History Tracking** (`/api/history`): Registro de análisis emocionales
+4. **Music Recommendations** (`/api/recommendations`): Generación de recomendaciones
+5. **Music Integration** (`/api/music`): Búsqueda y detalles musicales
+6. **Health Check** (`/api/health`): Monitoreo del estado del sistema
+
+#### Servicios de Negocio
+Los servicios de negocio encapsulan la lógica específica de dominio:
+
+1. **Emotion Detection Service**: Integración con face-api.js para análisis facial
+2. **Music Services**: Wrappers tipados para la API de Spotify
+3. **Analytics Services**: Generación de estadísticas y tendencias
+
+### Capa de Base de Datos
+
+#### Modelo Relacional
+La base de datos PostgreSQL almacena información estructurada en tablas relacionadas:
+
+1. **Users Table**: Información básica de usuarios
+2. **Sessions Table**: Gestión de sesiones activas
+3. **Emotion Analyses**: Registros históricos de análisis emocionales
+4. **Music Recommendations**: Recomendaciones musicales generadas
+5. **User Preferences**: Preferencias personalizadas del usuario
+
+#### Prisma ORM
+Prisma proporciona:
+- **Type Safety**: Generación automática de tipos TypeScript
+- **Query Builder**: API intuitiva para consultas complejas
+- **Migrations**: Sistema de migraciones declarativo y versionado
+- **Data Browser**: GUI para exploración de datos en desarrollo
+
+### Capa de Servicios Externos
+
+#### Spotify Web API
+Integración completa con la plataforma musical líder:
+
+1. **Metadata Access**: Información detallada de tracks, álbumes y artistas
+2. **Search Capabilities**: Potente motor de búsqueda con filtros avanzados
+3. **Recommendation Engine**: Algoritmos de recomendación basados en audio features
+4. **User Integration**: Acceso a playlists, bibliotecas y historial de escucha
+
+#### Face-API.js
+Sistema avanzado de reconocimiento facial:
+
+1. **Model Loading**: Carga eficiente de modelos de machine learning
+2. **Expression Analysis**: Detección precisa de 7 tipos de emociones
+3. **Face Recognition**: Identificación y verificación de rostros
+4. **Landmark Detection**: Puntos de referencia faciales para análisis detallado
+
+## Flujos de Datos Principales
+
+### Flujo de Autenticación
+```
+[Usuario] → [NextAuth.js] → [Base de Datos/Servicio OAuth] → [Sesión Establecida]
+```
+
+### Flujo de Detección Emocional
+```
+[Usuario] → [Cámara] → [Face-API.js] → [Emotion Analysis] → [Base de Datos] → [Respuesta]
+```
+
+### Flujo de Recomendaciones Musicales
+```
+[Emotion Data] → [Spotify API] → [Recommendation Engine] → [Playlist Generation] → [Usuario]
+```
+
+## Consideraciones de Escalabilidad
+
+### Horizontal Scaling
+- **Serverless Functions**: Escalamiento automático basado en demanda
+- **Database Connection Pooling**: Gestión eficiente de conexiones concurrentes
+- **Load Balancing**: Distribución automática de cargas mediante Vercel
+
+### Vertical Scaling
+- **Database Optimization**: Indices, particionamiento y query optimization
+- **Caching Strategy**: Redis para datos frecuentes y resultados computacionalmente costosos
+- **CDN Distribution**: Distribución de contenido estático globalmente
+
+### Monitoreo y Observabilidad
+- **Logging**: Sistema de logs estructurados para debugging
+- **Metrics Collection**: Métricas de performance y uso del sistema
+- **Error Tracking**: Sistema de reporte y análisis de errores en producción
+- **Performance Monitoring**: Métricas de tiempo de respuesta y disponibilidad
+
+Esta arquitectura modular y bien definida permite a Moodify crecer y evolucionar manteniendo altos estándares de calidad, seguridad y experiencia de usuario.

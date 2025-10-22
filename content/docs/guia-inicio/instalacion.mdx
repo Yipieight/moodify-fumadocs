@@ -1,0 +1,155 @@
+---
+title: "Instalación de Moodify"
+description: "Siga esta guía completa para instalar y configurar Moodify en su entorno local."
+---
+
+# Instalación de Moodify
+
+Siga esta guía completa para instalar y configurar Moodify en su entorno local.
+
+## Requisitos Previos
+
+Antes de comenzar la instalación, asegúrese de tener instalados los siguientes componentes:
+
+### Entorno del Sistema
+- **Sistema Operativo**: Windows 10+, macOS 10.14+, o Ubuntu 18.04+ (64-bit)
+- **Memoria RAM**: Mínimo 8GB (recomendado 16GB)
+- **Espacio en Disco**: Mínimo 5GB de espacio libre
+- **Conexión a Internet**: Requerida para descarga de dependencias y acceso a APIs
+
+### Versiones de Software Requeridas
+- **Node.js**: versión 20.x o superior
+- **npm**: versión 9.x o superior (incluido con Node.js)
+- **pnpm**: versión 8.x o superior (recomendado como gestor de paquetes)
+- **Git**: versión 2.20 o superior
+- **Editor de Código**: VS Code (recomendado) u otro editor con soporte TypeScript
+
+### Cuentas Externas Requeridas
+- **Cuenta de GitHub**: Para clonar el repositorio
+- **Cuenta de Spotify Developer**: Para obtener credenciales de API
+- **Cuenta de correo**: Para pruebas de autenticación
+
+## Clonación del Repositorio
+
+Clone el repositorio oficial de Moodify en su máquina local:
+
+```bash
+# Navegue al directorio donde desea clonar el proyecto
+cd /ruta/a/su/directorio/de/proyectos
+
+# Clone el repositorio
+git clone https://github.com/josegarcia/moodify-fumadocs.git
+
+# Acceda al directorio del proyecto
+cd moodify-fumadocs
+```
+
+## Instalación de Dependencias
+
+Moodify utiliza pnpm como gestor de paquetes principal. Si no lo tiene instalado, puede hacerlo ejecutando:
+
+```bash
+npm install -g pnpm
+```
+
+Instale todas las dependencias del proyecto:
+
+```bash
+# Instale las dependencias
+pnpm install
+```
+
+Este proceso descargará e instalará todas las dependencias necesarias, incluyendo:
+- Framework Next.js 15
+- Fumadocs para documentación
+- Librerías de reconocimiento facial
+- Integraciones con APIs externas
+- Dependencias de desarrollo
+
+## Verificación de Instalación
+
+Verifique que la instalación se haya realizado correctamente:
+
+```bash
+# Verifique la versión de Node.js
+node --version
+
+# Verifique la versión de pnpm
+pnpm --version
+
+# Liste las dependencias instaladas
+pnpm list
+```
+
+Si todos los comandos se ejecutan sin errores, la instalación básica está completa.
+
+## Configuración Post-Instalación
+
+### Compilación de Dependencias Nativas
+Algunas dependencias pueden requerir compilación nativa:
+
+```bash
+# Construya dependencias nativas si es necesario
+pnpm run build
+```
+
+### Instalación de Herramientas de Desarrollo
+Instale herramientas adicionales que pueden ser útiles:
+
+```bash
+# Instale TypeScript globalmente (opcional)
+pnpm add -g typescript
+
+# Verifique la instalación de ESLint
+pnpm exec eslint --version
+```
+
+## Solución de Problemas Comunes
+
+### Problemas de Permisos
+Si encuentra errores de permisos durante la instalación:
+
+```bash
+# En sistemas Unix/Linux/macOS, asegúrese de tener permisos adecuados
+sudo chown -R $(whoami) ~/.npm
+sudo chown -R $(whoami) ~/.pnpm-store
+
+# En Windows, ejecute el terminal como administrador
+```
+
+### Problemas de Conectividad
+Si tiene problemas de conectividad durante la instalación:
+
+```bash
+# Configure proxy si es necesario
+pnpm config set proxy http://your-proxy-url:port
+pnpm config set https-proxy http://your-proxy-url:port
+
+# O utilice registros alternativos
+pnpm config set registry https://registry.npmjs.org/
+```
+
+### Espacio en Disco Insuficiente
+Si tiene espacio limitado en disco:
+
+```bash
+# Limpie la caché de pnpm
+pnpm store prune
+
+# Elimine node_modules y reinstale
+rm -rf node_modules
+pnpm install
+```
+
+### Versiones de Node.js Incompatibles
+Si tiene múltiples versiones de Node.js:
+
+```bash
+# Utilice nvm (Node Version Manager) para cambiar versiones
+nvm use 20
+
+# Verifique la versión activa
+node --version
+```
+
+Una vez completados estos pasos, tendrá el entorno básico de Moodify configurado y listo para la configuración inicial.

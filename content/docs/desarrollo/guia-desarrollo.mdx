@@ -1,0 +1,340 @@
+---
+title: Guía de Desarrollo
+Description: Guía completa para desarrolladores que desean contribuir al proyecto Moodify.
+---
+
+# Guía de Desarrollo
+
+Guía completa para desarrolladores que desean contribuir al proyecto Moodify.
+
+## Configuración del Entorno de Desarrollo
+
+### Requisitos del Sistema
+
+Antes de comenzar, asegúrese de tener instalados los siguientes componentes:
+
+- **Node.js**: Versión 20.x o superior
+- **npm**: Versión 9.x o superior (incluido con Node.js)
+- **pnpm**: Versión 8.x o superior (recomendado como gestor de paquetes)
+- **Git**: Versión 2.20 o superior
+- **Editor de Código**: VS Code (recomendado) u otro editor con soporte TypeScript
+
+### Clonación del Repositorio
+
+```bash
+# Clone el repositorio
+git clone https://github.com/josegarcia/moodify-fumadocs.git
+
+# Acceda al directorio del proyecto
+cd moodify-fumadocs
+```
+
+### Instalación de Dependencias
+
+```bash
+# Instale pnpm si aún no lo tiene
+npm install -g pnpm
+
+# Instale todas las dependencias del proyecto
+pnpm install
+```
+
+## Estructura del Proyecto
+
+```
+moodify-frontend/
+├── app/                    # Aplicación Next.js con App Router
+├── components/             # Componentes reutilizables de UI
+├── content/                # Contenido de documentación en MDX
+├── lib/                    # Lógica compartida y utilidades
+├── public/                 # Archivos estáticos públicos
+├── scripts/                # Scripts de automatización
+├── styles/                 # Estilos globales y configuración
+├── types/                  # Definiciones de tipos TypeScript
+├── .env.local             # Variables de entorno (no versionado)
+├── next.config.mjs        # Configuración de Next.js
+├── package.json           # Dependencias y scripts del proyecto
+├── pnpm-lock.yaml         # Bloqueo de versiones de dependencias
+├── postcss.config.mjs     # Configuración de PostCSS
+├── README.md              # Documentación principal del proyecto
+├── source.config.ts       # Configuración de Fumadocs
+└── tsconfig.json          # Configuración de TypeScript
+```
+
+## Scripts Disponibles
+
+### Desarrollo
+
+```bash
+# Iniciar servidor de desarrollo
+pnpm dev
+
+# Construir para producción
+pnpm build
+
+# Iniciar servidor de producción
+pnpm start
+
+# Linting de código
+pnpm lint
+
+# Formateo de código
+pnpm format
+```
+
+### Pruebas
+
+```bash
+# Ejecutar pruebas unitarias
+pnpm test
+
+# Ejecutar pruebas en modo watch
+pnpm test:watch
+
+# Ejecutar pruebas con cobertura
+pnpm test:coverage
+
+# Ejecutar pruebas E2E (si están configuradas)
+pnpm test:e2e
+```
+
+### Base de Datos
+
+```bash
+# Generar cliente Prisma
+pnpm db:generate
+
+# Sincronizar esquema con base de datos
+pnpm db:push
+
+# Abrir Prisma Studio
+pnpm db:studio
+
+# Ejecutar seed de datos
+pnpm db:seed
+```
+
+## Convenciones de Código
+
+### Estructura de Archivos
+
+1. **Componentes**: Usar PascalCase (`UserProfile.tsx`)
+2. **Hooks personalizados**: Usar `use` + PascalCase (`useAuth.ts`)
+3. **Utilidades**: Usar camelCase (`formatDate.ts`)
+4. **Constantes**: Usar UPPER_SNAKE_CASE (`API_ENDPOINTS.ts`)
+
+### Estilos y Clases CSS
+
+1. **Tailwind CSS**: Utilizar utilidades de Tailwind CSS
+2. **Clases personalizadas**: Prefijo con `moodify-` (`moodify-gradient-primary`)
+3. **Variants**: Utilizar sistema de variants de Tailwind
+
+### Importaciones
+
+1. **Alias de ruta**: `@/components/Button` en lugar de `../../components/Button`
+2. **Importaciones nombradas**: Preferir importaciones específicas
+3. **Orden de importaciones**: Librerías externas, luego internas, luego locales
+
+## Arquitectura del Proyecto
+
+### Patrón de Componentes
+
+Los componentes siguen el patrón de Atomic Design:
+- **Átomos**: Componentes básicos (botones, inputs, etc.)
+- **Moléculas**: Combinaciones de átomos (formularios, cards)
+- **Organismos**: Secciones completas de la interfaz
+- **Plantillas**: Estructuras de página
+- **Páginas**: Implementación específica de plantillas
+
+### Patrón de API
+
+Las rutas de API siguen esta estructura:
+```
+/api/
+├── auth/          # Autenticación y autorización
+├── user/          # Gestión de usuarios
+├── history/       # Historial de análisis
+├── recommendations/ # Recomendaciones musicales
+├── emotion/       # Detección de emociones
+├── music/         # Integración con música
+└── health/        # Verificación de salud del sistema
+```
+
+## Contribución al Proyecto
+
+### Proceso de Desarrollo
+
+1. **Fork del repositorio** (para contribuidores externos)
+2. **Crear rama de funcionalidad**: `git checkout -b feature/nueva-funcionalidad`
+3. **Realizar cambios**
+4. **Ejecutar pruebas**: `pnpm test`
+5. **Hacer commit**: Seguir convención de commits
+6. **Push a la rama**: `git push origin feature/nueva-funcionalidad`
+7. **Crear Pull Request**
+
+### Convención de Commits
+
+Seguimos el estándar de Conventional Commits:
+
+```
+<tipo>[ámbito opcional]: <descripción>
+
+[cuerpo opcional]
+
+[pie opcional]
+```
+
+**Tipos válidos**:
+- `feat`: Nueva funcionalidad
+- `fix`: Corrección de errores
+- `docs`: Cambios en documentación
+- `style`: Cambios de estilo (espacios, formato, etc.)
+- `refactor`: Refactorización de código
+- `test`: Adición o modificación de pruebas
+- `chore`: Cambios de mantenimiento
+
+**Ejemplos**:
+```
+feat(auth): añadir login con Spotify
+fix(api): corregir error en endpoint de recomendaciones
+docs(readme): actualizar guía de instalación
+style(button): mejorar espaciado en botones
+refactor(components): mover lógica de estado a hooks personalizados
+test(api): añadir pruebas para endpoints de autenticación
+chore(deps): actualizar dependencias
+```
+
+## Pruebas
+
+### Tipos de Pruebas
+
+1. **Unitarias**: Pruebas de componentes y funciones individuales
+2. **Integración**: Pruebas de interacción entre componentes
+3. **E2E**: Pruebas de extremo a extremo (si están configuradas)
+4. **Snapshot**: Pruebas de regresión visual
+
+### Ejecución de Pruebas
+
+```bash
+# Ejecutar todas las pruebas
+pnpm test
+
+# Ejecutar pruebas específicas
+pnpm test src/components/Button.test.tsx
+
+# Ejecutar pruebas en modo watch
+pnpm test:watch
+
+# Ejecutar pruebas con cobertura
+pnpm test:coverage
+```
+
+### Escribir Pruebas
+
+```typescript
+// Ejemplo de prueba unitaria
+import { render, screen } from '@testing-library/react'
+import { Button } from '@/components/ui/Button'
+
+describe('Button', () => {
+  it('renders correctly with text', () => {
+    render(<Button>Click me</Button>)
+    expect(screen.getByText('Click me')).toBeInTheDocument()
+  })
+
+  it('calls onClick when clicked', () => {
+    const handleClick = jest.fn()
+    render(<Button onClick={handleClick}>Click me</Button>)
+    
+    screen.getByRole('button').click()
+    expect(handleClick).toHaveBeenCalledTimes(1)
+  })
+})
+```
+
+## Despliegue
+
+### Variables de Entorno para Producción
+
+```bash
+# Configuración de autenticación NextAuth
+NEXTAUTH_SECRET=secreto_seguro_para_producción
+NEXTAUTH_URL=https://su-dominio.com
+
+# Credenciales de Spotify API
+SPOTIFY_CLIENT_ID=cliente_id_de_producción
+SPOTIFY_CLIENT_SECRET=cliente_secret_de_producción
+
+# Configuración de base de datos
+DATABASE_URL=postgresql://usuario:contraseña@host:puerto/base_de_datos
+
+# Configuración adicional
+NODE_ENV=production
+```
+
+### Plataformas de Despliegue
+
+#### Vercel (Recomendado)
+
+1. **Conectar repositorio** a Vercel
+2. **Configurar variables de entorno** en el dashboard de Vercel
+3. **Seleccionar rama principal** para despliegues automáticos
+4. **Configurar dominio personalizado** (opcional)
+
+#### Otros Proveedores
+
+- **Netlify**: Compatible con Next.js
+- **AWS**: Usar AWS Amplify o EC2 con Docker
+- **Google Cloud**: Usar Cloud Run o App Engine
+- **DigitalOcean**: Usar App Platform
+
+## Solución de Problemas
+
+### Problemas Comunes de Desarrollo
+
+#### Error de Dependencias
+
+```bash
+# Limpiar e reinstalar dependencias
+rm -rf node_modules .next
+pnpm install
+pnpm build
+```
+
+#### Problemas de TypeScript
+
+```bash
+# Limpiar caché de TypeScript
+pnpm exec tsc --build --clean
+pnpm build
+```
+
+#### Problemas de Prisma
+
+```bash
+# Regenerar cliente Prisma
+pnpm db:generate
+```
+
+#### Problemas de Entorno
+
+```bash
+# Verificar variables de entorno
+echo $NEXTAUTH_SECRET
+echo $SPOTIFY_CLIENT_ID
+```
+
+### Logs y Depuración
+
+```bash
+# Ver logs de desarrollo
+pnpm dev
+
+# Ver logs de producción
+pnpm start
+
+# Ver logs detallados
+NEXT_DEBUG=true pnpm dev
+```
+
+Esta guía proporciona toda la información necesaria para cualquier desarrollador que quiera contribuir al proyecto Moodify o mantenerlo en el futuro.

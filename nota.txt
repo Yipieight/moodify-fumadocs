@@ -1,0 +1,1653 @@
+openapi: 3.1.0
+info:
+  title: Moodify API
+  version: 1.0.0
+  description: |
+    REST API for emotion-based music recommendation system. Moodify analyzes facial expressions to detect emotions and provides personalized music recommendations based on detected moods.
+    
+    ## Features
+    - 🎭 Facial emotion detection (7 emotions)
+    - 🎵 Spotify-powered music recommendations
+    - 📊 Advanced analytics and insights
+    - 🔐 Secure authentication via NextAuth.js
+    - 📱 Real-time emotion tracking
+  contact:
+    name: Moodify Development Team
+  license:
+    name: MIT
+    identifier: MIT
+
+servers:
+  - url: http://localhost:3000/api
+    description: Production server
+  - url: http://localhost:3000/api
+    description: Local development server
+  - url: http://localhost:3000/api
+    description: Staging server
+
+tags:
+  - name: Authentication
+    description: User authentication and registration endpoints
+  - name: Health
+    description: System health monitoring endpoints
+  - name: User Profile
+    description: User profile management
+  - name: History
+    description: Emotion analysis and recommendation history
+  - name: Analytics
+    description: User analytics and insights
+  - name: Recommendations
+    description: Music recommendation generation
+  - name: Music Search
+    description: Spotify music search and track details
+  - name: Emotion Detection
+    description: Server-side facial emotion analysis endpoints
+
+security:
+  - bearerAuth: []
+  - cookieAuth: []
+
+paths:
+  /auth/register:
+    post:
+      tags:
+        - Authentication
+      summary: Register a new user
+      description: Creates a new user account with credentials-based authentication
+      operationId: registerUser
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RegisterRequest'
+            examples:
+              validRegistration:
+                summary: Valid registration request
+                value:
+                  name: John Doe
+                  email: john.doe@example.com
+                  password: SecurePass123!
+      responses:
+        '201':
+          description: User registered successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RegisterResponse'
+              examples:
+                success:
+                  summary: Successful registration
+                  value:
+                    message: User registered successfully
+                    user:
+                      id: 550e8400-e29b-41d4-a716-446655440000
+                      name: John Doe
+                      email: john.doe@example.com
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '409':
+          description: User already exists
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                duplicate:
+                  summary: Duplicate email
+                  value:
+                    message: User with this email already exists
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+  /health:
+    get:
+      tags:
+        - Health
+      summary: System health check
+      description: Provides comprehensive system health status for monitoring and load balancers
+      operationId: getHealth
+      security: []
+      responses:
+        '200':
+          description: System is healthy
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HealthResponse'
+              examples:
+                healthy:
+                  summary: Healthy system
+                  value:
+                    status: healthy
+                    timestamp: '2025-10-20T12:00:00.000Z'
+                    uptime: 86400
+                    version: 1.0.0
+                    environment: production
+                    checks:
+                      server: ok
+                      memory:
+                        rss: 256
+                        heapTotal: 128
+                        heapUsed: 64
+                        external: 8
+                      env:
+                        status: ok
+        '503':
+          description: System is unhealthy
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnhealthyResponse'
+              examples:
+                unhealthy:
+                  summary: Unhealthy system
+                  value:
+                    status: unhealthy
+                    timestamp: '2025-10-20T12:00:00.000Z'
+                    error: Missing required environment variables
+
+  /user/profile:
+    get:
+      tags:
+        - User Profile
+      summary: Get user profile
+      description: Retrieves authenticated user's profile information
+      operationId: getUserProfile
+      responses:
+        '200':
+          description: User profile retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserProfileResponse'
+              examples:
+                success:
+                  summary: User profile
+                  value:
+                    user:
+                      id: 550e8400-e29b-41d4-a716-446655440000
+                      name: John Doe
+                      email: john.doe@example.com
+                      image: https://example.com/avatar.jpg
+                      bio: Music enthusiast and emotion tracker
+                      favoriteGenres:
+                        - Pop
+                        - Rock
+                        - Jazz
+                      joinDate: '2024-01-15T10:30:00.000Z'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+    
+    put:
+      tags:
+        - User Profile
+      summary: Update user profile
+      description: Updates authenticated user's profile information
+      operationId: updateUserProfile
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateProfileRequest'
+            examples:
+              updateProfile:
+                summary: Update profile
+                value:
+                  name: John Doe Updated
+                  email: john.doe.updated@example.com
+                  bio: Updated bio with more details
+                  favoriteGenres:
+                    - Electronic
+                    - Classical
+      responses:
+        '200':
+          description: Profile updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdateProfileResponse'
+              examples:
+                success:
+                  summary: Updated profile
+                  value:
+                    message: Profile updated successfully
+                    user:
+                      id: 550e8400-e29b-41d4-a716-446655440000
+                      name: John Doe Updated
+                      email: john.doe.updated@example.com
+                      image: https://example.com/avatar.jpg
+                      bio: Updated bio with more details
+                      favoriteGenres:
+                        - Electronic
+                        - Classical
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+  /history:
+    get:
+      tags:
+        - History
+      summary: Get user history
+      description: Retrieves user's emotion analysis and music recommendation history with pagination and filtering
+      operationId: getUserHistory
+      parameters:
+        - $ref: '#/components/parameters/HistoryType'
+        - $ref: '#/components/parameters/Limit'
+        - $ref: '#/components/parameters/Page'
+        - $ref: '#/components/parameters/StartDate'
+        - $ref: '#/components/parameters/EndDate'
+      responses:
+        '200':
+          description: History retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HistoryResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+    
+    post:
+      tags:
+        - History
+      summary: Create history entry
+      description: Saves a new emotion analysis or music recommendation to user's history
+      operationId: createHistoryEntry
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateHistoryRequest'
+            examples:
+              emotionEntry:
+                summary: Emotion analysis entry
+                value:
+                  type: emotion
+                  data:
+                    emotion: happy
+                    confidence: 0.85
+                    allEmotions:
+                      happy: 0.85
+                      sad: 0.05
+                      neutral: 0.10
+              recommendationEntry:
+                summary: Recommendation entry
+                value:
+                  type: recommendation
+                  data:
+                    emotion: happy
+                    tracks:
+                      - id: 3n3Ppam7vgaVa1iaRUc9Lp
+                        name: Mr. Brightside
+                        artist: The Killers
+                        album: Hot Fuss
+                        spotifyUrl: https://open.spotify.com/track/3n3Ppam7vgaVa1iaRUc9Lp
+                        imageUrl: https://i.scdn.co/image/ab67616d0000b273ccdddd46119a4ff53eaf1f5d
+                        duration: 222
+                        popularity: 92
+      responses:
+        '200':
+          description: History entry created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateHistoryResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+    
+    delete:
+      tags:
+        - History
+      summary: Delete history entry
+      description: Deletes a specific history entry by ID
+      operationId: deleteHistoryEntry
+      parameters:
+        - name: id
+          in: query
+          required: true
+          description: History entry ID to delete
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: History entry deleted successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: History entry deleted successfully
+        '400':
+          description: Missing entry ID
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                missingId:
+                  value:
+                    success: false
+                    error: Entry ID is required
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          description: History entry not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                notFound:
+                  value:
+                    success: false
+                    error: History entry not found
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+  /history/analytics:
+    get:
+      tags:
+        - Analytics
+      summary: Get analytics data
+      description: Provides comprehensive analytics on user's emotion patterns, activity trends, and music preferences
+      operationId: getAnalytics
+      parameters:
+        - name: timeRange
+          in: query
+          description: Number of days to analyze
+          schema:
+            type: integer
+            default: 30
+            minimum: 1
+            maximum: 365
+          example: 30
+      responses:
+        '200':
+          description: Analytics data retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AnalyticsResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+  /recommendations:
+    post:
+      tags:
+        - Recommendations
+      summary: Generate recommendations (Legacy)
+      description: Generates music recommendations based on detected emotion. This is the legacy endpoint maintained for backward compatibility.
+      operationId: generateRecommendations
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RecommendationRequest'
+            examples:
+              happyRecommendation:
+                summary: Happy emotion recommendation
+                value:
+                  emotion: happy
+                  confidence: 0.92
+                  limit: 10
+                  userPreferences:
+                    genres:
+                      - pop
+                      - dance
+                    excludeExplicit: false
+      responses:
+        '200':
+          description: Recommendations generated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RecommendationResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+    
+    get:
+      tags:
+        - Recommendations
+      summary: Get recommendations by emotion
+      description: Retrieves music recommendations for a specific emotion via GET request
+      operationId: getRecommendationsByEmotion
+      parameters:
+        - name: emotion
+          in: query
+          required: true
+          description: Emotion type for recommendations
+          schema:
+            $ref: '#/components/schemas/EmotionType'
+        - name: limit
+          in: query
+          description: Number of tracks to return
+          schema:
+            type: integer
+            default: 20
+            minimum: 1
+            maximum: 50
+      responses:
+        '200':
+          description: Recommendations retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RecommendationResponse'
+        '400':
+          description: Invalid or missing emotion
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                invalidEmotion:
+                  value:
+                    message: Valid emotion parameter required
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+  /music/recommendations:
+    post:
+      tags:
+        - Recommendations
+      summary: Generate music recommendations
+      description: Enhanced music recommendation endpoint with database persistence and analytics tracking
+      operationId: generateMusicRecommendations
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RecommendationRequest'
+            examples:
+              sadRecommendation:
+                summary: Sad emotion recommendation
+                value:
+                  emotion: sad
+                  confidence: 0.78
+                  limit: 15
+      responses:
+        '200':
+          description: Recommendations generated and saved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RecommendationResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+  /music/search:
+    get:
+      tags:
+        - Music Search
+      summary: Search tracks
+      description: Searches for music tracks using Spotify's search API
+      operationId: searchTracks
+      parameters:
+        - name: q
+          in: query
+          description: Search query (alias for query parameter)
+          schema:
+            type: string
+            minLength: 1
+            maxLength: 100
+        - name: query
+          in: query
+          description: Search query
+          schema:
+            type: string
+            minLength: 1
+            maxLength: 100
+        - name: limit
+          in: query
+          description: Number of results to return
+          schema:
+            type: integer
+            default: 20
+            minimum: 1
+            maximum: 50
+      responses:
+        '200':
+          description: Search results retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SearchResponse'
+              examples:
+                searchResults:
+                  summary: Search results
+                  value:
+                    success: true
+                    data:
+                      query: happy songs
+                      tracks:
+                        - id: 3n3Ppam7vgaVa1iaRUc9Lp
+                          name: Mr. Brightside
+                          artist: The Killers
+                          album: Hot Fuss
+                          duration: 222
+                          spotifyUrl: https://open.spotify.com/track/3n3Ppam7vgaVa1iaRUc9Lp
+                          imageUrl: https://i.scdn.co/image/ab67616d0000b273ccdddd46119a4ff53eaf1f5d
+                          popularity: 92
+                      totalTracks: 1
+                      searchedAt: '2025-10-20T12:00:00.000Z'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+  /music/tracks/{trackId}:
+    get:
+      tags:
+        - Music Search
+      summary: Get track details
+      description: Retrieves detailed information about a specific Spotify track
+      operationId: getTrackDetails
+      parameters:
+        - name: trackId
+          in: path
+          required: true
+          description: Spotify track ID
+          schema:
+            type: string
+          example: 3n3Ppam7vgaVa1iaRUc9Lp
+      responses:
+        '200':
+          description: Track details retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TrackDetailsResponse'
+              examples:
+                trackDetails:
+                  summary: Track details
+                  value:
+                    success: true
+                    data:
+                      id: 3n3Ppam7vgaVa1iaRUc9Lp
+                      name: Mr. Brightside
+                      artist: The Killers
+                      album: Hot Fuss
+                      duration: 222
+                      spotifyUrl: https://open.spotify.com/track/3n3Ppam7vgaVa1iaRUc9Lp
+                      imageUrl: https://i.scdn.co/image/ab67616d0000b273ccdddd46119a4ff53eaf1f5d
+                      popularity: 92
+        '400':
+          description: Missing track ID
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                missingId:
+                  value:
+                    message: Track ID is required
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          description: Track not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                notFound:
+                  value:
+                    message: Track not found
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: JWT token obtained from NextAuth.js authentication
+    cookieAuth:
+      type: apiKey
+      in: cookie
+      name: next-auth.session-token
+      description: Session cookie set by NextAuth.js
+
+  parameters:
+    HistoryType:
+      name: type
+      in: query
+      description: Filter by entry type
+      schema:
+        type: string
+        enum:
+          - emotion
+          - recommendation
+          - all
+        default: all
+    
+    Limit:
+      name: limit
+      in: query
+      description: Number of records per page
+      schema:
+        type: integer
+        default: 20
+        minimum: 1
+        maximum: 100
+    
+    Page:
+      name: page
+      in: query
+      description: Page number for pagination
+      schema:
+        type: integer
+        default: 1
+        minimum: 1
+    
+    StartDate:
+      name: startDate
+      in: query
+      description: Filter records after this date
+      schema:
+        type: string
+        format: date-time
+      example: '2024-01-01T00:00:00.000Z'
+    
+    EndDate:
+      name: endDate
+      in: query
+      description: Filter records before this date
+      schema:
+        type: string
+        format: date-time
+      example: '2024-12-31T23:59:59.999Z'
+
+  responses:
+    BadRequest:
+      description: Invalid input data
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ValidationError'
+          examples:
+            validationError:
+              summary: Validation error
+              value:
+                message: Invalid input data
+                errors:
+                  - path:
+                      - email
+                    message: Invalid email format
+                    code: invalid_string
+    
+    Unauthorized:
+      description: Unauthorized - Missing or invalid authentication
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          examples:
+            unauthorized:
+              summary: Not authenticated
+              value:
+                message: Unauthorized
+    
+    InternalServerError:
+      description: Internal server error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          examples:
+            serverError:
+              summary: Server error
+              value:
+                message: Internal server error
+
+  schemas:
+    EmotionType:
+      type: string
+      enum:
+        - happy
+        - sad
+        - angry
+        - surprised
+        - neutral
+        - fear
+        - disgust
+      description: Detected facial emotion type
+    
+    Track:
+      type: object
+      required:
+        - id
+        - name
+        - artist
+        - album
+        - duration
+        - spotifyUrl
+      properties:
+        id:
+          type: string
+          description: Spotify track ID
+          example: 3n3Ppam7vgaVa1iaRUc9Lp
+        name:
+          type: string
+          description: Track name
+          example: Mr. Brightside
+        artist:
+          type: string
+          description: Artist name
+          example: The Killers
+        album:
+          type: string
+          description: Album name
+          example: Hot Fuss
+        duration:
+          type: integer
+          description: Track duration in seconds
+          example: 222
+        previewUrl:
+          type: string
+          nullable: true
+          description: 30-second preview URL
+          example: https://p.scdn.co/mp3-preview/...
+        imageUrl:
+          type: string
+          description: Album artwork URL
+          example: https://i.scdn.co/image/ab67616d0000b273ccdddd46119a4ff53eaf1f5d
+        spotifyUrl:
+          type: string
+          description: Full Spotify track URL
+          example: https://open.spotify.com/track/3n3Ppam7vgaVa1iaRUc9Lp
+        popularity:
+          type: integer
+          description: Popularity score (0-100)
+          minimum: 0
+          maximum: 100
+          example: 92
+    
+    Pagination:
+      type: object
+      required:
+        - total
+        - page
+        - limit
+        - hasMore
+        - totalPages
+      properties:
+        total:
+          type: integer
+          description: Total number of records
+          example: 150
+        page:
+          type: integer
+          description: Current page number
+          example: 1
+        limit:
+          type: integer
+          description: Records per page
+          example: 20
+        hasMore:
+          type: boolean
+          description: Whether additional pages exist
+          example: true
+        totalPages:
+          type: integer
+          description: Total number of pages
+          example: 8
+    
+    Error:
+      type: object
+      required:
+        - message
+      properties:
+        success:
+          type: boolean
+          example: false
+        message:
+          type: string
+          description: Human-readable error message
+          example: Internal server error
+        error:
+          type: string
+          description: Error identifier
+          example: INTERNAL_ERROR
+    
+    ValidationError:
+      type: object
+      required:
+        - message
+        - errors
+      properties:
+        message:
+          type: string
+          description: General error message
+          example: Invalid input data
+        errors:
+          type: array
+          description: Detailed validation errors from Zod
+          items:
+            type: object
+            properties:
+              path:
+                type: array
+                items:
+                  type: string
+                description: Field path that failed validation
+                example:
+                  - email
+              message:
+                type: string
+                description: Validation error message
+                example: Invalid email format
+              code:
+                type: string
+                description: Error code
+                example: invalid_string
+    
+    RegisterRequest:
+      type: object
+      required:
+        - name
+        - email
+        - password
+      properties:
+        name:
+          type: string
+          minLength: 2
+          maxLength: 50
+          description: User's full name
+          example: John Doe
+        email:
+          type: string
+          format: email
+          description: User's email address
+          example: john.doe@example.com
+        password:
+          type: string
+          minLength: 8
+          description: User's password (will be hashed)
+          example: SecurePass123!
+    
+    RegisterResponse:
+      type: object
+      required:
+        - message
+        - user
+      properties:
+        message:
+          type: string
+          example: User registered successfully
+        user:
+          type: object
+          required:
+            - id
+            - name
+            - email
+          properties:
+            id:
+              type: string
+              format: uuid
+              description: Generated user ID
+              example: 550e8400-e29b-41d4-a716-446655440000
+            name:
+              type: string
+              example: John Doe
+            email:
+              type: string
+              format: email
+              example: john.doe@example.com
+    
+    HealthResponse:
+      type: object
+      required:
+        - status
+        - timestamp
+        - uptime
+        - version
+        - environment
+        - checks
+      properties:
+        status:
+          type: string
+          enum:
+            - healthy
+          example: healthy
+        timestamp:
+          type: string
+          format: date-time
+          example: '2025-10-20T12:00:00.000Z'
+        uptime:
+          type: number
+          description: Server uptime in seconds
+          example: 86400
+        version:
+          type: string
+          description: Application version
+          example: 1.0.0
+        environment:
+          type: string
+          description: Runtime environment
+          example: production
+        checks:
+          type: object
+          required:
+            - server
+            - memory
+            - env
+          properties:
+            server:
+              type: string
+              example: ok
+            memory:
+              type: object
+              required:
+                - rss
+                - heapTotal
+                - heapUsed
+                - external
+              properties:
+                rss:
+                  type: integer
+                  description: Resident Set Size in MB
+                  example: 256
+                heapTotal:
+                  type: integer
+                  description: Total heap size in MB
+                  example: 128
+                heapUsed:
+                  type: integer
+                  description: Used heap size in MB
+                  example: 64
+                external:
+                  type: integer
+                  description: External memory in MB
+                  example: 8
+            env:
+              type: object
+              required:
+                - status
+              properties:
+                status:
+                  type: string
+                  example: ok
+                missing:
+                  type: array
+                  items:
+                    type: string
+                  description: Missing required environment variables
+    
+    UnhealthyResponse:
+      type: object
+      required:
+        - status
+        - timestamp
+        - error
+      properties:
+        status:
+          type: string
+          enum:
+            - unhealthy
+          example: unhealthy
+        timestamp:
+          type: string
+          format: date-time
+          example: '2025-10-20T12:00:00.000Z'
+        error:
+          type: string
+          description: Error message
+          example: Missing required environment variables
+    
+    UserProfileResponse:
+      type: object
+      required:
+        - user
+      properties:
+        user:
+          type: object
+          required:
+            - id
+            - name
+            - email
+            - bio
+            - favoriteGenres
+            - joinDate
+          properties:
+            id:
+              type: string
+              format: uuid
+              example: 550e8400-e29b-41d4-a716-446655440000
+            name:
+              type: string
+              example: John Doe
+            email:
+              type: string
+              format: email
+              example: john.doe@example.com
+            image:
+              type: string
+              nullable: true
+              description: Profile image URL
+              example: https://example.com/avatar.jpg
+            bio:
+              type: string
+              description: User biography
+              example: Music enthusiast and emotion tracker
+            favoriteGenres:
+              type: array
+              items:
+                type: string
+              description: Preferred music genres
+              example:
+                - Pop
+                - Rock
+                - Jazz
+            joinDate:
+              type: string
+              format: date-time
+              description: Account creation date
+              example: '2024-01-15T10:30:00.000Z'
+    
+    UpdateProfileRequest:
+      type: object
+      required:
+        - name
+        - email
+      properties:
+        name:
+          type: string
+          minLength: 2
+          maxLength: 50
+          description: User's full name
+          example: John Doe Updated
+        email:
+          type: string
+          format: email
+          description: User's email address
+          example: john.doe.updated@example.com
+        bio:
+          type: string
+          maxLength: 200
+          description: User biography
+          example: Updated bio with more details
+        favoriteGenres:
+          type: array
+          items:
+            type: string
+          description: Preferred music genres
+          example:
+            - Electronic
+            - Classical
+    
+    UpdateProfileResponse:
+      type: object
+      required:
+        - message
+        - user
+      properties:
+        message:
+          type: string
+          example: Profile updated successfully
+        user:
+          type: object
+          required:
+            - id
+            - name
+            - email
+            - bio
+            - favoriteGenres
+          properties:
+            id:
+              type: string
+              format: uuid
+              example: 550e8400-e29b-41d4-a716-446655440000
+            name:
+              type: string
+              example: John Doe Updated
+            email:
+              type: string
+              format: email
+              example: john.doe.updated@example.com
+            image:
+              type: string
+              nullable: true
+              example: https://example.com/avatar.jpg
+            bio:
+              type: string
+              example: Updated bio with more details
+            favoriteGenres:
+              type: array
+              items:
+                type: string
+              example:
+                - Electronic
+                - Classical
+    
+    HistoryItem:
+      type: object
+      required:
+        - id
+        - type
+        - data
+        - createdAt
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: History entry ID
+          example: 660e8400-e29b-41d4-a716-446655440000
+        type:
+          type: string
+          enum:
+            - emotion
+            - recommendation
+          description: Entry type
+          example: emotion
+        data:
+          oneOf:
+            - $ref: '#/components/schemas/EmotionHistoryData'
+            - $ref: '#/components/schemas/RecommendationHistoryData'
+        createdAt:
+          type: string
+          format: date-time
+          description: Creation timestamp
+          example: '2025-10-20T12:00:00.000Z'
+    
+    EmotionHistoryData:
+      type: object
+      required:
+        - emotion
+        - confidence
+        - timestamp
+      properties:
+        emotion:
+          $ref: '#/components/schemas/EmotionType'
+        confidence:
+          type: number
+          minimum: 0
+          maximum: 1
+          description: Confidence score
+          example: 0.85
+        timestamp:
+          type: string
+          format: date-time
+          description: Detection timestamp
+          example: '2025-10-20T12:00:00.000Z'
+    
+    RecommendationHistoryData:
+      type: object
+      required:
+        - emotion
+        - tracks
+        - timestamp
+      properties:
+        emotion:
+          $ref: '#/components/schemas/EmotionType'
+        tracks:
+          type: array
+          items:
+            $ref: '#/components/schemas/Track'
+          description: Recommended tracks
+          minItems: 1
+        timestamp:
+          type: string
+          format: date-time
+          description: Recommendation timestamp
+          example: '2025-10-20T12:00:00.000Z'
+    
+    HistoryResponse:
+      type: object
+      required:
+        - success
+        - data
+      properties:
+        success:
+          type: boolean
+          example: true
+        data:
+          type: object
+          required:
+            - history
+            - pagination
+          properties:
+            history:
+              type: array
+              items:
+                $ref: '#/components/schemas/HistoryItem'
+            pagination:
+              $ref: '#/components/schemas/Pagination'
+    
+    CreateHistoryRequest:
+      type: object
+      required:
+        - type
+        - data
+      properties:
+        type:
+          type: string
+          enum:
+            - emotion
+            - recommendation
+          description: Entry type
+        data:
+          type: object
+          required:
+            - emotion
+          properties:
+            emotion:
+              $ref: '#/components/schemas/EmotionType'
+            confidence:
+              type: number
+              minimum: 0
+              maximum: 1
+              description: Confidence score (for emotion entries)
+              example: 0.85
+            allEmotions:
+              type: object
+              additionalProperties:
+                type: number
+              description: All emotion scores (for emotion entries)
+              example:
+                happy: 0.85
+                sad: 0.05
+                neutral: 0.10
+            tracks:
+              type: array
+              items:
+                $ref: '#/components/schemas/Track'
+              description: Track list (for recommendation entries)
+              minItems: 1
+            timestamp:
+              type: string
+              format: date-time
+              description: Entry timestamp
+    
+    CreateHistoryResponse:
+      type: object
+      required:
+        - success
+        - data
+        - message
+      properties:
+        success:
+          type: boolean
+          example: true
+        data:
+          $ref: '#/components/schemas/HistoryItem'
+        message:
+          type: string
+          example: Emotion analysis saved successfully
+    
+    AnalyticsResponse:
+      type: object
+      required:
+        - success
+        - data
+      properties:
+        success:
+          type: boolean
+          example: true
+        data:
+          type: object
+          required:
+            - totalAnalyses
+            - totalRecommendations
+            - averageAnalysesPerDay
+            - emotionDistribution
+            - mostCommonEmotion
+            - sentimentAnalysis
+            - weeklyData
+            - dailyTrends
+            - musicPreferences
+            - activityPatterns
+          properties:
+            totalAnalyses:
+              type: integer
+              description: Total emotion analyses in period
+              example: 150
+            totalRecommendations:
+              type: integer
+              description: Total recommendations in period
+              example: 75
+            averageAnalysesPerDay:
+              type: number
+              description: Average daily analyses
+              example: 5.0
+            emotionDistribution:
+              type: object
+              description: Count of each emotion type
+              required:
+                - happy
+                - sad
+                - angry
+                - surprised
+                - neutral
+                - fear
+                - disgust
+              properties:
+                happy:
+                  type: integer
+                  example: 50
+                sad:
+                  type: integer
+                  example: 20
+                angry:
+                  type: integer
+                  example: 10
+                surprised:
+                  type: integer
+                  example: 15
+                neutral:
+                  type: integer
+                  example: 40
+                fear:
+                  type: integer
+                  example: 8
+                disgust:
+                  type: integer
+                  example: 7
+            mostCommonEmotion:
+              $ref: '#/components/schemas/EmotionType'
+            sentimentAnalysis:
+              type: object
+              description: Sentiment breakdown
+              required:
+                - positive
+                - negative
+                - neutral
+              properties:
+                positive:
+                  type: integer
+                  description: Positive sentiment percentage
+                  example: 43
+                negative:
+                  type: integer
+                  description: Negative sentiment percentage
+                  example: 30
+                neutral:
+                  type: integer
+                  description: Neutral sentiment percentage
+                  example: 27
+            weeklyData:
+              type: array
+              description: Weekly aggregated data
+              items:
+                type: object
+                required:
+                  - week
+                  - count
+                  - emotions
+                properties:
+                  week:
+                    type: string
+                    format: date
+                    description: Week start date
+                    example: '2024-10-14'
+                  count:
+                    type: integer
+                    description: Total analyses in week
+                    example: 35
+                  emotions:
+                    type: object
+                    description: Emotion distribution for week
+                    additionalProperties:
+                      type: integer
+            dailyTrends:
+              type: array
+              description: Daily trends
+              items:
+                type: object
+                required:
+                  - date
+                  - count
+                  - primaryEmotion
+                properties:
+                  date:
+                    type: string
+                    format: date
+                    description: Date
+                    example: '2024-10-20'
+                  count:
+                    type: integer
+                    description: Total analyses on date
+                    example: 7
+                  primaryEmotion:
+                    $ref: '#/components/schemas/EmotionType'
+            musicPreferences:
+              type: object
+              description: Music listening patterns
+              required:
+                - genresByEmotion
+                - popularTracks
+              properties:
+                genresByEmotion:
+                  type: object
+                  description: Genres categorized by emotion
+                  additionalProperties:
+                    type: array
+                    items:
+                      type: string
+                popularTracks:
+                  type: array
+                  description: Most played tracks
+                  items:
+                    type: object
+                    required:
+                      - name
+                      - artist
+                      - playCount
+                    properties:
+                      name:
+                        type: string
+                        example: Mr. Brightside
+                      artist:
+                        type: string
+                        example: The Killers
+                      playCount:
+                        type: integer
+                        example: 15
+            activityPatterns:
+              type: object
+              description: User activity patterns
+              required:
+                - hourlyDistribution
+                - dayOfWeekDistribution
+                - peakActivityHour
+                - peakActivityDay
+              properties:
+                hourlyDistribution:
+                  type: array
+                  description: Activity count per hour (24 elements)
+                  items:
+                    type: integer
+                  minItems: 24
+                  maxItems: 24
+                  example: [0, 0, 0, 0, 0, 0, 2, 5, 8, 12, 15, 18, 20, 16, 14, 10, 8, 6, 4, 3, 2, 1, 0, 0]
+                dayOfWeekDistribution:
+                  type: array
+                  description: Activity count per day (7 elements)
+                  items:
+                    type: integer
+                  minItems: 7
+                  maxItems: 7
+                  example: [5, 25, 30, 28, 26, 22, 14]
+                peakActivityHour:
+                  type: integer
+                  description: Hour with most activity (0-23)
+                  minimum: 0
+                  maximum: 23
+                  example: 12
+                peakActivityDay:
+                  type: string
+                  description: Day with most activity
+                  example: Tuesday
+    
+    RecommendationRequest:
+      type: object
+      required:
+        - emotion
+      properties:
+        emotion:
+          $ref: '#/components/schemas/EmotionType'
+        confidence:
+          type: number
+          minimum: 0
+          maximum: 1
+          description: Confidence score
+          example: 0.92
+        limit:
+          type: integer
+          minimum: 1
+          maximum: 50
+          default: 20
+          description: Number of tracks to return
+          example: 10
+        userPreferences:
+          type: object
+          description: User preferences for recommendations
+          properties:
+            genres:
+              type: array
+              items:
+                type: string
+              description: Preferred genres
+              example:
+                - pop
+                - dance
+            excludeExplicit:
+              type: boolean
+              default: false
+              description: Exclude explicit content
+              example: false
+    
+    RecommendationResponse:
+      type: object
+      required:
+        - success
+        - data
+      properties:
+        success:
+          type: boolean
+          example: true
+        data:
+          type: object
+          required:
+            - emotion
+            - tracks
+            - generatedAt
+            - totalTracks
+          properties:
+            emotion:
+              $ref: '#/components/schemas/EmotionType'
+            confidence:
+              type: number
+              minimum: 0
+              maximum: 1
+              description: Confidence score
+              example: 0.92
+            tracks:
+              type: array
+              items:
+                $ref: '#/components/schemas/Track'
+              description: Recommended tracks
+            generatedAt:
+              type: string
+              format: date-time
+              description: Generation timestamp
+              example: '2025-10-20T12:00:00.000Z'
+            totalTracks:
+              type: integer
+              description: Number of tracks returned
+              example: 10
+            fallback:
+              type: boolean
+              description: True if fallback recommendations used
+              example: false
+            message:
+              type: string
+              description: Additional information
+              example: Using fallback recommendations due to service unavailability
+    
+    SearchResponse:
+      type: object
+      required:
+        - success
+        - data
+      properties:
+        success:
+          type: boolean
+          example: true
+        data:
+          type: object
+          required:
+            - query
+            - tracks
+            - totalTracks
+            - searchedAt
+          properties:
+            query:
+              type: string
+              description: Search query used
+              example: happy songs
+            tracks:
+              type: array
+              items:
+                $ref: '#/components/schemas/Track'
+              description: Matching tracks
+            totalTracks:
+              type: integer
+              description: Number of tracks returned
+              example: 15
+            searchedAt:
+              type: string
+              format: date-time
+              description: Search timestamp
+              example: '2025-10-20T12:00:00.000Z'
+    
+    TrackDetailsResponse:
+      type: object
+      required:
+        - success
+        - data
+      properties:
+        success:
+          type: boolean
+          example: true
+        data:
+          $ref: '#/components/schemas/Track'
+

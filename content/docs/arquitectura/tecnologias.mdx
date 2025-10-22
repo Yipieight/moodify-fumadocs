@@ -1,0 +1,170 @@
+---
+title: "Tecnologías y Frameworks Utilizados"
+description: "Documentación de las tecnologías y frameworks utilizados en Moodify"
+---
+# Tecnologías y Frameworks Utilizados
+
+Moodify emplea una pila tecnológica moderna y robusta que combina las mejores herramientas del ecosistema JavaScript/TypeScript para ofrecer una experiencia de usuario excepcional.
+
+## Framework Principal - Next.js 15
+
+### Características Clave
+- **App Router**: Nueva arquitectura de enrutamiento basada en carpetas
+- **Server Components**: Renderizado parcial en servidor para mejor rendimiento
+- **Turbopack**: Nuevo bundler escrito en Rust para compilación ultra rápida
+- **React 19**: Última versión de React con mejoras de rendimiento y nuevas APIs
+- **Partial Prerendering**: Combinación de SSG y SSR para carga instantánea
+
+### Ventajas para Moodify
+- **SEO Optimizado**: Indexación perfecta para contenido público
+- **Performance Excellence**: Tiempos de carga mínimos gracias a Server Components
+- **Streaming SSR**: Renderizado progresivo para experiencias de usuario fluidas
+- **Built-in Optimizations**: Compresión automática de imágenes, división de código
+
+## Framework de Documentación - Fumadocs
+
+### Componentes Principales
+- **fumadocs-core**: Motor principal de documentación
+- **fumadocs-mdx**: Soporte para contenido MDX avanzado
+- **fumadocs-openapi**: Integración automática con especificaciones OpenAPI
+- **fumadocs-ui**: Componentes de interfaz optimizados para documentación
+
+### Características Destacadas
+- **Navegación Inteligente**: Búsqueda semántica y navegación contextual
+- **Modo Oscuro/Natural**: Soporte automático para preferencias del sistema
+- **Responsive Design**: Documentación óptima en todos los dispositivos
+- **Code Highlighting**: Soporte para más de 100 lenguajes con Shiki
+
+## Estilado - Tailwind CSS v4
+
+### Innovaciones en v4
+- **CSS Native**: Eliminación de PostCSS para compilación más rápida
+- **Arbitrary Values**: Valores personalizados directamente en clases
+- **Native Nesting**: Soporte para anidamiento CSS nativo
+- **Improved DX**: Mejor experiencia de desarrollo con autocompletado mejorado
+
+### Beneficios para Moodify
+- **Consistencia Visual**: Sistema de diseño unificado en toda la aplicación
+- **Mantenibilidad**: Clases utilitarias descriptivas y auto-documentadas
+- **Performance**: Purging automático de estilos no utilizados
+- **Personalización**: Temas fácilmente configurables y extensibles
+
+## Tipado Estático - TypeScript 5.9
+
+### Nuevas Características
+- **Improved Decorators**: Soporte mejorado para decoradores
+- **Organic Intersections**: Mejor manejo de tipos intersección
+- **Enhanced JSX**: Soporte para nuevas características JSX
+- **Better Inference**: Inferencia de tipos más precisa
+
+### Ventajas para el Proyecto
+- **Prevención de Errores**: Detección temprana de errores de tipo
+- **Autocompletado Inteligente**: IDEs con sugerencias precisas basadas en tipos
+- **Refactorización Segura**: Cambios con confianza en tipos mantenidos
+- **Documentación Integrada**: Tipos como documentación ejecutable
+
+## Autenticación - NextAuth.js
+
+### Protocolos Soportados
+- **OAuth**: Integración con más de 30 proveedores (Spotify, Google, GitHub)
+- **Credenciales**: Autenticación basada en email/contraseña
+- **Email Magic Links**: Inicio de sesión sin contraseña
+- **Enterprise SSO**: Soporte para SAML, LDAP, Azure AD
+
+### Seguridad Implementada
+- **JSON Web Tokens**: Tokens firmados y encriptados
+- **Session Management**: Gestión automática de sesiones con renovación
+- **Rate Limiting**: Protección contra ataques de fuerza bruta
+- **CSRF Protection**: Protección automática contra falsificación de solicitudes
+
+## Base de Datos - Prisma ORM
+
+### Características Principales
+- **Type Safety**: Generación automática de tipos TypeScript
+- **Query Builder**: Consultas intuitivas con autocompletado
+- **Migrations**: Sistema de migraciones declarativo
+- **Data Browser**: GUI para exploración de datos en desarrollo
+
+### Ventajas para Moodify
+- **Productividad**: Desarrollo rápido con APIs intuitivas
+- **Seguridad**: Prevención automática de inyecciones SQL
+- **Performance**: Optimización automática de consultas
+- **Multi-Database**: Soporte para PostgreSQL, MySQL, SQLite, MongoDB
+
+## Componentes de Interfaz - Shadcn/UI + Lucide React
+
+### Shadcn/UI
+- **Headless Components**: Componentes sin estilos predeterminados
+- **Accessibility First**: Cumplimiento completo de estándares WCAG
+- **Customizable**: Fácil personalización con clases Tailwind
+- **Copy-Paste**: Componentes individuales copiables
+
+### Lucide React
+- **400+ Icons**: Colección completa de íconos consistentes
+- **Tree-Shaking**: Solo incluye íconos utilizados
+- **Customizable Sizes**: Tamaños ajustables por props
+- **Theming Support**: Hereda colores del contexto actual
+
+## Análisis Musical - Spotify Web API
+
+### Integraciones Clave
+- **Audio Features**: Análisis detallado de características musicales
+- **Recommendations**: Motores de recomendación basados en atributos
+- **Playlists**: Gestión completa de playlists personalizadas
+- **User Library**: Acceso a bibliotecas musicales de usuarios
+
+### Beneficios para Usuarios
+- **Millones de Canciones**: Acceso a catálogo extenso de Spotify
+- **Personalization**: Recomendaciones basadas en historial y preferencias
+- **Real-time Sync**: Sincronización instantánea con estado de Spotify
+- **Cross-Platform**: Funcionamiento consistente en todas las plataformas
+
+## Herramientas de Desarrollo
+
+### Gestor de Paquetes - pnpm
+- **Espacio Eficiente**: Almacenamiento enlazado para dependencias comunes
+- **Velocidad**: Instalación más rápida que npm/yarn
+- **Seguridad**: Verificación de integridad con checksums
+- **Workspace Support**: Gestión de monorepositorios
+
+### Linter - ESLint
+- **Quality Assurance**: Reglas automáticas para código limpio
+- **Framework Integration**: Configuración específica para Next.js/React
+- **Auto-Fix**: Corrección automática de muchos problemas comunes
+- **Custom Rules**: Reglas específicas para el proyecto
+
+### Formatter - Prettier
+- **Opinionated Formatting**: Formato consistente sin debates
+- **Editor Integration**: Formato automático al guardar
+- **Configuration Minimal**: Configuración simple con defaults sensatos
+- **Language Support**: Soporte para JavaScript, TypeScript, JSON, CSS, MDX
+
+## Testing - Jest + React Testing Library
+
+### Jest
+- **Zero-Config Setup**: Configuración mínima para empezar rápido
+- **Snapshot Testing**: Verificación automática de cambios inesperados
+- **Mocking System**: Sistema de mocks potente y flexible
+- **Coverage Reports**: Reportes detallados de cobertura de código
+
+### React Testing Library
+- **User-Centric Testing**: Pruebas que reflejan cómo usan los usuarios reales
+- **Accessibility Built-In**: APIs que promueven código accesible
+- **Framework Agnostic**: Funciona con cualquier framework React
+- **Query-Based Selection**: Selección de elementos como lo harían usuarios reales
+
+## Deployment - Vercel
+
+### Características Destacadas
+- **Git Integration**: Deploy automático en push a repositorios
+- **Global CDN**: Distribución mundial para baja latencia
+- **Serverless Functions**: Ejecución automática de funciones API
+- **Automatic HTTPS**: Certificados SSL gratuitos y renovación automática
+
+### Optimizaciones Incluidas
+- **Smart Caching**: Estrategias de cache inteligentes por tipo de contenido
+- **Edge Network**: Ejecución cerca de usuarios con Edge Functions
+- **Image Optimization**: Compresión y formato automático de imágenes
+- **Instant Rollbacks**: Reversión instantánea a versiones anteriores
+
+Esta combinación de tecnologías modernas proporciona a Moodify una base sólida, escalable y mantenible que puede crecer con las necesidades futuras del proyecto mientras mantiene altos estándares de calidad, seguridad y experiencia de usuario.

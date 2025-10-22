@@ -1,0 +1,324 @@
+---
+title: Inicio de Sesión
+Description: Guía completa para usuarios que desean utilizar Moodify para descubrir música basada en sus emociones.
+---
+
+# Manual de Usuario de Moodify
+
+Guía completa para usuarios que desean utilizar Moodify para descubrir música basada en sus emociones.
+
+## Registro e Inicio de Sesión
+
+### Registro de Nueva Cuenta
+
+Para comenzar a usar Moodify, primero debe registrarse:
+
+1. **Acceder a la página de registro**:
+   - Visite `http://localhost:3000/auth/register` (entorno local)
+   - O visite `https://su-dominio.com/auth/register` (entorno de producción)
+
+2. **Completar el formulario de registro**:
+   - **Nombre completo**: Ingrese su nombre real o nombre de usuario preferido
+   - **Correo electrónico**: Proporcione una dirección de correo válida
+   - **Contraseña**: Cree una contraseña segura (mínimo 8 caracteres)
+   - **Confirmar contraseña**: Repita la misma contraseña
+
+3. **Enviar formulario**:
+   - Haga clic en el botón "Registrarse"
+   - Recibirá un correo de verificación en su bandeja de entrada
+   - Haga clic en el enlace de verificación para activar su cuenta
+
+### Inicio de Sesión
+
+Si ya tiene una cuenta registrada:
+
+1. **Acceder a la página de inicio de sesión**:
+   - Visite `http://localhost:3000/auth/login` (entorno local)
+   - O visite `https://su-dominio.com/auth/login` (entorno de producción)
+
+2. **Completar el formulario de inicio de sesión**:
+   - **Correo electrónico**: Ingrese la dirección de correo registrada
+   - **Contraseña**: Ingrese su contraseña segura
+   - **Recordarme**: (Opcional) Marque esta casilla para mantener la sesión activa
+
+3. **Iniciar sesión**:
+   - Haga clic en el botón "Iniciar Sesión"
+   - Será redirigido automáticamente al panel principal
+
+## Detección de Emociones
+
+### Captura de Imagen Facial
+
+Moodify utiliza reconocimiento facial para detectar sus emociones:
+
+1. **Acceder a la sección de detección**:
+   - En el panel principal, haga clic en "Detectar Emoción"
+   - O visite `http://localhost:3000/detect` directamente
+
+2. **Preparar para la captura**:
+   - Asegúrese de tener buena iluminación
+   - Elimine obstáculos faciales (gafas de sol, mascarillas)
+   - Encuentre un fondo neutro y bien iluminado
+
+3. **Permitir acceso a la cámara**:
+   - Cuando el navegador solicite permiso, permita el acceso a la cámara
+   - Verifique que su cámara funcione correctamente
+
+4. **Captura automática**:
+   - El sistema detectará automáticamente cuando esté listo
+   - Se tomará una foto y se analizará su expresión facial
+   - Recibirá retroalimentación visual inmediata
+
+### Interpretación de Resultados
+
+Después de la captura, verá los resultados:
+
+1. **Emoción detectada**:
+   - La emoción principal identificada será mostrada claramente
+   - Una puntuación de confianza (0-100%) indicará la precisión
+   - Desglose de todas las emociones detectadas con porcentajes
+
+2. **Recomendaciones musicales**:
+   - Playlist personalizada basada en su emoción detectada
+   - Canciones sugeridas que complementan su estado de ánimo
+   - Opción para guardar la recomendación en su historial
+
+## Recomendaciones Musicales
+
+### Obtención de Recomendaciones
+
+Las recomendaciones musicales se generan basadas en sus emociones detectadas:
+
+1. **Desde la página de detección**:
+   - Después de una detección emocional exitosa
+   - Las recomendaciones aparecerán automáticamente
+
+2. **Desde el panel principal**:
+   - Haga clic en "Recomendaciones" en el menú lateral
+   - Seleccione una emoción específica si lo desea
+   - Las recomendaciones se generarán basadas en esa emoción
+
+### Exploración de Recomendaciones
+
+Explore las canciones recomendadas:
+
+1. **Lista de canciones**:
+   - Cada canción muestra título, artista y álbum
+   - Imagen de portada de alta calidad
+   - Duración de la canción
+   - Popularidad en la plataforma
+
+2. **Reproducción**:
+   - Haga clic en cualquier canción para abrir en Spotify
+   - Las canciones se reproducirán directamente en Spotify
+   - Puede crear playlists con las recomendaciones
+
+3. **Guardado**:
+   - Guarde canciones favoritas en su biblioteca
+   - Añada canciones a playlists existentes
+   - Califique canciones para mejorar futuras recomendaciones
+
+## Historial de Análisis
+
+### Visualización del Historial
+
+Acceda a su historial de análisis emocionales:
+
+1. **Ir al historial**:
+   - Haga clic en "Historial" en el menú lateral
+   - O visite `http://localhost:3000/history`
+
+2. **Filtrado del historial**:
+   - **Por tipo**: Emociones, recomendaciones o todo
+   - **Por emoción**: Filtre por emociones específicas
+   - **Por rango de fechas**: Seleccione período específico
+   - **Por cantidad**: Limite el número de resultados
+
+3. **Visualización de entradas**:
+   - Cada entrada muestra fecha, hora y emoción
+   - Miniatura de la imagen analizada
+   - Canciones recomendadas asociadas
+   - Opciones para eliminar entradas individuales
+
+### Gestión del Historial
+
+Administre su historial de análisis:
+
+1. **Eliminar entradas individuales**:
+   - Haga clic en el botón "Eliminar" de cualquier entrada
+   - Confirme la eliminación en el diálogo emergente
+
+2. **Limpiar historial completo**:
+   - Haga clic en "Limpiar Historial" en la parte superior
+   - Elija si desea eliminar todo o solo emociones/recomendaciones
+   - Confirme la acción con su contraseña
+
+3. **Exportar datos**:
+   - Haga clic en "Exportar Datos" para descargar su historial
+   - Los datos se exportan en formato JSON legible por máquina
+   - Incluye toda la información para cumplimiento GDPR/CCPA
+
+## Perfil de Usuario
+
+### Configuración del Perfil
+
+Administre su información personal:
+
+1. **Acceder al perfil**:
+   - Haga clic en su foto de perfil en la esquina superior derecha
+   - Seleccione "Mi Perfil" en el menú desplegable
+   - O visite `http://localhost:3000/profile`
+
+2. **Editar información**:
+   - **Nombre**: Actualice su nombre completo
+   - **Correo electrónico**: Modifique su dirección de correo
+   - **Biografía**: Añada una descripción personal
+   - **Géneros favoritos**: Seleccione sus géneros musicales preferidos
+
+3. **Cambiar contraseña**:
+   - Haga clic en "Cambiar Contraseña"
+   - Ingrese su contraseña actual
+   - Cree una nueva contraseña segura
+   - Confirme la nueva contraseña
+
+### Eliminación de Cuenta
+
+Si desea eliminar permanentemente su cuenta:
+
+1. **Acceder a la eliminación**:
+   - En la página de perfil, desplácese hacia abajo
+   - Haga clic en "Eliminar Cuenta Permanentemente"
+   - Lea cuidadosamente la advertencia
+
+2. **Confirmar eliminación**:
+   - Ingrese su contraseña actual para confirmar
+   - Escriba su correo electrónico para confirmación adicional
+   - Haga clic en "Eliminar Cuenta"
+
+3. **Consecuencias**:
+   - Todos sus datos serán eliminados permanentemente
+   - No podrá recuperar su cuenta ni sus datos
+   - Se cancelarán todas las sesiones activas
+
+## Analíticas y Estadísticas
+
+### Dashboard de Analíticas
+
+Obtenga insights sobre sus patrones emocionales:
+
+1. **Tendencias emocionales**:
+   - Gráfico de línea mostrando evolución emocional
+   - Distribución de emociones a lo largo del tiempo
+   - Emociones más y menos frecuentes
+
+2. **Patrones de actividad**:
+   - Horas del día con mayor actividad
+   - Días de la semana más activos
+   - Preferencias musicales por emoción
+
+3. **Estadísticas generales**:
+   - Total de análisis realizados
+   - Total de recomendaciones recibidas
+   - Edad de la cuenta en días
+
+### Interpretación de Datos
+
+Comprenda mejor sus patrones emocionales:
+
+1. **Emociones predominantes**:
+   - Identifique sus emociones más comunes
+   - Compare con patrones de salud emocional
+   - Descubra posibles desencadenantes
+
+2. **Variabilidad emocional**:
+   - Observe cambios en sus estados emocionales
+   - Identifique períodos de estabilidad o cambio
+   - Relacione con eventos de su vida
+
+3. **Preferencias musicales**:
+   - Descubra qué música prefiere en cada estado emocional
+   - Identifique géneros que mejor complementan sus emociones
+   - Encuentre artistas que resuenan con usted
+
+## Solución de Problemas Comunes
+
+### Problemas de Cámara
+
+1. **Cámara no detectada**:
+   - Verifique permisos del navegador
+   - Asegúrese de que ninguna otra aplicación use la cámara
+   - Reinicie el navegador si es necesario
+
+2. **Mala calidad de imagen**:
+   - Mejore las condiciones de iluminación
+   - Limpie la lente de la cámara
+   - Asegúrese de una distancia adecuada
+
+### Problemas de Conexión
+
+1. **Sin conexión a Internet**:
+   - Verifique su conexión a Internet
+   - Intente recargar la página
+   - Compruebe el firewall o antivirus
+
+2. **Errores de API**:
+   - Espere unos minutos e intente nuevamente
+   - Verifique que las credenciales sean correctas
+   - Contacte al soporte si el problema persiste
+
+### Problemas de Autenticación
+
+1. **Credenciales incorrectas**:
+   - Verifique que el correo y contraseña sean correctos
+   - Asegúrese de que la cuenta esté verificada
+   - Use la opción de recuperación de contraseña
+
+2. **Sesión expirada**:
+   - Inicie sesión nuevamente
+   - Habilite la opción "Recordarme" si lo desea
+   - Verifique la configuración de cookies
+
+### Problemas de Recomendaciones
+
+1. **Recomendaciones irrelevantes**:
+   - Actualice sus preferencias musicales
+   - Proporcione feedback sobre las recomendaciones
+   - Asegúrese de tener conexión a Internet estable
+
+2. **Spotify no disponible**:
+   - Verifique que tenga cuenta en Spotify
+   - Asegúrese de estar conectado a Spotify
+   - Compruebe que la integración esté funcionando
+
+## Consejos y Mejores Prácticas
+
+### Para una Experiencia Óptima
+
+1. **Consistencia en la captura**:
+   - Realice análisis en condiciones similares
+   - Mantenga la misma distancia de la cámara
+   - Asegúrese de buena iluminación
+
+2. **Variedad emocional**:
+   - No se limite a estados de ánimo positivos
+   - Explore cómo la música puede ayudar en momentos difíciles
+   - Use Moodify como herramienta de autoexploración
+
+3. **Integración en la rutina**:
+   - Establezca momentos regulares para análisis emocionales
+   - Combine con su rutina musical diaria
+   - Comparta descubrimientos con amigos
+
+### Privacidad y Seguridad
+
+1. **Protección de datos**:
+   - Sus datos emocionales nunca se comparten sin su consentimiento
+   - Todas las comunicaciones son encriptadas
+   - Puede eliminar su cuenta y datos en cualquier momento
+
+2. **Control de acceso**:
+   - Mantenga su contraseña segura
+   - Habilite autenticación de dos factores si está disponible
+   - Cierre sesión en dispositivos compartidos
+
+Con este manual, estará completamente equipado para aprovechar al máximo todas las funcionalidades de Moodify y comenzar su viaje emocional musical.

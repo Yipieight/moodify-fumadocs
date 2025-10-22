@@ -1,0 +1,247 @@
+---
+title: "Configuración Inicial"
+description: "Guía para configurar correctamente su entorno de Moodify"
+---
+
+# Configuración Inicial
+
+Configure correctamente su entorno de Moodify siguiendo esta guía detallada.
+
+## Variables de Entorno Obligatorias
+
+Antes de ejecutar la aplicación, debe configurar las siguientes variables de entorno creando un archivo `.env.local` en la raíz del proyecto:
+
+```bash
+# Configuración de autenticación NextAuth
+NEXTAUTH_SECRET=su_secreto_seguro_aqui
+NEXTAUTH_URL=http://localhost:3000
+
+# Credenciales de Spotify API
+SPOTIFY_CLIENT_ID=su_client_id_de_spotify
+SPOTIFY_CLIENT_SECRET=su_client_secret_de_spotify
+
+# Configuración de base de datos
+DATABASE_URL=postgresql://usuario:contraseña@localhost:5432/moodify_db
+
+# Configuración adicional (opcional)
+NODE_ENV=development
+JWT_SECRET=su_jwt_secreto_para_pruebas
+```
+
+### Obtención de Credenciales de Spotify
+
+1. **Acceda a Spotify Developer Dashboard**:
+   - Visite [Spotify Developer Dashboard](https://developer.spotify.com/dashboard)
+   - Inicie sesión con su cuenta de Spotify
+
+2. **Cree una nueva aplicación**:
+   - Haga clic en "Create an App"
+   - Ingrese un nombre para su aplicación (ej: "Moodify Local")
+   - Agregue una descripción breve
+   - Seleccione "Web API" como tipo de aplicación
+   - Acepte los términos y condiciones
+
+3. **Obtenga las credenciales**:
+   - En la página de su aplicación, encontrará:
+     - **Client ID**: Cópielo y péguelo en `SPOTIFY_CLIENT_ID`
+     - **Client Secret**: Haga clic en "Show Client Secret" y cópielo en `SPOTIFY_CLIENT_SECRET`
+
+4. **Configure los URIs de redirección**:
+   - En la sección "Redirect URIs", agregue:
+     - `http://localhost:3000/api/auth/callback/spotify`
+     - `http://localhost:3000/auth/login`
+
+### Generación de Secretos Seguros
+
+Genere secretos seguros para su entorno local:
+
+```bash
+# Genere un secreto para NextAuth (Unix/Linux/macOS)
+openssl rand -base64 32
+
+# Genere un secreto JWT (alternativa)
+node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"
+```
+
+## Configuración de la Base de Datos
+
+### Opción 1: PostgreSQL Local
+
+1. **Instale PostgreSQL**:
+   ```bash
+   # En macOS con Homebrew
+   brew install postgresql
+   
+   # En Ubuntu/Debian
+   sudo apt update
+   sudo apt install postgresql postgresql-contrib
+   ```
+
+2. **Inicie el servicio**:
+   ```bash
+   # En macOS
+   brew services start postgresql
+   
+   # En Linux
+   sudo systemctl start postgresql
+   ```
+
+3. **Cree la base de datos**:
+   ```bash
+   # Acceda a PostgreSQL
+   psql postgres
+   
+   # Cree el usuario y base de datos
+   CREATE USER moodify_user WITH PASSWORD 'moodify_password';
+   CREATE DATABASE moodify_db OWNER moodify_user;
+   GRANT ALL PRIVILEGES ON DATABASE moodify_db TO moodify_user;
+   \q
+   ```
+
+4. **Actualice su archivo `.env.local`**:
+   ```bash
+   DATABASE_URL=postgresql://moodify_user:moodify_password@localhost:5432/moodify_db
+   ```
+
+### Opción 2: PostgreSQL en la Nube (Supabase)
+
+1. **Cree una cuenta gratuita en Supabase**
+2. **Cree un nuevo proyecto**
+3. **Obtenga la cadena de conexión**:
+   - Vaya a "Project Settings" > "Database"
+   - Copie la cadena de conexión en "Connection String"
+   - Actualice su `.env.local` con esta cadena
+
+## Configuración del Perfil de Desarrollo
+
+### Editor de Código (VS Code)
+
+Instale las extensiones recomendadas:
+
+1. **Abrir el proyecto en VS Code**:
+   ```bash
+   code .
+   ```
+
+2. **Extensiones recomendadas**:
+   - **ESLint**: Para análisis estático de código
+   - **Prettier**: Para formateo automático
+   - **Tailwind CSS IntelliSense**: Para autocompletado de clases
+   - **Prisma**: Para resaltado de sintaxis de Prisma Schema
+   - **Thunder Client**: Para pruebas de API
+
+3. **Configuración de VS Code**:
+   Cree un archivo `.vscode/settings.json`:
+
+   ```json
+   {
+     "editor.formatOnSave": true,
+     "editor.defaultFormatter": "esbenp.prettier-vscode",
+     "editor.codeActionsOnSave": {
+       "source.fixAll.eslint": true
+     },
+     "typescript.preferences.includePackageJsonAutoImports": "auto",
+     "tailwindCSS.classAttributes": ["class", "className", "classList", "ngClass"],
+     "files.exclude": {
+       "**/.git": true,
+       "**/.DS_Store": true,
+       "**/node_modules": true,
+       "**/.next": true
+     }
+   }
+   ```
+
+## Configuración de Alias de Importación
+
+Verifique que los alias de importación estén correctamente configurados en `tsconfig.json`:
+
+```json
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"],
+      "@/components/*": ["./src/components/*"],
+      "@/lib/*": ["./src/lib/*"],
+      "@/types/*": ["./src/types/*"],
+      "@/app/*": ["./src/app/*"]
+    }
+  }
+}
+```
+
+## Configuración de Puerto Personalizado
+
+Si necesita ejecutar la aplicación en un puerto diferente al 3000:
+
+1. **En su archivo `.env.local`**:
+   ```bash
+   PORT=3001
+   ```
+
+2. **En `package.json`**, actualice los scripts:
+   ```json
+   {
+     "scripts": {
+       "dev": "next dev --port 3001",
+       "build": "next build",
+       "start": "next start --port 3001"
+     }
+   }
+   ```
+
+## Configuración de HTTPS Local (Opcional)
+
+Para desarrollo con HTTPS local:
+
+1. **Instale mkcert**:
+   ```bash
+   # En macOS
+   brew install mkcert
+   
+   # En Linux, siga las instrucciones en https://github.com/FiloSottile/mkcert
+   ```
+
+2. **Cree certificados locales**:
+   ```bash
+   mkcert -install
+   mkcert localhost 127.0.0.1 ::1
+   ```
+
+3. **Configure Next.js para usar HTTPS**:
+   ```bash
+   # En package.json
+   "dev": "next dev --experimental-https --experimental-https-key ./localhost+2-key.pem --experimental-https-cert ./localhost+2.pem"
+   ```
+
+## Verificación de Configuración
+
+Verifique que todas las configuraciones estén correctas:
+
+```bash
+# Verifique variables de entorno
+pnpm run check-env
+
+# Verifique conexión a base de datos
+pnpm run check-db
+
+# Verifique credenciales de Spotify
+pnpm run check-spotify
+```
+
+## Configuración de Pruebas
+
+Prepare el entorno para ejecutar pruebas:
+
+1. **Cree una base de datos de prueba**:
+   ```sql
+   CREATE DATABASE moodify_test OWNER moodify_user;
+   ```
+
+2. **Configure variables de entorno para pruebas** en `.env.test`:
+   ```bash
+   DATABASE_URL=postgresql://moodify_user:moodify_password@localhost:5432/moodify_test
+   NODE_ENV=test
+   ```
+
+Con esta configuración inicial completa, su entorno de desarrollo de Moodify estará listo para ejecutar la aplicación.
