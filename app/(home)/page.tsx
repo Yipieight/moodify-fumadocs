@@ -18,11 +18,11 @@ export default function HomePage() {
           </p>
           <div className="mt-8 flex items-center justify-center gap-3">
             <Link
-              href="/docs"
+              href="/docs/introduccion"
               className="inline-flex items-center gap-2 rounded-md bg-fd-foreground px-4 py-2 font-medium text-fd-background hover:opacity-90"
             >
               <BookOpen className="size-4" />
-              Ver documentación
+              Ver Documentación
             </Link>
             <Link
               href="/docs/arquitectura/diagrama-arquitectura"
