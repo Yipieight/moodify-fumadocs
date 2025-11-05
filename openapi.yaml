@@ -17,7 +17,7 @@ info:
     name: MIT
     identifier: MIT
 servers:
-  - url: http://localhost:3000/api
+  - url: https://d44a7kjxt8x5x.cloudfront.net/api
     description: Servidor de producción
   - url: http://localhost:3000/api
     description: Servidor de desarrollo local
